@@ -1,21 +1,14 @@
 import Section from "./Section";
-import { profile, skills } from "@/lib/content";
+import { skills } from "@/lib/content";
 
 export default function About() {
   return (
-    <Section id="about" eyebrow="About" title="A bit about me.">
-      <div className="grid md:grid-cols-3 gap-10">
-        <div className="md:col-span-2">
-          <p className="text-base sm:text-lg leading-relaxed text-foreground/85">
-            {profile.longBio}
-          </p>
-        </div>
-        <div className="space-y-6">
-          <SkillGroup label="Languages" items={skills.languages} />
-          <SkillGroup label="Python Stack" items={skills.python} />
-          <SkillGroup label="Data & BI" items={skills.data} />
-          <SkillGroup label="Tools" items={skills.tools} />
-        </div>
+    <Section id="about" eyebrow="Skills" title="Tools I work with.">
+      <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <SkillGroup label="Languages" items={skills.languages} />
+        <SkillGroup label="Python Stack" items={skills.python} />
+        <SkillGroup label="Data & BI" items={skills.data} />
+        <SkillGroup label="Tools" items={skills.tools} />
       </div>
     </Section>
   );
