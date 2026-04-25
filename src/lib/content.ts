@@ -222,12 +222,12 @@ export const education = {
   graduation: "May 2025",
   logo: "/logos/tamu.jpeg",
   activities: [
-    "Chinese Student Association — President, VP Internal",
-    "Recovery From Stress Lab — Research Assistant",
-    "Dept. of Statistics — Teaching Assistant",
-    "BCS Theatre Company — Pit Orchestra Violist",
-    "Texas A&M Esports — Event Coordinator",
-    "Aggie Data Science Club — Member",
+    { org: "Chinese Student Association", role: "President, VP Internal" },
+    { org: "Recovery From Stress Lab", role: "Research Assistant" },
+    { org: "Dept. of Statistics", role: "Teaching Assistant" },
+    { org: "BCS Theatre Company", role: "Pit Orchestra Violist" },
+    { org: "Texas A&M Esports", role: "Event Coordinator" },
+    { org: "Aggie Data Science Club", role: "Member" },
   ],
 };
 

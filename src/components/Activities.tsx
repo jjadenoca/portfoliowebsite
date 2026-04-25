@@ -49,9 +49,11 @@ export default function Activities() {
                 </p>
                 <ul className="space-y-1.5 text-sm text-foreground/85">
                   {education.activities.map((a) => (
-                    <li key={a} className="flex gap-2">
+                    <li key={a.org} className="flex gap-2">
                       <span className="text-accent shrink-0">▪</span>
-                      <span>{a}</span>
+                      <span>
+                        <strong className="font-semibold text-foreground">{a.org}</strong>: {a.role}
+                      </span>
                     </li>
                   ))}
                 </ul>
