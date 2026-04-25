@@ -179,6 +179,7 @@ export const activities: Activity[] = [
       "Facilitate communication by holding 1-on-1 meetings with each of 45 team members geared towards giving & receiving feedback",
     ],
     logo: "/logos/caslogo.png",
+    image: "/logos/2024csa.JPG",
   },
   {
     title: "Research Assistant",
