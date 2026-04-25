@@ -24,12 +24,26 @@ export const metadata: Metadata = {
     url: "https://jadenoca.com",
     siteName: "Jaden Oca",
     type: "website",
+    images: [
+      {
+        url: "/headshot.jpeg",
+        width: 1200,
+        height: 1500,
+        alt: "Jaden Oca",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Jaden Oca — Data Science & Analytics",
     description:
       "Data scientist & analyst building ML pipelines, KPI analytics, and AI tools.",
+    images: ["/headshot.jpeg"],
+  },
+  icons: {
+    icon: "/headshot.jpeg",
+    shortcut: "/headshot.jpeg",
+    apple: "/headshot.jpeg",
   },
 };
 
