@@ -7,9 +7,6 @@ export default function Footer() {
         <p className="font-mono text-xs uppercase tracking-[0.2em]">
           © {new Date().getFullYear()} {profile.name}
         </p>
-        <p className="font-mono text-xs">
-          Built with Next.js & Tailwind. Hosted on Vercel.
-        </p>
       </div>
     </footer>
   );
