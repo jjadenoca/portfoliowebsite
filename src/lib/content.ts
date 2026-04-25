@@ -194,7 +194,7 @@ export const activities: Activity[] = [
     href: "https://sites.google.com/view/ze-mia-zhus-research-lab/home?authuser=0",
   },
   {
-    title: "Statistics Teacher Assistant",
+    title: "Statistics Teaching Assistant",
     org: "Texas A&M University",
     start: "January 2023",
     end: "May 2025",
