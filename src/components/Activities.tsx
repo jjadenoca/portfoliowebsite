@@ -42,30 +42,39 @@ export default function Activities() {
             <p className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground mt-4">
               Graduated {education.graduation}
             </p>
-            {education.activities && education.activities.length > 0 && (
-              <div className="mt-5 pt-4 border-t border-border">
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">
-                  Activities & Societies
-                </p>
-                <ul className="space-y-1.5 text-sm text-foreground/85">
-                  {education.activities.map((a) => (
-                    <li key={a.org} className="flex gap-2">
-                      <span className="text-accent shrink-0">▪</span>
-                      <span>
-                        <strong className="font-semibold text-foreground">{a.org}</strong>: {a.role}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
+
+          {education.activities && education.activities.length > 0 && (
+            <div className="mt-6">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
+                Activities & Societies
+              </p>
+              <ul className="space-y-3">
+                {education.activities.map((a) => (
+                  <li
+                    key={a.org}
+                    className="rounded-xl border border-border bg-card p-4 hover:border-accent/50 transition-colors"
+                  >
+                    <p className="text-sm font-semibold text-foreground leading-snug">
+                      {a.org}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {a.role}
+                    </p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-accent mt-2">
+                      {a.start} — {a.end}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Activities */}
         <div className="md:col-span-2">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3">
-            Activities
+            Additional Experience
           </p>
           {activities.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-border p-6 text-sm text-muted-foreground">
