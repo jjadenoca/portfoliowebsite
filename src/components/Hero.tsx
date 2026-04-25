@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="pt-20 sm:pt-28 pb-16 sm:pb-20 grid md:grid-cols-[1fr_420px] gap-10 md:gap-14 items-center"
+      className="pt-20 sm:pt-28 pb-16 sm:pb-20 grid md:grid-cols-[1fr_500px] gap-10 md:gap-14 items-center"
     >
       <div>
         <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">
@@ -40,13 +40,13 @@ export default function Hero() {
 
       {profile.headshot && (
         <div className="md:justify-self-end order-first md:order-none">
-          <div className="relative aspect-[4/5] w-64 sm:w-80 md:w-[420px] rounded-2xl overflow-hidden border border-border shadow-sm">
+          <div className="relative aspect-[4/5] w-72 sm:w-96 md:w-[500px] rounded-2xl overflow-hidden border border-border shadow-sm">
             <Image
               src={profile.headshot}
               alt={`${profile.name} portrait`}
               fill
               priority
-              sizes="(max-width: 768px) 320px, 420px"
+              sizes="(max-width: 768px) 384px, 500px"
               className="object-cover"
               style={{ objectPosition: "45% center" }}
             />
