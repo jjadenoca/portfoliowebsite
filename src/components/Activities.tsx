@@ -45,7 +45,7 @@ export default function Activities() {
               {activities.map((a) => (
                 <li
                   key={a.title + a.org}
-                  className="rounded-2xl border border-border bg-card p-6"
+                  className="rounded-2xl border border-border bg-card p-6 overflow-hidden"
                 >
                   <div className="flex items-start gap-4">
                     {a.logo && (
@@ -93,6 +93,17 @@ export default function Activities() {
                       </li>
                     ))}
                   </ul>
+                  {a.image && (
+                    <div className="relative mt-5 w-full aspect-[16/9] rounded-xl overflow-hidden border border-border">
+                      <Image
+                        src={a.image}
+                        alt={`${a.org} event photo`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 66vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
                 </li>
               ))}
             </ol>

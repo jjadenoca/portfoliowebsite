@@ -102,6 +102,7 @@ export type Project = {
   tech: string[];
   href?: string;
   logo?: string;
+  image?: string;
 };
 
 export const projects: Project[] = [
@@ -119,6 +120,7 @@ export const projects: Project[] = [
     tech: ["Python", "PyTorch", "GPT-2", "BERT", "Genius API"],
     href: "https://medium.com/@jadenesoca/analyzing-my-spotify-listening-data-dd1bd76b9c75",
     logo: "/logos/spotify.png",
+    image: "/logos/projectspotify.webp",
   },
   {
     name: "League of Legends Player Data",
@@ -133,6 +135,7 @@ export const projects: Project[] = [
     tech: ["Python", "Logistic Regression", "Random Forest", "LASSO"],
     href: "https://medium.com/@jadenesoca/league-of-legends-a-machine-learning-breakdown-across-different-skill-brackets-f6d0588f6a79",
     logo: "/logos/lol.jpg",
+    image: "/logos/lolroc.webp",
   },
 ];
 
@@ -144,6 +147,7 @@ export type Activity = {
   bullets: string[];
   logo?: string;
   href?: string;
+  image?: string;
 };
 
 export const activities: Activity[] = [
@@ -161,6 +165,7 @@ export const activities: Activity[] = [
       "Analyzed variance in personality test answers to simplify test to three most relevant questions, deploying to member base, and sorting each of 500 members into one of six groups based on quantifiable preferences",
     ],
     logo: "/logos/caslogo.png",
+    image: "/logos/csanihowdy.jpg",
   },
   {
     title: "Vice President Internal",

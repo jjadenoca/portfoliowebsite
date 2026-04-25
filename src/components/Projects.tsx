@@ -9,8 +9,20 @@ export default function Projects() {
         {projects.map((p) => (
           <article
             key={p.name}
-            className="rounded-2xl border border-border bg-card p-6 sm:p-7 hover:border-accent/60 transition-colors"
+            className="rounded-2xl border border-border bg-card overflow-hidden hover:border-accent/60 transition-colors"
           >
+            {p.image && (
+              <div className="relative w-full aspect-[16/9] bg-muted/30 border-b border-border">
+                <Image
+                  src={p.image}
+                  alt={`${p.name} preview`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain p-3"
+                />
+              </div>
+            )}
+            <div className="p-6 sm:p-7">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-3 min-w-0">
                 {p.logo && (
@@ -61,6 +73,7 @@ export default function Projects() {
                   {t}
                 </span>
               ))}
+            </div>
             </div>
           </article>
         ))}
