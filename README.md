@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# jadenoca.com — Personal Portfolio
 
-## Getting Started
+Personal portfolio site for Jaden Oca. Built with **Next.js 16 (App Router)**, **TypeScript**, and **Tailwind CSS v4**.
 
-First, run the development server:
+## Sections
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Hero** — name, title, location, intro
+- **About** — long bio + skill chips
+- **Experience** — Capital One, Cotality, Truist, Link Logistics
+- **Projects** — Spotify Streaming Insights + future builds
+- **Activities & Education** — research lab, Texas A&M, room for college clubs
+- **Writing** — auto-pulled from Medium RSS (cached hourly)
+- **Contact** — email, LinkedIn, GitHub, Medium
+
+## Edit content
+
+All copy lives in **one file**: [`src/lib/content.ts`](./src/lib/content.ts).
+
+Update profile info, experiences, projects, activities, education, and skills there. The site updates automatically.
+
+```ts
+// src/lib/content.ts
+export const profile = {
+  name: "Jaden Oca",
+  email: "jadenesoca@gmail.com",
+  linkedin: "https://www.linkedin.com/in/jadenoca",
+  github: "https://github.com/jadenoca",
+  mediumUsername: "jadenoca", // <- update this for the Writing section
+  // ...
+};
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### To-do (replace placeholders)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Verify LinkedIn / GitHub / Medium URLs in `profile`
+- Add a project repo link (`projects[i].href`)
+- Fill in `activities[]` with college clubs, leadership, hackathons, TA roles, etc.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Replace the resume PDF
 
-## Learn More
+Drop your latest resume at `public/JadenOcaResume.pdf` (already there). The Nav "Resume" button + hidden links use this file.
 
-To learn more about Next.js, take a look at the following resources:
+## Run locally
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000).
 
-## Deploy on Vercel
+## Deploy to Vercel + custom domain
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push this repo to GitHub.
+2. Go to [vercel.com/new](https://vercel.com/new) and import the repo. Accept defaults.
+3. Once deployed, go to **Project → Settings → Domains** and add `jadenoca.com` and `www.jadenoca.com`.
+4. Vercel will show two DNS records to add at your registrar:
+   - An `A` record for `jadenoca.com` → `76.76.21.21`
+   - A `CNAME` for `www` → `cname.vercel-dns.com`
+5. SSL provisions automatically. Site goes live within a few minutes.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tech
+
+- [Next.js 16](https://nextjs.org) (App Router, RSC, Turbopack)
+- [Tailwind CSS v4](https://tailwindcss.com)
+- [Inter](https://fonts.google.com/specimen/Inter) + [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) via `next/font`
+- Medium RSS via [rss2json](https://rss2json.com) (cached hourly)
+
+## File structure
+
+```
+src/
+├── app/
+│   ├── layout.tsx       # site metadata, fonts, theme
+│   ├── page.tsx         # composes all sections
+│   └── globals.css      # CSS variables + Tailwind theme
+├── components/          # one file per section
+│   ├── Nav.tsx
+│   ├── Hero.tsx
+│   ├── About.tsx
+│   ├── Experience.tsx
+│   ├── Projects.tsx
+│   ├── Activities.tsx
+│   ├── Writing.tsx      # async RSC, fetches Medium RSS
+│   ├── Contact.tsx
+│   ├── Footer.tsx
+│   └── Section.tsx
+└── lib/
+    └── content.ts       # ALL site content lives here
+```
