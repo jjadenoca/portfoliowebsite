@@ -123,8 +123,51 @@ export default function Experience() {
     }, 520);
   };
 
-  const goPrev = () => snapTo(activeIndex === 0 ? experiences.length - 1 : activeIndex - 1);
-  const goNext = () => snapTo((activeIndex + 1) % experiences.length);
+  // Step the marquee forward/backward by one card width.
+  // Allow the transition to overshoot past halfWidth (so the next card slides
+  // smoothly into view), then silently rebase the offset back into [0, halfWidth)
+  // *after* the transition completes — the duplicated second copy looks identical
+  // to the first, so the rebase is invisible.
+  const stepBy = (direction: 1 | -1) => {
+    const track = trackRef.current;
+    if (!track || halfWidthRef.current <= 0) return;
+    const firstCard = track.children[0] as HTMLElement | undefined;
+    if (!firstCard) return;
+    setPaused(true);
+    const gap = 24; // gap-6 between cards
+    const stepSize = firstCard.offsetWidth + gap;
+
+    // If going backward from a position near 0, jump invisibly to the
+    // equivalent spot in the second copy first so the transition has room.
+    if (direction === -1 && offsetRef.current < stepSize) {
+      const rebased = offsetRef.current + halfWidthRef.current;
+      offsetRef.current = rebased;
+      track.style.transition = "none";
+      track.style.transform = `translate3d(${-rebased}px, 0, 0)`;
+      void track.offsetWidth;
+    }
+
+    const next = offsetRef.current + direction * stepSize;
+    offsetRef.current = next;
+    track.style.transition = "transform 500ms ease-out";
+    track.style.transform = `translate3d(${-next}px, 0, 0)`;
+
+    window.setTimeout(() => {
+      if (!track) return;
+      let rebased = offsetRef.current;
+      if (rebased >= halfWidthRef.current) rebased -= halfWidthRef.current;
+      if (rebased < 0) rebased += halfWidthRef.current;
+      offsetRef.current = rebased;
+      track.style.transition = "none";
+      track.style.transform = `translate3d(${-rebased}px, 0, 0)`;
+      window.requestAnimationFrame(() => {
+        if (track) track.style.transition = "";
+      });
+    }, 520);
+  };
+
+  const goPrev = () => stepBy(-1);
+  const goNext = () => stepBy(1);
 
   return (
     <Section

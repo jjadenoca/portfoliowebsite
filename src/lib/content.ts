@@ -225,20 +225,14 @@ export const education = {
     {
       org: "BCS Theatre Company",
       role: "Pit Orchestra Violist",
-      start: "August 2022",
-      end: "May 2025",
-    },
-    {
-      org: "Texas A&M Esports",
-      role: "Event Coordinator",
-      start: "August 2022",
-      end: "May 2023",
+      start: "November 2022",
+      end: "March 2023",
     },
     {
       org: "Aggie Data Science Club",
       role: "Member",
       start: "August 2021",
-      end: "May 2025",
+      end: "August 2022",
     },
   ],
 };

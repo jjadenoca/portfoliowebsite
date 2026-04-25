@@ -1,156 +1,294 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import Section from "./Section";
-import { activities, education } from "@/lib/content";
+import { activities } from "@/lib/content";
+
+// Pixels per second the marquee scrolls at when running
+const SCROLL_SPEED = 75;
 
 export default function Activities() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [paused, setPaused] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const offsetRef = useRef(0);
+  const halfWidthRef = useRef(0);
+
+  // Duplicate the list so the marquee can loop seamlessly
+  const loop = [...activities, ...activities];
+
+  // Measure the width of one set of cards
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const measure = () => {
+      halfWidthRef.current = track.scrollWidth / 2;
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(track);
+    return () => ro.disconnect();
+  }, []);
+
+  // Drive the scroll with rAF so we can pause/resume at arbitrary positions
+  useEffect(() => {
+    let raf = 0;
+    let lastTs = performance.now();
+
+    const tick = (ts: number) => {
+      const dt = (ts - lastTs) / 1000;
+      lastTs = ts;
+      const track = trackRef.current;
+      if (track && !paused && halfWidthRef.current > 0) {
+        offsetRef.current += SCROLL_SPEED * dt;
+        if (offsetRef.current >= halfWidthRef.current) {
+          offsetRef.current -= halfWidthRef.current;
+        }
+        track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [paused]);
+
+  // Determine which card is currently most centered
+  useEffect(() => {
+    const container = containerRef.current;
+    const track = trackRef.current;
+    if (!container || !track) return;
+    let raf = 0;
+    const updateActive = () => {
+      const containerRect = container.getBoundingClientRect();
+      const center = containerRect.left + containerRect.width / 2;
+      const cards = track.children;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i < cards.length; i++) {
+        const r = (cards[i] as HTMLElement).getBoundingClientRect();
+        const cardCenter = r.left + r.width / 2;
+        const d = Math.abs(cardCenter - center);
+        if (d < bestDist) {
+          bestDist = d;
+          bestIdx = i % activities.length;
+        }
+      }
+      setActiveIndex(bestIdx);
+      raf = requestAnimationFrame(updateActive);
+    };
+    raf = requestAnimationFrame(updateActive);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  // Snap to a specific card (centered) and pause the marquee
+  const snapTo = (idx: number) => {
+    const track = trackRef.current;
+    const container = containerRef.current;
+    if (!track || !container) return;
+    const card = track.children[idx] as HTMLElement | undefined;
+    if (!card) return;
+    setPaused(true);
+    const containerWidth = container.clientWidth;
+    const cardLeft = card.offsetLeft;
+    const cardWidth = card.offsetWidth;
+    let target = cardLeft + cardWidth / 2 - containerWidth / 2;
+    if (halfWidthRef.current > 0) {
+      target = ((target % halfWidthRef.current) + halfWidthRef.current) % halfWidthRef.current;
+    }
+    offsetRef.current = target;
+    track.style.transition = "transform 500ms ease-out";
+    track.style.transform = `translate3d(${-target}px, 0, 0)`;
+    window.setTimeout(() => {
+      if (track) track.style.transition = "";
+    }, 520);
+  };
+
+  // Step the marquee forward/backward by one card width.
+  // Allow the transition to overshoot past halfWidth (so the next card slides
+  // smoothly into view), then silently rebase the offset back into [0, halfWidth)
+  // *after* the transition completes — the duplicated second copy looks identical
+  // to the first, so the rebase is invisible.
+  const stepBy = (direction: 1 | -1) => {
+    const track = trackRef.current;
+    if (!track || halfWidthRef.current <= 0) return;
+    const firstCard = track.children[0] as HTMLElement | undefined;
+    if (!firstCard) return;
+    setPaused(true);
+    const gap = 24; // gap-6 between cards
+    const stepSize = firstCard.offsetWidth + gap;
+
+    // If going backward from a position near 0, jump invisibly to the
+    // equivalent spot in the second copy first so the transition has room.
+    if (direction === -1 && offsetRef.current < stepSize) {
+      const rebased = offsetRef.current + halfWidthRef.current;
+      offsetRef.current = rebased;
+      track.style.transition = "none";
+      track.style.transform = `translate3d(${-rebased}px, 0, 0)`;
+      // Force layout flush so the no-transition jump takes effect
+      void track.offsetWidth;
+    }
+
+    const next = offsetRef.current + direction * stepSize;
+    offsetRef.current = next;
+    track.style.transition = "transform 500ms ease-out";
+    track.style.transform = `translate3d(${-next}px, 0, 0)`;
+
+    window.setTimeout(() => {
+      if (!track) return;
+      // Rebase back into [0, halfWidth) without animation
+      let rebased = offsetRef.current;
+      if (rebased >= halfWidthRef.current) rebased -= halfWidthRef.current;
+      if (rebased < 0) rebased += halfWidthRef.current;
+      offsetRef.current = rebased;
+      track.style.transition = "none";
+      track.style.transform = `translate3d(${-rebased}px, 0, 0)`;
+      // Clear inline transition so rAF loop's transform updates aren't laggy
+      window.requestAnimationFrame(() => {
+        if (track) track.style.transition = "";
+      });
+    }, 520);
+  };
+
+  const goPrev = () => stepBy(-1);
+  const goNext = () => stepBy(1);
+
   return (
     <Section
       id="activities"
       eyebrow="Beyond Work"
-      title="Activities & education."
+      title="Additional experience."
     >
-      <div className="grid md:grid-cols-3 gap-10">
-        {/* Education */}
-        <div className="md:col-span-1">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3">
-            Education
-          </p>
-          <div className="rounded-2xl border border-border bg-card p-6">
-            <div className="flex items-start gap-3">
-              {education.logo && (
-                <div className="shrink-0 h-12 w-12 rounded-lg overflow-hidden flex items-center justify-center">
-                  <Image
-                    src={education.logo}
-                    alt={`${education.school} logo`}
-                    width={96}
-                    height={96}
-                    className="h-full w-full object-contain"
-                  />
+      <div
+        ref={containerRef}
+        className="relative -mx-6 overflow-hidden"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        {/* edge fade masks */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-24 z-10 bg-gradient-to-r from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-24 z-10 bg-gradient-to-l from-background to-transparent" />
+
+        {/* Arrow buttons */}
+        <button
+          type="button"
+          onClick={goPrev}
+          aria-label="Previous activity"
+          className="hidden sm:flex absolute left-3 top-1/2 -translate-y-1/2 z-20 h-11 w-11 items-center justify-center rounded-full border border-border bg-background/90 backdrop-blur hover:border-accent hover:text-accent hover:scale-110 active:scale-95 transition-all duration-200 shadow-sm hover:shadow-md"
+        >
+          <span aria-hidden className="text-lg">←</span>
+        </button>
+        <button
+          type="button"
+          onClick={goNext}
+          aria-label="Next activity"
+          className="hidden sm:flex absolute right-3 top-1/2 -translate-y-1/2 z-20 h-11 w-11 items-center justify-center rounded-full border border-border bg-background/90 backdrop-blur hover:border-accent hover:text-accent hover:scale-110 active:scale-95 transition-all duration-200 shadow-sm hover:shadow-md"
+        >
+          <span aria-hidden className="text-lg">→</span>
+        </button>
+
+        <div ref={trackRef} className="flex gap-6 w-max py-2 will-change-transform">
+          {loop.map((a, idx) => (
+            <article
+              key={a.title + a.org + idx}
+              className="shrink-0 w-[88vw] sm:w-[460px] md:w-[480px] min-h-[480px] sm:min-h-[520px] rounded-2xl border border-border bg-card p-6 sm:p-7 flex flex-col hover:border-accent/50 hover:shadow-lg transition-all duration-300"
+            >
+              <div className="flex items-start gap-4">
+                {a.logo && (
+                  <div
+                    className="shrink-0 mt-0.5 rounded-lg overflow-hidden flex items-center justify-center"
+                    style={{ height: "3.5rem", width: "3.5rem" }}
+                  >
+                    <Image
+                      src={a.logo}
+                      alt={`${a.org} logo`}
+                      width={144}
+                      height={144}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg sm:text-xl font-semibold leading-tight">
+                    {a.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-foreground/80 mt-0.5">
+                    {a.href ? (
+                      <a
+                        href={a.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-accent underline-offset-4 hover:underline transition-colors"
+                      >
+                        {a.org} ↗
+                      </a>
+                    ) : (
+                      a.org
+                    )}
+                  </p>
                 </div>
-              )}
-              <div className="min-w-0">
-                <h3 className="font-semibold">{education.school}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {education.location}
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center justify-end gap-x-4 gap-y-1 pb-4 border-b border-border/60">
+                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-accent">
+                  {a.start} {a.end ? `— ${a.end}` : ""}
                 </p>
               </div>
-            </div>
-            <p className="mt-3 text-sm">{education.degree}</p>
-            <p className="text-sm text-muted-foreground">
-              {education.minors}
-            </p>
-            <p className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground mt-4">
-              Graduated {education.graduation}
-            </p>
-          </div>
 
-          {education.activities && education.activities.length > 0 && (
-            <div className="mt-6">
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
-                Activities & Societies
-              </p>
-              <ul className="space-y-3">
-                {education.activities.map((a) => (
-                  <li
-                    key={a.org}
-                    className="rounded-xl border border-border bg-card p-4 hover:border-accent/50 transition-colors"
-                  >
-                    <p className="text-sm font-semibold text-foreground leading-snug">
-                      {a.org}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {a.role}
-                    </p>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-accent mt-2">
-                      {a.start} — {a.end}
-                    </p>
+              <ul className="mt-3 space-y-2 text-foreground/85 leading-relaxed flex-1 text-sm">
+                {a.bullets.map((b, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span className="text-accent mt-1.5 shrink-0">▪</span>
+                    <span>{b}</span>
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
-        </div>
 
-        {/* Activities */}
-        <div className="md:col-span-2">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3">
-            Additional Experience
-          </p>
-          {activities.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-border p-6 text-sm text-muted-foreground">
-              Add clubs, leadership, hackathons, TA roles, and other college
-              activities in <code className="font-mono">src/lib/content.ts</code>.
-            </div>
-          ) : (
-            <ol className="space-y-6">
-              {activities.map((a) => (
-                <li
-                  key={a.title + a.org}
-                  className="rounded-2xl border border-border bg-card p-6 overflow-hidden"
-                >
-                  <div className="flex items-start gap-4">
-                    {a.logo && (
-                      <div className="shrink-0 mt-0.5 h-15 w-15 rounded-lg overflow-hidden flex items-center justify-center" style={{ height: "3.75rem", width: "3.75rem" }}>
-                        <Image
-                          src={a.logo}
-                          alt={`${a.org} logo`}
-                          width={120}
-                          height={120}
-                          className="h-full w-full object-contain"
-                        />
-                      </div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <h3 className="text-base sm:text-lg font-semibold">
-                          {a.title}{" "}
-                          <span className="text-muted-foreground font-normal">
-                            ·{" "}
-                            {a.href ? (
-                              <a
-                                href={a.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:text-accent underline-offset-4 hover:underline transition-colors"
-                              >
-                                {a.org} ↗
-                              </a>
-                            ) : (
-                              a.org
-                            )}
-                          </span>
-                        </h3>
-                        <span className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                          {a.start} - {a.end}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <ul className="mt-4 space-y-2 text-sm text-foreground/85 leading-relaxed">
-                    {a.bullets.map((b, i) => (
-                      <li key={i} className="flex gap-3">
-                        <span className="text-accent mt-1.5 shrink-0">▪</span>
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  {a.image && (
-                    <div className="relative mt-5 w-full overflow-hidden rounded-xl border border-border" style={{ aspectRatio: "16 / 9" }}>
-                      <Image
-                        src={a.image}
-                        alt={`${a.org} event photo`}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 66vw"
-                        className="object-cover"
-                        style={{ objectPosition: "center bottom" }}
-                      />
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ol>
-          )}
+              {a.image && (
+                <div className="relative mt-4 w-full overflow-hidden rounded-xl border border-border" style={{ aspectRatio: "16 / 9" }}>
+                  <Image
+                    src={a.image}
+                    alt={`${a.org} event photo`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 480px"
+                    className="object-cover"
+                    style={{ objectPosition: "center bottom" }}
+                  />
+                </div>
+              )}
+            </article>
+          ))}
         </div>
+      </div>
+
+      {/* Pagination dots + status indicator */}
+      <div className="mt-5 flex items-center justify-center gap-3">
+        <div className="flex gap-2">
+          {activities.map((a, idx) => (
+            <button
+              key={a.title + a.org}
+              type="button"
+              onClick={() => snapTo(idx)}
+              aria-label={`Go to ${a.title} at ${a.org}`}
+              className={
+                "h-2 rounded-full transition-all duration-300 " +
+                (idx === activeIndex
+                  ? "w-8 bg-accent"
+                  : "w-2 bg-border hover:bg-accent/50")
+              }
+            />
+          ))}
+        </div>
+        {paused && (
+          <button
+            type="button"
+            onClick={() => setPaused(false)}
+            className="ml-2 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground hover:text-accent transition-colors"
+          >
+            ▶ Resume
+          </button>
+        )}
       </div>
     </Section>
   );

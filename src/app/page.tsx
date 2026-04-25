@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Activities from "@/components/Activities";
+import Education from "@/components/Education";
 import Writing from "@/components/Writing";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -16,6 +17,7 @@ export default function Home() {
         <Experience />
         <Projects />
         <Activities />
+        <Education />
         <Writing />
         <Contact />
       </main>
