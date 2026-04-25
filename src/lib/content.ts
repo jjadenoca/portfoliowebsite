@@ -223,24 +223,6 @@ export const education = {
   logo: "/logos/tamu.jpeg",
   activities: [
     {
-      org: "Texas A&M Chinese Student Association",
-      role: "President, Vice President Internal",
-      start: "April 2023",
-      end: "April 2025",
-    },
-    {
-      org: "Recovery From Stress Lab",
-      role: "Research Assistant",
-      start: "August 2024",
-      end: "May 2025",
-    },
-    {
-      org: "Texas A&M Department of Statistics",
-      role: "Teaching Assistant",
-      start: "January 2023",
-      end: "May 2025",
-    },
-    {
       org: "BCS Theatre Company",
       role: "Pit Orchestra Violist",
       start: "August 2022",
