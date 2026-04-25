@@ -13,12 +13,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jaden Oca — Data Science & Analytics",
+  title: "Jaden Oca — Data Professional",
   description:
     "Portfolio of Jaden Oca — Associate Business Analyst at Capital One. Data science, ML pipelines, and analytics for SaaS and financial services.",
   metadataBase: new URL("https://jadenoca.com"),
   openGraph: {
-    title: "Jaden Oca — Data Science & Analytics",
+    title: "Jaden Oca — Data Professional",
     description:
       "Data scientist & analyst building ML pipelines, KPI analytics, and AI tools for large-scale SaaS products.",
     url: "https://jadenoca.com",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jaden Oca — Data Science & Analytics",
+    title: "Jaden Oca — Data Professional",
     description:
       "Data scientist & analyst building ML pipelines, KPI analytics, and AI tools.",
     images: ["/headshot.jpeg"],
