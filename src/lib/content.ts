@@ -176,7 +176,7 @@ export const activities: Activity[] = [
       "Optimized bi-weekly newsletter sent to 900 recipients for brevity, raising email interactions by 29% & member attendance by 12%",
       "Reinvented intern program, holding workshops & shadowing sessions for 15 members, converting 73% of interns into future officers",
       "Spoke on panel with 5 other student leaders to audience of 200, educating Asian-American students on leadership values & growth",
-      "Facilitate communication by holding 1-on-1 meetings with each of 45 team members geared towards giving & receiving feedback",
+      "Facilitated communication by holding 1-on-1 meetings with each of 45 team members geared towards giving & receiving feedback",
     ],
     logo: "/logos/caslogo.png",
     image: "/logos/2024csa.JPG",
