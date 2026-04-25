@@ -2,6 +2,18 @@ import Image from "next/image";
 import Section from "./Section";
 import { projects } from "@/lib/content";
 
+const AI_TAGS = new Set([
+  "Claude",
+  "Gemini",
+  "GPT-2",
+  "BERT",
+  "NLP",
+  "LLM",
+  "LLM Fine-tuning",
+  "RAG",
+  "Prompt Engineering",
+]);
+
 export default function Projects() {
   return (
     <Section id="projects" eyebrow="Projects" title="Things I’ve built.">
@@ -65,14 +77,22 @@ export default function Projects() {
               ))}
             </ul>
             <div className="mt-5 flex flex-wrap gap-1.5">
-              {p.tech.map((t) => (
-                <span
-                  key={t}
-                  className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border border-border text-muted-foreground"
-                >
-                  {t}
-                </span>
-              ))}
+              {p.tech.map((t) => {
+                const isAi = AI_TAGS.has(t);
+                return (
+                  <span
+                    key={t}
+                    className={
+                      "font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border " +
+                      (isAi
+                        ? "border-accent/40 bg-accent/10 text-accent"
+                        : "border-border text-muted-foreground")
+                    }
+                  >
+                    {t}
+                  </span>
+                );
+              })}
             </div>
             </div>
           </article>

@@ -1,14 +1,26 @@
 import Image from "next/image";
-import { profile, skills } from "@/lib/content";
+import { profile } from "@/lib/content";
 
-const heroSkills = [
-  ...skills.languages,
+const stackSkills = [
+  "Python",
+  "SQL",
+  "R",
   "PyTorch",
   "scikit-learn",
   "Snowflake",
   "Tableau",
   "Power BI",
   "Azure",
+];
+
+const aiSkills = [
+  "Claude",
+  "Gemini",
+  "GPT-2",
+  "BERT",
+  "LLM Fine-tuning",
+  "RAG",
+  "Prompt Engineering",
 ];
 
 export default function Hero() {
@@ -31,15 +43,33 @@ export default function Hero() {
         <p className="mt-8 max-w-2xl text-base sm:text-lg leading-relaxed text-foreground/80">
           {profile.bio}
         </p>
-        <div className="mt-6 flex flex-wrap gap-1.5 max-w-2xl">
-          {heroSkills.map((s) => (
-            <span
-              key={s}
-              className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border border-border text-muted-foreground"
-            >
-              {s}
+        <div className="mt-6 max-w-2xl space-y-2.5">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mr-1 w-12 shrink-0">
+              Stack
             </span>
-          ))}
+            {stackSkills.map((s) => (
+              <span
+                key={s}
+                className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border border-border text-muted-foreground"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent mr-1 w-12 shrink-0">
+              AI
+            </span>
+            {aiSkills.map((s) => (
+              <span
+                key={s}
+                className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border border-accent/40 bg-accent/10 text-accent"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
         </div>
         <div className="mt-8 flex flex-wrap gap-3">
           <a
