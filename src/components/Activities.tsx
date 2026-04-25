@@ -94,13 +94,14 @@ export default function Activities() {
                     ))}
                   </ul>
                   {a.image && (
-                    <div className="relative mt-5 w-full aspect-[16/9] rounded-xl overflow-hidden border border-border">
+                    <div className="relative mt-5 w-full overflow-hidden rounded-xl border border-border" style={{ aspectRatio: "16 / 9" }}>
                       <Image
                         src={a.image}
                         alt={`${a.org} event photo`}
                         fill
                         sizes="(max-width: 768px) 100vw, 66vw"
                         className="object-cover"
+                        style={{ objectPosition: "center bottom" }}
                       />
                     </div>
                   )}
