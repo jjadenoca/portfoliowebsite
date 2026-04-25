@@ -131,7 +131,7 @@ export const projects: Project[] = [
     name: "League of Legends Player Data",
     tagline: "Video game player-base comparison",
     start: "December 2023",
-    end: "December 2023",
+    end: "January 2024",
     bullets: [
       "Demonstrated influence of player skill in overcoming quantifiable deficits based on data trained on 400K League of Legends matches",
       "Compared Logistic Regression & Random Forest to predict winners based on statistics at 15, 20, 25, and 30 minutes of game time and quantified model performance using log score, brier score, confusion matrices, and visualizing results using ROC Curve & AUC",
