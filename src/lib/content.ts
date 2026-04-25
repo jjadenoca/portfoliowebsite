@@ -101,6 +101,7 @@ export type Project = {
   bullets: string[];
   tech: string[];
   href?: string;
+  logo?: string;
 };
 
 export const projects: Project[] = [
@@ -117,6 +118,7 @@ export const projects: Project[] = [
     ],
     tech: ["Python", "PyTorch", "GPT-2", "BERT", "Genius API"],
     href: "https://medium.com/@jadenesoca/analyzing-my-spotify-listening-data-dd1bd76b9c75",
+    logo: "/logos/spotify.png",
   },
   {
     name: "League of Legends Player Data",
@@ -130,6 +132,7 @@ export const projects: Project[] = [
     ],
     tech: ["Python", "Logistic Regression", "Random Forest", "LASSO"],
     href: "https://medium.com/@jadenesoca/league-of-legends-a-machine-learning-breakdown-across-different-skill-brackets-f6d0588f6a79",
+    logo: "/logos/lol.jpg",
   },
 ];
 

@@ -14,12 +14,6 @@ export default function Nav() {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-background/70 border-b border-border">
       <nav className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
-        <Link
-          href="#top"
-          className="font-mono text-sm tracking-tight font-semibold hover:text-accent transition-colors"
-        >
-          {profile.name.toLowerCase().replace(" ", ".")}
-        </Link>
         <ul className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
           {links.map((l) => (
             <li key={l.href}>

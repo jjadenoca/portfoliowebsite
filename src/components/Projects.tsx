@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Section from "./Section";
 import { projects } from "@/lib/content";
 
@@ -11,13 +12,26 @@ export default function Projects() {
             className="rounded-2xl border border-border bg-card p-6 sm:p-7 hover:border-accent/60 transition-colors"
           >
             <div className="flex items-start justify-between gap-4">
-              <h3 className="text-lg sm:text-xl font-semibold">{p.name}</h3>
+              <div className="flex items-start gap-3 min-w-0">
+                {p.logo && (
+                  <div className="shrink-0 mt-0.5 rounded-lg overflow-hidden flex items-center justify-center" style={{ height: "3rem", width: "3rem" }}>
+                    <Image
+                      src={p.logo}
+                      alt={`${p.name} logo`}
+                      width={96}
+                      height={96}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                )}
+                <h3 className="text-lg sm:text-xl font-semibold">{p.name}</h3>
+              </div>
               {p.href && (
                 <a
                   href={p.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-accent transition-colors"
+                  className="text-sm text-muted-foreground hover:text-accent transition-colors shrink-0"
                   aria-label={`Open ${p.name}`}
                 >
                   ↗
