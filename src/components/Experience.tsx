@@ -39,22 +39,22 @@ export default function Experience() {
                   />
                 </div>
               )}
-              <div className="flex-1 min-w-0">
-                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <div className="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-x-4 gap-y-1">
+                <div className="min-w-0">
                   <h3 className="text-xl sm:text-2xl font-semibold">
                     {e.company} - {e.role}
                   </h3>
-                  <span className="text-base font-semibold text-foreground/80">
-                    {e.location}
-                  </span>
-                </div>
-                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mt-1.5">
-                  <p className="text-base italic text-muted-foreground">
+                  <p className="text-base italic text-muted-foreground mt-1.5">
                     {e.blurb}
                   </p>
-                  <span className="text-base italic text-muted-foreground">
+                </div>
+                <div className="shrink-0 sm:text-right">
+                  <p className="text-base font-semibold text-foreground/80">
+                    {e.location}
+                  </p>
+                  <p className="text-base italic text-muted-foreground mt-1.5">
                     {e.start} {e.end ? `- ${e.end}` : ""}
-                  </span>
+                  </p>
                 </div>
               </div>
             </div>
