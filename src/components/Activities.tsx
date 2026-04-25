@@ -16,10 +16,25 @@ export default function Activities() {
             Education
           </p>
           <div className="rounded-2xl border border-border bg-card p-6">
-            <h3 className="font-semibold">{education.school}</h3>
-            <p className="text-sm text-muted-foreground">
-              {education.location}
-            </p>
+            <div className="flex items-start gap-3">
+              {education.logo && (
+                <div className="shrink-0 h-12 w-12 rounded-lg overflow-hidden flex items-center justify-center">
+                  <Image
+                    src={education.logo}
+                    alt={`${education.school} logo`}
+                    width={96}
+                    height={96}
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+              )}
+              <div className="min-w-0">
+                <h3 className="font-semibold">{education.school}</h3>
+                <p className="text-sm text-muted-foreground">
+                  {education.location}
+                </p>
+              </div>
+            </div>
             <p className="mt-3 text-sm">{education.degree}</p>
             <p className="text-sm text-muted-foreground">
               {education.minors}
@@ -27,6 +42,21 @@ export default function Activities() {
             <p className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground mt-4">
               Graduated {education.graduation}
             </p>
+            {education.activities && education.activities.length > 0 && (
+              <div className="mt-5 pt-4 border-t border-border">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">
+                  Activities & Societies
+                </p>
+                <ul className="space-y-1.5 text-sm text-foreground/85">
+                  {education.activities.map((a) => (
+                    <li key={a} className="flex gap-2">
+                      <span className="text-accent shrink-0">▪</span>
+                      <span>{a}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
 

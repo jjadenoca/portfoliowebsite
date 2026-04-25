@@ -3,7 +3,7 @@
 
 export const profile = {
   name: "Jaden Oca",
-  title: "Data Science & Analytics",
+  title: "Data Professional",
   location: "Dallas, TX",
   openTo: "Open to relocation",
   email: "jadenesoca@gmail.com",
@@ -220,6 +220,15 @@ export const education = {
   degree: "Bachelor of Science in Statistics",
   minors: "Minors in Business and Psychology",
   graduation: "May 2025",
+  logo: "/logos/tamu.jpeg",
+  activities: [
+    "Chinese Student Association — President, VP Internal",
+    "Recovery From Stress Lab — Research Assistant",
+    "Dept. of Statistics — Teaching Assistant",
+    "BCS Theatre Company — Pit Orchestra Violist",
+    "Texas A&M Esports — Event Coordinator",
+    "Aggie Data Science Club — Member",
+  ],
 };
 
 export const skills = {
