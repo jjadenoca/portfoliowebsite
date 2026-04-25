@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Section from "./Section";
 import { experiences } from "@/lib/content";
 
@@ -17,11 +17,114 @@ const AI_TAGS = new Set([
   "Prompt Engineering",
 ]);
 
+// Pixels per second the marquee scrolls at when running
+const SCROLL_SPEED = 75;
+
 export default function Experience() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [paused, setPaused] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  // Track translateX in a ref so the rAF loop doesn't re-render every frame
+  const offsetRef = useRef(0);
+  // Width of one full set of cards (so we can wrap when offset > halfWidth)
+  const halfWidthRef = useRef(0);
 
   // Duplicate the list so the marquee can loop seamlessly
   const loop = [...experiences, ...experiences];
+
+  // Measure the width of one set of cards (track is two sets long)
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const measure = () => {
+      halfWidthRef.current = track.scrollWidth / 2;
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(track);
+    return () => ro.disconnect();
+  }, []);
+
+  // Drive the scroll with requestAnimationFrame so we can pause/resume
+  // at arbitrary positions (unlike a CSS keyframe).
+  useEffect(() => {
+    let raf = 0;
+    let lastTs = performance.now();
+
+    const tick = (ts: number) => {
+      const dt = (ts - lastTs) / 1000;
+      lastTs = ts;
+      const track = trackRef.current;
+      if (track && !paused && halfWidthRef.current > 0) {
+        offsetRef.current += SCROLL_SPEED * dt;
+        if (offsetRef.current >= halfWidthRef.current) {
+          offsetRef.current -= halfWidthRef.current;
+        }
+        track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [paused]);
+
+  // Determine which card is currently most centered and update activeIndex
+  useEffect(() => {
+    const container = containerRef.current;
+    const track = trackRef.current;
+    if (!container || !track) return;
+    let raf = 0;
+    const updateActive = () => {
+      const containerRect = container.getBoundingClientRect();
+      const center = containerRect.left + containerRect.width / 2;
+      const cards = track.children;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i < cards.length; i++) {
+        const r = (cards[i] as HTMLElement).getBoundingClientRect();
+        const cardCenter = r.left + r.width / 2;
+        const d = Math.abs(cardCenter - center);
+        if (d < bestDist) {
+          bestDist = d;
+          bestIdx = i % experiences.length;
+        }
+      }
+      setActiveIndex(bestIdx);
+      raf = requestAnimationFrame(updateActive);
+    };
+    raf = requestAnimationFrame(updateActive);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  // Snap to a specific card (centered) and pause the marquee
+  const snapTo = (idx: number) => {
+    const track = trackRef.current;
+    const container = containerRef.current;
+    if (!track || !container) return;
+    const card = track.children[idx] as HTMLElement | undefined;
+    if (!card) return;
+    setPaused(true);
+    // Compute offset that places this card's center at the container's center
+    const containerWidth = container.clientWidth;
+    const cardLeft = card.offsetLeft;
+    const cardWidth = card.offsetWidth;
+    let target = cardLeft + cardWidth / 2 - containerWidth / 2;
+    // Keep within first half so the duplicate copy is offscreen
+    if (halfWidthRef.current > 0) {
+      target = ((target % halfWidthRef.current) + halfWidthRef.current) % halfWidthRef.current;
+    }
+    offsetRef.current = target;
+    track.style.transition = "transform 500ms ease-out";
+    track.style.transform = `translate3d(${-target}px, 0, 0)`;
+    // Clear the transition after it completes so rAF updates aren't laggy
+    window.setTimeout(() => {
+      if (track) track.style.transition = "";
+    }, 520);
+  };
+
+  const goPrev = () => snapTo(activeIndex === 0 ? experiences.length - 1 : activeIndex - 1);
+  const goNext = () => snapTo((activeIndex + 1) % experiences.length);
 
   return (
     <Section
@@ -30,6 +133,7 @@ export default function Experience() {
       title="Where I've worked."
     >
       <div
+        ref={containerRef}
         className="relative -mx-6 overflow-hidden"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
@@ -38,14 +142,29 @@ export default function Experience() {
         <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-24 z-10 bg-gradient-to-r from-background to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-24 z-10 bg-gradient-to-l from-background to-transparent" />
 
-        <div
-          className="flex gap-6 w-max py-2 marquee"
-          style={{ animationPlayState: paused ? "paused" : "running" }}
+        {/* Arrow buttons */}
+        <button
+          type="button"
+          onClick={goPrev}
+          aria-label="Previous experience"
+          className="hidden sm:flex absolute left-3 top-1/2 -translate-y-1/2 z-20 h-11 w-11 items-center justify-center rounded-full border border-border bg-background/90 backdrop-blur hover:border-accent hover:text-accent hover:scale-110 active:scale-95 transition-all duration-200 shadow-sm hover:shadow-md"
         >
+          <span aria-hidden className="text-lg">←</span>
+        </button>
+        <button
+          type="button"
+          onClick={goNext}
+          aria-label="Next experience"
+          className="hidden sm:flex absolute right-3 top-1/2 -translate-y-1/2 z-20 h-11 w-11 items-center justify-center rounded-full border border-border bg-background/90 backdrop-blur hover:border-accent hover:text-accent hover:scale-110 active:scale-95 transition-all duration-200 shadow-sm hover:shadow-md"
+        >
+          <span aria-hidden className="text-lg">→</span>
+        </button>
+
+        <div ref={trackRef} className="flex gap-6 w-max py-2 will-change-transform">
           {loop.map((e, idx) => (
             <article
               key={e.company + e.start + idx}
-              className="shrink-0 w-[88vw] sm:w-[460px] md:w-[480px] min-h-[480px] sm:min-h-[520px] rounded-2xl border border-border bg-card p-6 sm:p-7 flex flex-col hover:border-accent/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+              className="shrink-0 w-[88vw] sm:w-[460px] md:w-[480px] min-h-[480px] sm:min-h-[520px] rounded-2xl border border-border bg-card p-6 sm:p-7 flex flex-col hover:border-accent/50 hover:shadow-lg transition-all duration-300"
             >
               <div className="flex items-start gap-4">
                 {e.logo && (
@@ -119,25 +238,34 @@ export default function Experience() {
         </div>
       </div>
 
-      <style jsx>{`
-        .marquee {
-          animation: scroll-left 40s linear infinite;
-        }
-        @keyframes scroll-left {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            /* shift by exactly half (the duplicated set) for seamless loop */
-            transform: translateX(-50%);
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .marquee {
-            animation: none;
-          }
-        }
-      `}</style>
+      {/* Pagination dots + status indicator */}
+      <div className="mt-5 flex items-center justify-center gap-3">
+        <div className="flex gap-2">
+          {experiences.map((e, idx) => (
+            <button
+              key={e.company + e.start}
+              type="button"
+              onClick={() => snapTo(idx)}
+              aria-label={`Go to ${e.company}`}
+              className={
+                "h-2 rounded-full transition-all duration-300 " +
+                (idx === activeIndex
+                  ? "w-8 bg-accent"
+                  : "w-2 bg-border hover:bg-accent/50")
+              }
+            />
+          ))}
+        </div>
+        {paused && (
+          <button
+            type="button"
+            onClick={() => setPaused(false)}
+            className="ml-2 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground hover:text-accent transition-colors"
+          >
+            ▶ Resume
+          </button>
+        )}
+      </div>
     </Section>
   );
 }
