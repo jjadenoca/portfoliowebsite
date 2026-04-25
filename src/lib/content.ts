@@ -237,6 +237,13 @@ export const education = {
   ],
 };
 
+export const awards: string[] = [
+  "President's Endowed Scholar",
+  "National Merit Finalist",
+  "TMEA All-State Violist",
+  "National AP Scholar",
+];
+
 export const skills = {
   languages: ["Python", "SQL", "R"],
   python: ["Pandas", "NumPy", "Matplotlib", "PyTorch", "scikit-learn"],

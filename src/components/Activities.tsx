@@ -6,7 +6,7 @@ import Section from "./Section";
 import { activities } from "@/lib/content";
 
 // Pixels per second the slot reel scrolls at when running
-const SCROLL_SPEED = 90;
+const SCROLL_SPEED = 65;
 
 export default function Activities() {
   const trackRef = useRef<HTMLDivElement>(null);

@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Section from "./Section";
-import { education } from "@/lib/content";
+import { education, awards } from "@/lib/content";
 
 export default function Education() {
   return (
     <Section id="education" eyebrow="Education" title="School & societies.">
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-6 mb-6">
         {/* Education card */}
         <div className="rounded-2xl border border-border bg-card p-6">
           <div className="flex items-start gap-3">
@@ -61,6 +61,27 @@ export default function Education() {
           </div>
         )}
       </div>
+
+      {awards && awards.length > 0 && (
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
+            Awards
+          </p>
+          <ul className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {awards.map((a) => (
+              <li
+                key={a}
+                className="rounded-xl border border-border bg-card p-3 hover:border-accent/50 transition-colors flex items-center gap-2 whitespace-nowrap"
+              >
+                <span aria-hidden className="text-accent shrink-0">★</span>
+                <span className="text-[11px] font-medium text-foreground">
+                  {a}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </Section>
   );
 }
