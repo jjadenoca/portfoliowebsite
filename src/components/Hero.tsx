@@ -1,5 +1,15 @@
 import Image from "next/image";
-import { profile } from "@/lib/content";
+import { profile, skills } from "@/lib/content";
+
+const heroSkills = [
+  ...skills.languages,
+  "PyTorch",
+  "scikit-learn",
+  "Snowflake",
+  "Tableau",
+  "Power BI",
+  "Azure",
+];
 
 export default function Hero() {
   return (
@@ -21,7 +31,17 @@ export default function Hero() {
         <p className="mt-8 max-w-2xl text-base sm:text-lg leading-relaxed text-foreground/80">
           {profile.bio}
         </p>
-        <div className="mt-10 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-wrap gap-1.5 max-w-2xl">
+          {heroSkills.map((s) => (
+            <span
+              key={s}
+              className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border border-border text-muted-foreground"
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+        <div className="mt-8 flex flex-wrap gap-3">
           <a
             href="#experience"
             className="inline-flex items-center gap-2 bg-foreground text-background px-5 py-2.5 rounded-full text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"

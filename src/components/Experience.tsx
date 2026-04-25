@@ -54,6 +54,18 @@ export default function Experience() {
                 </li>
               ))}
             </ul>
+            {e.tech && e.tech.length > 0 && (
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {e.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border border-border text-muted-foreground"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            )}
           </li>
         ))}
       </ol>

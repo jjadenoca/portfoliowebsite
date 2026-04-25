@@ -29,6 +29,7 @@ export type Experience = {
   end: string;
   blurb: string;
   bullets: string[];
+  tech?: string[];
   // Local image path under /public, e.g. "/logos/capitalone.png"
   logo?: string;
 };
@@ -47,6 +48,7 @@ export const experiences: Experience[] = [
       "Inform GTM strategy for B2B SaaS products by building and maintaining quarterly report from scratch, using SQL to pull and analyze transaction data from 19K auto dealerships, ensuring reproducibility with Git",
       "Drive pricing decisions by delivering competitive analyses across SaaS product portfolio, benchmarking pricing and positioning against key competitors",
     ],
+    tech: ["SQL", "Python", "Snowflake", "Quicksight", "Gemini", "Git"],
     logo: "/logos/c1.png",
   },
   {
@@ -61,6 +63,7 @@ export const experiences: Experience[] = [
       "Automated 95% of claims review process through building machine learning pipeline in Python and SQL with TF-IDF vectorization and Logistic Regression model",
       "Built scalable NLP feature engineering pipeline by designing ETL framework to clean and standardize 40K peril records into a single source of truth in Snowflake",
     ],
+    tech: ["Python", "SQL", "scikit-learn", "Snowflake", "NLP"],
     logo: "/logos/cotality.png",
   },
   {
@@ -75,6 +78,7 @@ export const experiences: Experience[] = [
       "Increased recovery for past-due payments by 11% through analyzing 23M transactions to identify trends between when alerts are sent and effectiveness in generating payments within three days",
       "Enhanced decision-making for a 50-member department by creating a Tableau dashboard analyzing 13 months of client behavior across 6M accounts, leading to improved assessment of payment trends",
     ],
+    tech: ["SQL", "Tableau", "Python"],
     logo: "/logos/truist.png",
   },
   {
@@ -89,6 +93,7 @@ export const experiences: Experience[] = [
       "Improved model performance by 12% by incorporating geographic and demographic factors using Azure and GeoPandas",
       "Identified three underutilized investments with projected 8% ROI uplift through regression based financial modeling across 4K properties in 51 geographic markets",
     ],
+    tech: ["Python", "Random Forest", "XGBoost", "Azure", "GeoPandas"],
     logo: "/logos/link.png",
   },
 ];

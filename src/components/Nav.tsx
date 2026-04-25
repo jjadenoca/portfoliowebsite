@@ -2,7 +2,6 @@ import Link from "next/link";
 import { profile } from "@/lib/content";
 
 const links = [
-  { href: "#about", label: "About" },
   { href: "#experience", label: "Experience" },
   { href: "#projects", label: "Projects" },
   { href: "#activities", label: "Activities" },
