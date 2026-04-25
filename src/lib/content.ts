@@ -197,6 +197,7 @@ export const activities: Activity[] = [
     ],
     logo: "/logos/tamu.jpeg",
     href: "https://sites.google.com/view/ze-mia-zhus-research-lab/home?authuser=0",
+    image: "/logos/REST Lab.png",
   },
   {
     title: "Statistics Teaching Assistant",
@@ -209,6 +210,7 @@ export const activities: Activity[] = [
       "Coordinated with 3 other TAs to collect student feedback throughout semester to suggest lesson plan and exam changes to professors",
     ],
     logo: "/logos/tamu.jpeg",
+    image: "/logos/Stats.jpg",
   },
 ];
 
