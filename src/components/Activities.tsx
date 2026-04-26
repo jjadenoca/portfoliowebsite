@@ -134,14 +134,24 @@ export default function Activities() {
       void track.offsetWidth;
     }
 
-    // Snap the destination to the nearest centered-card boundary in the
-    // direction of travel so we never land between two cards.
+    // Decide which centered card boundary to land on.
+    //
+    // When going DOWN (direction = 1):
+    //   - If we're less than halfway between card N and N+1, the "incoming"
+    //     card N+1 hasn't arrived yet → finish bringing it in (target = N+1).
+    //   - If we're more than halfway, N+1 is already on its way out →
+    //     skip to N+2.
+    // When going UP (direction = -1): mirror logic.
     const relative = offsetRef.current - centerCorrection;
-    const snappedRelative =
-      direction === 1
-        ? Math.floor(relative / stepSize) * stepSize
-        : Math.ceil(relative / stepSize) * stepSize;
-    const next = centerCorrection + snappedRelative + direction * stepSize;
+    const baseIdx = Math.floor(relative / stepSize);
+    const fraction = relative / stepSize - baseIdx; // 0..1
+    let targetIdx: number;
+    if (direction === 1) {
+      targetIdx = fraction < 0.5 ? baseIdx + 1 : baseIdx + 2;
+    } else {
+      targetIdx = fraction > 0.5 ? baseIdx : baseIdx - 1;
+    }
+    const next = centerCorrection + targetIdx * stepSize;
     offsetRef.current = next;
     track.style.transition = "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)";
     track.style.transform = `translate3d(0, ${-next}px, 0)`;
