@@ -132,52 +132,89 @@ export default function Activities() {
     const container = containerRef.current;
     if (!track || !container || halfHeightRef.current <= 0) return;
     if (animatingRef.current) return; // ignore clicks while easing
-    const firstCard = track.children[0] as HTMLElement | undefined;
-    if (!firstCard) return;
+    const cards = Array.from(track.children) as HTMLElement[];
+    if (cards.length === 0) return;
     // Stop auto-scroll synchronously so the next rAF tick can't overwrite us.
     pausedRef.current = true;
     animatingRef.current = true;
     setPaused(true);
-    const gap = 24; // gap-6 between cards
-    const stepSize = firstCard.offsetHeight + gap;
     const containerHeight = container.clientHeight;
 
-    // The "centered" offset for card 0. Every centered card position is
-    // centerCorrection + k * stepSize.
-    const centerCorrection =
-      firstCard.offsetTop + firstCard.offsetHeight / 2 - containerHeight / 2;
+    // Build the centered offset for every card by measuring actual layout.
+    // Cards have variable heights (different bullet counts), so we cannot
+    // assume a single uniform stepSize.
+    const centeredOffsets = cards.map(
+      (c) => c.offsetTop + c.offsetHeight / 2 - containerHeight / 2
+    );
 
-    // If going backward (up) from a position near 0, jump invisibly to the
-    // equivalent spot in the second copy so the transition has room.
-    if (direction === -1 && offsetRef.current < stepSize) {
-      const rebased = offsetRef.current + halfHeightRef.current;
+    // Find the card whose centered position is closest to the current
+    // offset, and how far past it we are (signed pixel distance).
+    const cur = offsetRef.current;
+    let nearestIdx = 0;
+    let nearestDist = Infinity;
+    for (let i = 0; i < centeredOffsets.length; i++) {
+      const d = Math.abs(cur - centeredOffsets[i]);
+      if (d < nearestDist) {
+        nearestDist = d;
+        nearestIdx = i;
+      }
+    }
+    const signedDelta = cur - centeredOffsets[nearestIdx];
+
+    // If going backward (up) from a position near the top, jump invisibly
+    // to the equivalent spot in the second copy so the transition has room.
+    const minSafeOffset =
+      nearestIdx > 0
+        ? centeredOffsets[nearestIdx] - centeredOffsets[nearestIdx - 1]
+        : 200;
+    if (direction === -1 && cur < minSafeOffset) {
+      const rebased = cur + halfHeightRef.current;
       offsetRef.current = rebased;
       track.style.transition = "none";
       track.style.transform = `translate3d(0, ${-rebased}px, 0)`;
       void track.offsetWidth;
+      // Re-measure offsets after the jump (positions of cards in the
+      // second copy are nearestIdx + activities.length).
     }
 
-    // Decide which centered card boundary to land on.
+    // Decide which centered card to land on.
     //
     // When going DOWN (direction = 1):
-    //   - If we're less than halfway between card N and N+1, the "incoming"
-    //     card N+1 hasn't arrived yet → finish bringing it in (target = N+1).
-    //   - If we're more than halfway, N+1 is already on its way out →
-    //     skip to N+2.
-    // When going UP (direction = -1): mirror logic.
-    const relative = offsetRef.current - centerCorrection;
-    const baseIdx = Math.floor(relative / stepSize);
-    const fraction = relative / stepSize - baseIdx; // 0..1
+    //   - If we haven't yet reached the nearest card's center
+    //     (signedDelta < 0), that card is still arriving → land on it.
+    //   - Otherwise we're past it → skip to the next one.
+    // When going UP, mirror.
     let targetIdx: number;
-    if (direction === 1) {
-      targetIdx = fraction < 0.5 ? baseIdx + 1 : baseIdx + 2;
-    } else {
-      targetIdx = fraction > 0.5 ? baseIdx : baseIdx - 1;
+    const liveCur = direction === -1 && cur < minSafeOffset ? offsetRef.current : cur;
+    let liveNearest = nearestIdx;
+    if (direction === -1 && cur < minSafeOffset) {
+      // After the rebase, recompute the nearest centered offset.
+      let bestD = Infinity;
+      for (let i = 0; i < centeredOffsets.length; i++) {
+        const d = Math.abs(liveCur - centeredOffsets[i]);
+        if (d < bestD) {
+          bestD = d;
+          liveNearest = i;
+        }
+      }
     }
-    const next = centerCorrection + targetIdx * stepSize;
+    const liveSignedDelta = liveCur - centeredOffsets[liveNearest];
+    if (direction === 1) {
+      targetIdx = liveSignedDelta < 0 ? liveNearest : liveNearest + 1;
+    } else {
+      targetIdx = liveSignedDelta > 0 ? liveNearest : liveNearest - 1;
+    }
+    targetIdx = Math.max(0, Math.min(centeredOffsets.length - 1, targetIdx));
+    // Avoid no-op (snapping back to where we already are).
+    if (Math.abs(centeredOffsets[targetIdx] - liveCur) < 1) {
+      targetIdx = direction === 1 ? targetIdx + 1 : targetIdx - 1;
+      targetIdx = Math.max(0, Math.min(centeredOffsets.length - 1, targetIdx));
+    }
+    const next = centeredOffsets[targetIdx];
     offsetRef.current = next;
     track.style.transition = "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)";
     track.style.transform = `translate3d(0, ${-next}px, 0)`;
+    void signedDelta;
 
     window.setTimeout(() => {
       if (!track) return;
