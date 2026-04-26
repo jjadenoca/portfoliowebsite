@@ -15,6 +15,13 @@ export default function Activities() {
   const [activeIndex, setActiveIndex] = useState(0);
   const offsetRef = useRef(0);
   const halfHeightRef = useRef(0);
+  // Synchronous pause flag — the React state takes a render to propagate,
+  // but the rAF tick reads this ref every frame so we can stop the auto
+  // scroll instantly when the user clicks an arrow.
+  const pausedRef = useRef(false);
+  // While a transition is in flight, the auto-scroll must not touch the
+  // transform (it would overwrite the eased step animation mid-frame).
+  const animatingRef = useRef(false);
 
   // Duplicate the list so the reel can loop seamlessly
   const loop = [...activities, ...activities];
@@ -32,6 +39,12 @@ export default function Activities() {
     return () => ro.disconnect();
   }, []);
 
+  // Mirror the paused state into a ref so other code paths (like stepBy)
+  // can flip pause synchronously without waiting for a render.
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
+
   // Drive the scroll vertically with rAF
   useEffect(() => {
     let raf = 0;
@@ -41,7 +54,13 @@ export default function Activities() {
       const dt = (ts - lastTs) / 1000;
       lastTs = ts;
       const track = trackRef.current;
-      if (track && !paused && halfHeightRef.current > 0) {
+      if (
+        track &&
+        !paused &&
+        !pausedRef.current &&
+        !animatingRef.current &&
+        halfHeightRef.current > 0
+      ) {
         offsetRef.current += SCROLL_SPEED * dt;
         if (offsetRef.current >= halfHeightRef.current) {
           offsetRef.current -= halfHeightRef.current;
@@ -112,8 +131,12 @@ export default function Activities() {
     const track = trackRef.current;
     const container = containerRef.current;
     if (!track || !container || halfHeightRef.current <= 0) return;
+    if (animatingRef.current) return; // ignore clicks while easing
     const firstCard = track.children[0] as HTMLElement | undefined;
     if (!firstCard) return;
+    // Stop auto-scroll synchronously so the next rAF tick can't overwrite us.
+    pausedRef.current = true;
+    animatingRef.current = true;
     setPaused(true);
     const gap = 24; // gap-6 between cards
     const stepSize = firstCard.offsetHeight + gap;
@@ -166,6 +189,7 @@ export default function Activities() {
       track.style.transform = `translate3d(0, ${-rebased}px, 0)`;
       window.requestAnimationFrame(() => {
         if (track) track.style.transition = "";
+        animatingRef.current = false;
       });
     }, 620);
   };
