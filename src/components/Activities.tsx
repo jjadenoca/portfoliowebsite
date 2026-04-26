@@ -193,14 +193,13 @@ export default function Activities() {
     }
 
     // Always advance at least one card past the one we're currently on.
-    // That alone fixes "first click only nudges to current card's exact
-    // center". For the "incoming card already past halfway → skip" rule:
-    // if we are already significantly past the nearest card's center in
-    // the direction of travel, advance two instead of one.
+    // For the "incoming card already past halfway → skip" rule: if we
+    // are already significantly past the nearest card's center in the
+    // direction of travel, advance two instead of one.
     let targetIdx: number;
     const currentCardHeight = cards[nearest].offsetHeight;
-    const skipThreshold = currentCardHeight * 0.5; // half a card past center
-    const signedDelta = liveCur - centeredOffsets[nearest]; // + means past
+    const skipThreshold = currentCardHeight * 0.5;
+    const signedDelta = liveCur - centeredOffsets[nearest];
     if (direction === 1) {
       const skip = signedDelta > skipThreshold;
       targetIdx = nearest + (skip ? 2 : 1);
@@ -210,23 +209,35 @@ export default function Activities() {
     }
     targetIdx = Math.max(0, Math.min(centeredOffsets.length - 1, targetIdx));
 
-    const next = centeredOffsets[targetIdx];
+    let next = centeredOffsets[targetIdx];
+
+    // If the eased transition would land us inside the second copy of
+    // the list (>= halfHeight), rebase BEFORE the animation: shift the
+    // current visual position back by halfHeight and reduce the target
+    // by the same amount. The user sees the same starting frame because
+    // the loop is identical, then the eased animation lands directly on
+    // a first-copy position — no post-animation readjust needed.
+    if (next >= halfHeightRef.current) {
+      next -= halfHeightRef.current;
+      const rebasedCur = liveCur - halfHeightRef.current;
+      offsetRef.current = rebasedCur;
+      track.style.transition = "none";
+      track.style.transform = `translate3d(0, ${-rebasedCur}px, 0)`;
+      // Force a layout flush so the browser commits the rebased frame
+      // before we install the new transition. Without this, some
+      // browsers collapse the two transform writes and animate from
+      // the OLD visual position to the new one — looking like a jolt.
+      void track.offsetWidth;
+    }
+
     offsetRef.current = next;
     track.style.transition = "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)";
     track.style.transform = `translate3d(0, ${-next}px, 0)`;
 
     window.setTimeout(() => {
       if (!track) return;
-      let rebased = offsetRef.current;
-      if (rebased >= halfHeightRef.current) rebased -= halfHeightRef.current;
-      if (rebased < 0) rebased += halfHeightRef.current;
-      offsetRef.current = rebased;
-      track.style.transition = "none";
-      track.style.transform = `translate3d(0, ${-rebased}px, 0)`;
-      window.requestAnimationFrame(() => {
-        if (track) track.style.transition = "";
-        animatingRef.current = false;
-      });
+      track.style.transition = "";
+      animatingRef.current = false;
     }, 620);
   };
 
