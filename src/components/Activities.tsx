@@ -105,7 +105,9 @@ export default function Activities() {
     }, 620);
   };
 
-  // Step the reel up/down by one card height with seamless wrap
+  // Step the reel up/down by one card height with seamless wrap.
+  // Always lands on a whole card (no half-frame stops) by snapping the
+  // target to the nearest card boundary from the current fractional offset.
   const stepBy = (direction: 1 | -1) => {
     const track = trackRef.current;
     if (!track || halfHeightRef.current <= 0) return;
@@ -125,7 +127,14 @@ export default function Activities() {
       void track.offsetWidth;
     }
 
-    const next = offsetRef.current + direction * stepSize;
+    // Snap the destination to the nearest card boundary in the direction of
+    // travel so we never land between two cards.
+    const current = offsetRef.current;
+    const snappedCurrent =
+      direction === 1
+        ? Math.floor(current / stepSize) * stepSize
+        : Math.ceil(current / stepSize) * stepSize;
+    const next = snappedCurrent + direction * stepSize;
     offsetRef.current = next;
     track.style.transition = "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)";
     track.style.transform = `translate3d(0, ${-next}px, 0)`;
