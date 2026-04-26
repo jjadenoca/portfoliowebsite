@@ -181,61 +181,34 @@ export default function Activities() {
     // Tolerance = 25% of nearest card height — small enough that we still
     // skip cards we're solidly past, but large enough that "just crossed"
     // doesn't get unfairly skipped.
-    let targetIdx = -1;
-    if (direction === 1) {
-      // Find the nearest card center, derive tolerance from its height.
-      let nearest = 0;
-      let bestD = Infinity;
-      for (let i = 0; i < centeredOffsets.length; i++) {
-        const d = Math.abs(liveCur - centeredOffsets[i]);
-        if (d < bestD) {
-          bestD = d;
-          nearest = i;
-        }
+    // Find the card we are currently centered on (nearest center).
+    let nearest = 0;
+    let bestD = Infinity;
+    for (let i = 0; i < centeredOffsets.length; i++) {
+      const d = Math.abs(liveCur - centeredOffsets[i]);
+      if (d < bestD) {
+        bestD = d;
+        nearest = i;
       }
-      const tolerance = (cards[nearest].offsetHeight) * 0.25;
-      for (let i = 0; i < centeredOffsets.length; i++) {
-        if (centeredOffsets[i] > liveCur - tolerance + 1) {
-          targetIdx = i;
-          break;
-        }
-      }
-      // If we're already at/past the requested target's exact center
-      // (within 1px), advance one more.
-      if (
-        targetIdx !== -1 &&
-        centeredOffsets[targetIdx] - liveCur < 1 &&
-        targetIdx + 1 < centeredOffsets.length
-      ) {
-        targetIdx = targetIdx + 1;
-      }
-      if (targetIdx === -1) targetIdx = centeredOffsets.length - 1;
-    } else {
-      let nearest = 0;
-      let bestD = Infinity;
-      for (let i = 0; i < centeredOffsets.length; i++) {
-        const d = Math.abs(liveCur - centeredOffsets[i]);
-        if (d < bestD) {
-          bestD = d;
-          nearest = i;
-        }
-      }
-      const tolerance = (cards[nearest].offsetHeight) * 0.25;
-      for (let i = centeredOffsets.length - 1; i >= 0; i--) {
-        if (centeredOffsets[i] < liveCur + tolerance - 1) {
-          targetIdx = i;
-          break;
-        }
-      }
-      if (
-        targetIdx !== -1 &&
-        liveCur - centeredOffsets[targetIdx] < 1 &&
-        targetIdx - 1 >= 0
-      ) {
-        targetIdx = targetIdx - 1;
-      }
-      if (targetIdx === -1) targetIdx = 0;
     }
+
+    // Always advance at least one card past the one we're currently on.
+    // That alone fixes "first click only nudges to current card's exact
+    // center". For the "incoming card already past halfway → skip" rule:
+    // if we are already significantly past the nearest card's center in
+    // the direction of travel, advance two instead of one.
+    let targetIdx: number;
+    const currentCardHeight = cards[nearest].offsetHeight;
+    const skipThreshold = currentCardHeight * 0.5; // half a card past center
+    const signedDelta = liveCur - centeredOffsets[nearest]; // + means past
+    if (direction === 1) {
+      const skip = signedDelta > skipThreshold;
+      targetIdx = nearest + (skip ? 2 : 1);
+    } else {
+      const skip = -signedDelta > skipThreshold;
+      targetIdx = nearest - (skip ? 2 : 1);
+    }
+    targetIdx = Math.max(0, Math.min(centeredOffsets.length - 1, targetIdx));
 
     const next = centeredOffsets[targetIdx];
     offsetRef.current = next;
