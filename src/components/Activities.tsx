@@ -148,14 +148,31 @@ export default function Activities() {
     );
 
     const cur = offsetRef.current;
-
-    // If going backward (up) from a position near the start, jump invisibly
-    // forward by one full loop so the transition has room to ease backwards.
     let liveCur = cur;
+
+    // Find what would be the nearest card BEFORE any rebase, just to
+    // decide whether we need one. If going up and that nearest card is
+    // in the first copy of the list (idx < activities.length), shift
+    // the visual position into the second copy so the eased animation
+    // has room to travel backwards into a real (existing) card index.
     if (direction === -1) {
-      // first card's centered offset (smallest in the array)
-      const firstCenter = centeredOffsets[0];
-      if (cur - firstCenter < 100) {
+      let preNearest = 0;
+      let preBest = Infinity;
+      for (let i = 0; i < centeredOffsets.length; i++) {
+        const d = Math.abs(cur - centeredOffsets[i]);
+        if (d < preBest) {
+          preBest = d;
+          preNearest = i;
+        }
+      }
+      // If the previous slot would be < 0 OR pointing to the same card
+      // (no movement), we need to jump into copy 2 first.
+      // We "skip 2" if past halfway through current card.
+      const ph = cards[preNearest].offsetHeight;
+      const pSigned = cur - centeredOffsets[preNearest];
+      const wouldSkip2 = -pSigned > ph * 0.5;
+      const tentativeTarget = preNearest - (wouldSkip2 ? 2 : 1);
+      if (tentativeTarget < 0) {
         const rebased = cur + halfHeightRef.current;
         offsetRef.current = rebased;
         liveCur = rebased;
