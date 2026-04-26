@@ -15,6 +15,11 @@ export default function Activities() {
   const [activeIndex, setActiveIndex] = useState(0);
   const offsetRef = useRef(0);
   const halfHeightRef = useRef(0);
+  // The "loop period" — the offset distance between identical cards in
+  // copy 1 vs copy 2. This is the correct modulo for seamless looping;
+  // halfHeight (track.scrollHeight/2) is off by the track's outer
+  // py-10 padding, which only exists once but gets averaged into half.
+  const loopPeriodRef = useRef(0);
   // Synchronous pause flag — the React state takes a render to propagate,
   // but the rAF tick reads this ref every frame so we can stop the auto
   // scroll instantly when the user clicks an arrow.
@@ -32,6 +37,16 @@ export default function Activities() {
     if (!track) return;
     const measure = () => {
       halfHeightRef.current = track.scrollHeight / 2;
+      // Compute true loop period from card centers if possible.
+      const kids = track.children;
+      const N = activities.length;
+      if (kids.length >= 2 * N && N > 0) {
+        const a = kids[0] as HTMLElement;
+        const b = kids[N] as HTMLElement;
+        const period =
+          b.offsetTop + b.offsetHeight / 2 - (a.offsetTop + a.offsetHeight / 2);
+        if (period > 0) loopPeriodRef.current = period;
+      }
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -62,8 +77,9 @@ export default function Activities() {
         halfHeightRef.current > 0
       ) {
         offsetRef.current += SCROLL_SPEED * dt;
-        if (offsetRef.current >= halfHeightRef.current) {
-          offsetRef.current -= halfHeightRef.current;
+        const period = loopPeriodRef.current || halfHeightRef.current;
+        if (offsetRef.current >= period) {
+          offsetRef.current -= period;
         }
         track.style.transform = `translate3d(0, ${-offsetRef.current}px, 0)`;
       }
@@ -147,6 +163,17 @@ export default function Activities() {
       (c) => c.offsetTop + c.offsetHeight / 2 - containerHeight / 2
     );
 
+    // The true "loop period" — the offset distance between the same card
+    // in copy 1 vs copy 2. This is the amount we must shift by when
+    // rebasing positions, NOT track.scrollHeight/2 (which is off by the
+    // top/bottom padding because the track has py-10 only at its outer
+    // edges, not between copies).
+    const ACTIVITIES_LEN = centeredOffsets.length / 2;
+    const loopPeriod =
+      ACTIVITIES_LEN > 0
+        ? centeredOffsets[ACTIVITIES_LEN] - centeredOffsets[0]
+        : halfHeightRef.current;
+
     const cur = offsetRef.current;
     let liveCur = cur;
 
@@ -173,7 +200,7 @@ export default function Activities() {
       const wouldSkip2 = -pSigned > ph * 0.5;
       const tentativeTarget = preNearest - (wouldSkip2 ? 2 : 1);
       if (tentativeTarget < 0) {
-        const rebased = cur + halfHeightRef.current;
+        const rebased = cur + loopPeriod;
         offsetRef.current = rebased;
         liveCur = rebased;
         track.style.transition = "none";
@@ -234,16 +261,17 @@ export default function Activities() {
     // by the same amount. The user sees the same starting frame because
     // the loop is identical, then the eased animation lands directly on
     // a first-copy position — no post-animation readjust needed.
-    if (next >= halfHeightRef.current) {
-      next -= halfHeightRef.current;
-      const rebasedCur = liveCur - halfHeightRef.current;
+    // Pre-animation rebase using loopPeriod (NOT halfHeight — see comment
+    // above). If the snap target is in copy 2, shift current and target
+    // back by exactly one loop period so the animation lands in copy 1.
+    if (targetIdx >= ACTIVITIES_LEN) {
+      next -= loopPeriod;
+      const rebasedCur = liveCur - loopPeriod;
       offsetRef.current = rebasedCur;
       track.style.transition = "none";
       track.style.transform = `translate3d(0, ${-rebasedCur}px, 0)`;
       // Force a layout flush so the browser commits the rebased frame
-      // before we install the new transition. Without this, some
-      // browsers collapse the two transform writes and animate from
-      // the OLD visual position to the new one — looking like a jolt.
+      // before we install the new transition.
       void track.offsetWidth;
     }
 
