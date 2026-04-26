@@ -25,9 +25,37 @@ export default function ChatWidget() {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, loading]);
 
-  // Focus textarea when opened
+  // Focus textarea when opened — desktop only (avoid keyboard pop on mobile)
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (!open) return;
+    const isDesktop =
+      typeof window !== "undefined" &&
+      window.matchMedia("(min-width: 640px)").matches;
+    if (isDesktop) inputRef.current?.focus();
+  }, [open]);
+
+  // Lock body scroll while open on mobile
+  useEffect(() => {
+    if (!open) return;
+    const isMobile =
+      typeof window !== "undefined" &&
+      !window.matchMedia("(min-width: 640px)").matches;
+    if (!isMobile) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  // Close on Escape
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   const send = async (text: string) => {
@@ -81,22 +109,42 @@ export default function ChatWidget() {
           type="button"
           onClick={() => setOpen(true)}
           aria-label="Open chat with Jaden's AI assistant"
-          className="fixed bottom-5 right-5 z-50 group flex items-center gap-2 rounded-full bg-accent text-accent-foreground px-5 py-3 shadow-lg shadow-accent/20 hover:shadow-accent/40 hover:scale-105 active:scale-95 transition-all duration-200 border border-accent/40"
+          className="fixed z-50 bg-accent text-accent-foreground shadow-lg shadow-accent/20 hover:shadow-accent/40 hover:scale-105 active:scale-95 transition-all duration-200 border border-accent/40
+            right-5 sm:right-5
+            bottom-[calc(1.25rem+env(safe-area-inset-bottom))] sm:bottom-5
+            h-14 w-14 rounded-full flex items-center justify-center
+            sm:h-auto sm:w-auto sm:rounded-full sm:px-5 sm:py-3 sm:flex sm:items-center sm:gap-2"
         >
-          <span aria-hidden className="text-base">💬</span>
-          <span className="font-mono text-xs uppercase tracking-[0.15em]">
+          <span aria-hidden className="text-xl sm:text-base">💬</span>
+          <span className="hidden sm:inline font-mono text-xs uppercase tracking-[0.15em]">
             Ask about Jaden
           </span>
         </button>
       )}
 
-      {/* Panel */}
+      {/* Backdrop (mobile only) */}
+      {open && (
+        <div
+          aria-hidden
+          onClick={() => setOpen(false)}
+          className="sm:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
+        />
+      )}
+
+      {/* Panel / Sheet */}
       {open && (
         <div
           role="dialog"
           aria-label="Chat with Jaden's AI assistant"
-          className="fixed bottom-4 right-4 left-4 sm:left-auto z-50 sm:w-[380px] max-h-[calc(100dvh-2rem)] h-[520px] flex flex-col rounded-2xl border border-border bg-background shadow-2xl shadow-black/20 overflow-hidden animate-in"
+          className="fixed z-50 flex flex-col bg-background shadow-2xl shadow-black/30 overflow-hidden
+            inset-x-0 bottom-0 h-[85dvh] rounded-t-2xl border-t border-x border-border
+            sm:inset-x-auto sm:bottom-4 sm:right-4 sm:left-auto sm:top-auto sm:w-[380px] sm:h-[520px] sm:max-h-[calc(100dvh-2rem)] sm:rounded-2xl sm:border"
         >
+          {/* Drag handle (mobile only) */}
+          <div className="sm:hidden flex justify-center pt-2 pb-1">
+            <span className="h-1 w-10 rounded-full bg-border" />
+          </div>
+
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-card/50">
             <div className="min-w-0">
@@ -111,9 +159,9 @@ export default function ChatWidget() {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close chat"
-              className="shrink-0 h-8 w-8 rounded-full hover:bg-card flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+              className="shrink-0 h-10 w-10 sm:h-8 sm:w-8 rounded-full hover:bg-card flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
             >
-              <span aria-hidden className="text-lg leading-none">×</span>
+              <span aria-hidden className="text-xl sm:text-lg leading-none">×</span>
             </button>
           </div>
 
@@ -125,7 +173,7 @@ export default function ChatWidget() {
             {messages.length === 0 && (
               <div className="space-y-3">
                 <div className="rounded-xl border border-border bg-card p-3">
-                  <p className="text-sm text-foreground/85 leading-relaxed">
+                  <p className="text-[15px] sm:text-sm text-foreground/85 leading-relaxed">
                     Hi! I&apos;m an AI assistant trained on Jaden&apos;s
                     resume. Ask me about his experience, projects, or skills.
                   </p>
@@ -139,7 +187,7 @@ export default function ChatWidget() {
                       key={s}
                       type="button"
                       onClick={() => send(s)}
-                      className="w-full text-left text-xs rounded-lg border border-border bg-card hover:border-accent/50 hover:bg-accent/5 px-3 py-2 transition-colors"
+                      className="w-full text-left text-sm sm:text-xs rounded-lg border border-border bg-card hover:border-accent/50 hover:bg-accent/5 px-3 py-3 sm:py-2 transition-colors"
                     >
                       {s}
                     </button>
@@ -159,7 +207,7 @@ export default function ChatWidget() {
               >
                 <div
                   className={
-                    "max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed whitespace-pre-wrap " +
+                    "max-w-[85%] rounded-2xl px-3.5 py-2 text-[15px] sm:text-sm leading-relaxed whitespace-pre-wrap " +
                     (m.role === "user"
                       ? "bg-accent text-accent-foreground rounded-br-sm"
                       : "bg-card border border-border text-foreground/90 rounded-bl-sm")
@@ -193,6 +241,7 @@ export default function ChatWidget() {
           <form
             onSubmit={handleSubmit}
             className="border-t border-border p-3 bg-card/30"
+            style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
           >
             <div className="flex items-end gap-2">
               <textarea
@@ -202,16 +251,19 @@ export default function ChatWidget() {
                 onKeyDown={handleKeyDown}
                 rows={1}
                 placeholder="Ask about Jaden's experience…"
-                className="flex-1 resize-none rounded-xl border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:border-accent/60 max-h-32"
+                inputMode="text"
+                autoCapitalize="sentences"
+                enterKeyHint="send"
+                className="flex-1 resize-none rounded-xl border border-border bg-background px-3 py-2 text-base sm:text-sm placeholder:text-muted-foreground focus:outline-none focus:border-accent/60 max-h-32"
                 disabled={loading}
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
                 aria-label="Send message"
-                className="shrink-0 h-9 w-9 rounded-full bg-accent text-accent-foreground hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100 transition-all flex items-center justify-center"
+                className="shrink-0 h-11 w-11 sm:h-9 sm:w-9 rounded-full bg-accent text-accent-foreground hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100 transition-all flex items-center justify-center"
               >
-                <span aria-hidden className="text-sm">↑</span>
+                <span aria-hidden className="text-base sm:text-sm">↑</span>
               </button>
             </div>
             <p className="mt-1.5 font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground">
