@@ -192,23 +192,25 @@ export async function POST(req: NextRequest) {
     if (m.content.length > 2000) m.content = m.content.slice(0, 2000);
   }
 
-  // Rate limit before we spend any API tokens.
   const ip = getClientIp(req);
+  const lastUserMsg = messages[messages.length - 1].content;
+
+  // Log the visitor's question first, before any rate-limit gate, so we
+  // always capture what was asked even if the request gets blocked.
+  console.log(
+    `[chat] ip=${ip} q=${JSON.stringify(lastUserMsg.slice(0, 500))}`
+  );
+
+  // Rate limit before we spend any API tokens.
   sweepRateLimit(Date.now());
   const gate = checkRateLimit(ip);
   if (!gate.ok) {
+    console.log(`[chat] ip=${ip} blocked=${gate.reason}`);
     return new Response(JSON.stringify({ error: gate.reason }), {
       status: 429,
       headers: { "Content-Type": "application/json" },
     });
   }
-
-  const lastUserMsg = messages[messages.length - 1].content;
-  // Log the visitor's question so it shows up in Vercel Runtime Logs.
-  // Truncate to keep log lines reasonable.
-  console.log(
-    `[chat] ip=${ip} q=${JSON.stringify(lastUserMsg.slice(0, 500))}`
-  );
 
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
