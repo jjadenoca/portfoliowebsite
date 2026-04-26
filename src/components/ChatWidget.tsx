@@ -95,7 +95,7 @@ export default function ChatWidget() {
         <div
           role="dialog"
           aria-label="Chat with Jaden's AI assistant"
-          className="fixed bottom-5 right-5 z-50 w-[calc(100vw-2.5rem)] sm:w-[400px] h-[min(560px,calc(100vh-2.5rem))] flex flex-col rounded-2xl border border-border bg-background shadow-2xl shadow-black/20 overflow-hidden animate-in"
+          className="fixed bottom-4 right-4 left-4 sm:left-auto z-50 sm:w-[380px] max-h-[calc(100dvh-2rem)] h-[520px] flex flex-col rounded-2xl border border-border bg-background shadow-2xl shadow-black/20 overflow-hidden animate-in"
         >
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-card/50">
