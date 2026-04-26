@@ -226,6 +226,52 @@ export async function POST(req: NextRequest) {
     });
   } catch (err) {
     console.error("[chat] anthropic error", err);
+
+    // Detect Anthropic spend-limit / billing / quota errors and surface a
+    // friendly message instead of a generic 502. The Anthropic SDK throws
+    // APIError subclasses with a `status` and an `error.error.type` field.
+    const status =
+      typeof err === "object" && err !== null && "status" in err
+        ? (err as { status?: number }).status
+        : undefined;
+    const errType =
+      typeof err === "object" && err !== null && "error" in err
+        ? ((err as { error?: { error?: { type?: string }; type?: string } })
+            .error?.error?.type ??
+          (err as { error?: { type?: string } }).error?.type)
+        : undefined;
+    const errMessage =
+      err instanceof Error ? err.message.toLowerCase() : "";
+
+    const isBillingLimit =
+      errType === "billing_error" ||
+      errType === "permission_error" ||
+      (status === 400 &&
+        (errMessage.includes("credit") ||
+          errMessage.includes("billing") ||
+          errMessage.includes("spend") ||
+          errMessage.includes("quota") ||
+          errMessage.includes("limit")));
+
+    if (isBillingLimit) {
+      return new Response(
+        JSON.stringify({
+          error: `Usage limit reached for this month — the chatbot is paused. Please email Jaden directly at ${profile.email} with any questions.`,
+        }),
+        { status: 503, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // Anthropic-side rate limits (e.g. burst overage) — distinct from billing
+    if (status === 429) {
+      return new Response(
+        JSON.stringify({
+          error: "The assistant is a bit busy right now. Please try again in a moment.",
+        }),
+        { status: 429, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     return new Response(
       JSON.stringify({ error: "Sorry, the assistant is unavailable right now." }),
       { status: 502, headers: { "Content-Type": "application/json" } }
