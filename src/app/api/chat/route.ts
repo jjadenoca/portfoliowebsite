@@ -81,6 +81,57 @@ function buildResumeContext(): string {
 
 const RESUME_CONTEXT = buildResumeContext();
 
+// Per-IP rate limit (in-memory; resets on serverless cold start).
+// Cheap defense against casual abuse. Pair with an Anthropic spend cap
+// for a hard ceiling.
+type Bucket = { count: number; resetAt: number };
+type Entry = { minute: Bucket; day: Bucket };
+const RATE_LIMIT = new Map<string, Entry>();
+const PER_MINUTE = 10;
+const PER_DAY = 50;
+const MINUTE_MS = 60_000;
+const DAY_MS = 24 * 60 * 60_000;
+
+function getClientIp(req: NextRequest): string {
+  const fwd = req.headers.get("x-forwarded-for");
+  if (fwd) return fwd.split(",")[0]!.trim();
+  return req.headers.get("x-real-ip") ?? "unknown";
+}
+
+function checkRateLimit(ip: string): { ok: true } | { ok: false; reason: string } {
+  const now = Date.now();
+  let entry = RATE_LIMIT.get(ip);
+  if (!entry) {
+    entry = {
+      minute: { count: 0, resetAt: now + MINUTE_MS },
+      day: { count: 0, resetAt: now + DAY_MS },
+    };
+    RATE_LIMIT.set(ip, entry);
+  }
+  if (now > entry.minute.resetAt) {
+    entry.minute = { count: 0, resetAt: now + MINUTE_MS };
+  }
+  if (now > entry.day.resetAt) {
+    entry.day = { count: 0, resetAt: now + DAY_MS };
+  }
+  if (entry.minute.count >= PER_MINUTE) {
+    return { ok: false, reason: "Too many messages — give me a moment and try again." };
+  }
+  if (entry.day.count >= PER_DAY) {
+    return { ok: false, reason: "Daily message limit reached. Please come back tomorrow." };
+  }
+  entry.minute.count++;
+  entry.day.count++;
+  return { ok: true };
+}
+
+// Periodic cleanup of stale entries to keep the map bounded.
+function sweepRateLimit(now: number) {
+  for (const [ip, entry] of RATE_LIMIT) {
+    if (now > entry.day.resetAt) RATE_LIMIT.delete(ip);
+  }
+}
+
 const SYSTEM_PROMPT = `You are a friendly, concise assistant embedded on Jaden Oca's portfolio website (jadenoca.com). Your job is to answer questions a recruiter, hiring manager, or curious visitor might have about Jaden's background, experience, projects, and skills.
 
 Ground every answer strictly in the context below. If a question can't be answered from what you know, just say you don't have that info and suggest they email Jaden at ${profile.email} — do NOT mention the resume, the context, or where your info comes from. Never invent facts, employers, dates, or numbers.
@@ -139,6 +190,17 @@ export async function POST(req: NextRequest) {
   // Trim each message to a sane size to prevent abuse
   for (const m of messages) {
     if (m.content.length > 2000) m.content = m.content.slice(0, 2000);
+  }
+
+  // Rate limit before we spend any API tokens.
+  const ip = getClientIp(req);
+  sweepRateLimit(Date.now());
+  const gate = checkRateLimit(ip);
+  if (!gate.ok) {
+    return new Response(JSON.stringify({ error: gate.reason }), {
+      status: 429,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
