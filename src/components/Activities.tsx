@@ -106,16 +106,23 @@ export default function Activities() {
   };
 
   // Step the reel up/down by one card height with seamless wrap.
-  // Always lands on a whole card (no half-frame stops) by snapping the
-  // target to the nearest card boundary from the current fractional offset.
+  // Lands on the same center-aligned position the pagination dots use,
+  // so the active card is always perfectly framed in the highlight band.
   const stepBy = (direction: 1 | -1) => {
     const track = trackRef.current;
-    if (!track || halfHeightRef.current <= 0) return;
+    const container = containerRef.current;
+    if (!track || !container || halfHeightRef.current <= 0) return;
     const firstCard = track.children[0] as HTMLElement | undefined;
     if (!firstCard) return;
     setPaused(true);
     const gap = 24; // gap-6 between cards
     const stepSize = firstCard.offsetHeight + gap;
+    const containerHeight = container.clientHeight;
+
+    // The "centered" offset for card 0. Every centered card position is
+    // centerCorrection + k * stepSize.
+    const centerCorrection =
+      firstCard.offsetTop + firstCard.offsetHeight / 2 - containerHeight / 2;
 
     // If going backward (up) from a position near 0, jump invisibly to the
     // equivalent spot in the second copy so the transition has room.
@@ -127,14 +134,14 @@ export default function Activities() {
       void track.offsetWidth;
     }
 
-    // Snap the destination to the nearest card boundary in the direction of
-    // travel so we never land between two cards.
-    const current = offsetRef.current;
-    const snappedCurrent =
+    // Snap the destination to the nearest centered-card boundary in the
+    // direction of travel so we never land between two cards.
+    const relative = offsetRef.current - centerCorrection;
+    const snappedRelative =
       direction === 1
-        ? Math.floor(current / stepSize) * stepSize
-        : Math.ceil(current / stepSize) * stepSize;
-    const next = snappedCurrent + direction * stepSize;
+        ? Math.floor(relative / stepSize) * stepSize
+        : Math.ceil(relative / stepSize) * stepSize;
+    const next = centerCorrection + snappedRelative + direction * stepSize;
     offsetRef.current = next;
     track.style.transition = "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)";
     track.style.transform = `translate3d(0, ${-next}px, 0)`;
