@@ -147,74 +147,100 @@ export default function Activities() {
       (c) => c.offsetTop + c.offsetHeight / 2 - containerHeight / 2
     );
 
-    // Find the card whose centered position is closest to the current
-    // offset, and how far past it we are (signed pixel distance).
     const cur = offsetRef.current;
-    let nearestIdx = 0;
-    let nearestDist = Infinity;
-    for (let i = 0; i < centeredOffsets.length; i++) {
-      const d = Math.abs(cur - centeredOffsets[i]);
-      if (d < nearestDist) {
-        nearestDist = d;
-        nearestIdx = i;
+
+    // If going backward (up) from a position near the start, jump invisibly
+    // forward by one full loop so the transition has room to ease backwards.
+    let liveCur = cur;
+    if (direction === -1) {
+      // first card's centered offset (smallest in the array)
+      const firstCenter = centeredOffsets[0];
+      if (cur - firstCenter < 100) {
+        const rebased = cur + halfHeightRef.current;
+        offsetRef.current = rebased;
+        liveCur = rebased;
+        track.style.transition = "none";
+        track.style.transform = `translate3d(0, ${-rebased}px, 0)`;
+        void track.offsetWidth;
       }
     }
-    const signedDelta = cur - centeredOffsets[nearestIdx];
 
-    // If going backward (up) from a position near the top, jump invisibly
-    // to the equivalent spot in the second copy so the transition has room.
-    const minSafeOffset =
-      nearestIdx > 0
-        ? centeredOffsets[nearestIdx] - centeredOffsets[nearestIdx - 1]
-        : 200;
-    if (direction === -1 && cur < minSafeOffset) {
-      const rebased = cur + halfHeightRef.current;
-      offsetRef.current = rebased;
-      track.style.transition = "none";
-      track.style.transform = `translate3d(0, ${-rebased}px, 0)`;
-      void track.offsetWidth;
-      // Re-measure offsets after the jump (positions of cards in the
-      // second copy are nearestIdx + activities.length).
-    }
-
-    // Decide which centered card to land on.
+    // Decide target by "which card center are we approaching, in the
+    // direction of travel?" with a tolerance equal to half the typical
+    // gap between cards. This prevents the case where the auto-scroll
+    // has just barely crossed a card's center and the user clicks down,
+    // making us skip that card unfairly (variable-height cards make a
+    // strict signedDelta-sign rule too aggressive).
     //
-    // When going DOWN (direction = 1):
-    //   - If we haven't yet reached the nearest card's center
-    //     (signedDelta < 0), that card is still arriving → land on it.
-    //   - Otherwise we're past it → skip to the next one.
-    // When going UP, mirror.
-    let targetIdx: number;
-    const liveCur = direction === -1 && cur < minSafeOffset ? offsetRef.current : cur;
-    let liveNearest = nearestIdx;
-    if (direction === -1 && cur < minSafeOffset) {
-      // After the rebase, recompute the nearest centered offset.
+    // direction = 1 (DOWN): pick the smallest centered-offset that is
+    //   strictly greater than (liveCur - tolerance). i.e. if a card's
+    //   center is barely behind us, still treat it as the next target.
+    // direction = -1 (UP): pick the largest centered-offset that is
+    //   strictly less than (liveCur + tolerance).
+    //
+    // Tolerance = 25% of nearest card height — small enough that we still
+    // skip cards we're solidly past, but large enough that "just crossed"
+    // doesn't get unfairly skipped.
+    let targetIdx = -1;
+    if (direction === 1) {
+      // Find the nearest card center, derive tolerance from its height.
+      let nearest = 0;
       let bestD = Infinity;
       for (let i = 0; i < centeredOffsets.length; i++) {
         const d = Math.abs(liveCur - centeredOffsets[i]);
         if (d < bestD) {
           bestD = d;
-          liveNearest = i;
+          nearest = i;
         }
       }
-    }
-    const liveSignedDelta = liveCur - centeredOffsets[liveNearest];
-    if (direction === 1) {
-      targetIdx = liveSignedDelta < 0 ? liveNearest : liveNearest + 1;
+      const tolerance = (cards[nearest].offsetHeight) * 0.25;
+      for (let i = 0; i < centeredOffsets.length; i++) {
+        if (centeredOffsets[i] > liveCur - tolerance + 1) {
+          targetIdx = i;
+          break;
+        }
+      }
+      // If we're already at/past the requested target's exact center
+      // (within 1px), advance one more.
+      if (
+        targetIdx !== -1 &&
+        centeredOffsets[targetIdx] - liveCur < 1 &&
+        targetIdx + 1 < centeredOffsets.length
+      ) {
+        targetIdx = targetIdx + 1;
+      }
+      if (targetIdx === -1) targetIdx = centeredOffsets.length - 1;
     } else {
-      targetIdx = liveSignedDelta > 0 ? liveNearest : liveNearest - 1;
+      let nearest = 0;
+      let bestD = Infinity;
+      for (let i = 0; i < centeredOffsets.length; i++) {
+        const d = Math.abs(liveCur - centeredOffsets[i]);
+        if (d < bestD) {
+          bestD = d;
+          nearest = i;
+        }
+      }
+      const tolerance = (cards[nearest].offsetHeight) * 0.25;
+      for (let i = centeredOffsets.length - 1; i >= 0; i--) {
+        if (centeredOffsets[i] < liveCur + tolerance - 1) {
+          targetIdx = i;
+          break;
+        }
+      }
+      if (
+        targetIdx !== -1 &&
+        liveCur - centeredOffsets[targetIdx] < 1 &&
+        targetIdx - 1 >= 0
+      ) {
+        targetIdx = targetIdx - 1;
+      }
+      if (targetIdx === -1) targetIdx = 0;
     }
-    targetIdx = Math.max(0, Math.min(centeredOffsets.length - 1, targetIdx));
-    // Avoid no-op (snapping back to where we already are).
-    if (Math.abs(centeredOffsets[targetIdx] - liveCur) < 1) {
-      targetIdx = direction === 1 ? targetIdx + 1 : targetIdx - 1;
-      targetIdx = Math.max(0, Math.min(centeredOffsets.length - 1, targetIdx));
-    }
+
     const next = centeredOffsets[targetIdx];
     offsetRef.current = next;
     track.style.transition = "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)";
     track.style.transform = `translate3d(0, ${-next}px, 0)`;
-    void signedDelta;
 
     window.setTimeout(() => {
       if (!track) return;
