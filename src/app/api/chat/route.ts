@@ -203,6 +203,13 @@ export async function POST(req: NextRequest) {
     });
   }
 
+  const lastUserMsg = messages[messages.length - 1].content;
+  // Log the visitor's question so it shows up in Vercel Runtime Logs.
+  // Truncate to keep log lines reasonable.
+  console.log(
+    `[chat] ip=${ip} q=${JSON.stringify(lastUserMsg.slice(0, 500))}`
+  );
+
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
   try {
@@ -219,6 +226,8 @@ export async function POST(req: NextRequest) {
         .map((b) => (b.type === "text" ? b.text : ""))
         .join("\n")
         .trim() || "Sorry, I didn't catch that — try rephrasing?";
+
+    console.log(`[chat] ip=${ip} a=${JSON.stringify(text.slice(0, 500))}`);
 
     return new Response(JSON.stringify({ reply: text }), {
       status: 200,
