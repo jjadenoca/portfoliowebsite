@@ -248,5 +248,5 @@ export const skills = {
   languages: ["Python", "SQL", "R"],
   python: ["Pandas", "NumPy", "Matplotlib", "PyTorch", "scikit-learn"],
   data: ["Snowflake", "Power BI", "Tableau", "Quicksight", "Excel", "Azure"],
-  tools: ["Git", "Claude", "Gemini"],
+  tools: ["Git", "Claude Code", "Gemini"],
 };
