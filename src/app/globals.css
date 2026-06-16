@@ -1,53 +1,393 @@
 @import "tailwindcss";
 
+/* ===================================================================
+   EDITORIAL LUXE — light cream canvas, deep ink-navy, warm gold accent
+   =================================================================== */
+
 :root {
-  --background: #D8E5F0;
-  --foreground: #384959;
-  --muted: #6A89A7;
-  --muted-foreground: #4F6479;
-  --border: #BDCEE0;
-  --card: #FFFFFF;
-  --accent: #6A89A7;
-  --accent-foreground: #FFFFFF;
+  /* Base surfaces */
+  --color-bg:         #FBF7F0;
+  --color-bg-alt:     #F4EDE2;
+  --color-surface:    #FFFFFF;
+  --color-surface-2:  #FAF4EA;
+
+  /* Ink */
+  --color-text:         #14181F;
+  --color-text-strong:  #0A0D12;
+  --color-muted:        #5A6068;
+  --color-border:       #E6DCCC;
+
+  /* Gold accent */
+  --color-accent:      #C8852A;
+  --color-accent-soft: #E8A93C;
+  --color-accent-ink:  #1A1206;
+
+  /* Navy feature bands */
+  --color-ink-navy:       #11161F;
+  --color-navy-surface:   #1A212E;
+  --color-navy-border:    #2A3340;
+  --color-on-navy:        #F3EFE7;
+  --color-on-navy-muted:  #9AA3B0;
+
+  /* Font family vars — set by next/font in layout.tsx */
+  --font-display:       var(--font-fraunces, Georgia, serif);
+  --font-sans:          var(--font-plus-jakarta, system-ui, -apple-system, sans-serif);
+  --font-serif-accent:  var(--font-instrument-serif, Georgia, serif);
 }
 
+/* Expose tokens as Tailwind utility classes */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-border: var(--border);
-  --color-card: var(--card);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  /* Surfaces */
+  --color-bg:           var(--color-bg);
+  --color-bg-alt:       var(--color-bg-alt);
+  --color-surface:      var(--color-surface);
+  --color-surface-2:    var(--color-surface-2);
+
+  /* Ink */
+  --color-text:         var(--color-text);
+  --color-text-strong:  var(--color-text-strong);
+  --color-muted:        var(--color-muted);
+  --color-border:       var(--color-border);
+
+  /* Accent */
+  --color-accent:       var(--color-accent);
+  --color-accent-soft:  var(--color-accent-soft);
+  --color-accent-ink:   var(--color-accent-ink);
+
+  /* Navy */
+  --color-ink-navy:       var(--color-ink-navy);
+  --color-navy-surface:   var(--color-navy-surface);
+  --color-navy-border:    var(--color-navy-border);
+  --color-on-navy:        var(--color-on-navy);
+  --color-on-navy-muted:  var(--color-on-navy-muted);
+
+  /* Fonts */
+  --font-display:       var(--font-display);
+  --font-sans:          var(--font-sans);
+  --font-serif-accent:  var(--font-serif-accent);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1A2330;
-    --foreground: #E5EFF8;
-    --muted: #6A89A7;
-    --muted-foreground: #88BDF2;
-    --border: #2D3D52;
-    --card: #243140;
-    --accent: #88BDF2;
-    --accent-foreground: #1A2330;
-  }
-}
+/* ===================================================================
+   BASE
+   =================================================================== */
 
 html {
+  color-scheme: light;
   scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.7;
 }
 
-/* Subtle text selection */
+/* Heading defaults — display serif, strong ink, tight tracking on large */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-text-strong);
+  line-height: 1.15;
+}
+
+h1 { letter-spacing: -0.02em; }
+h2 { letter-spacing: -0.02em; }
+
 ::selection {
-  background: var(--accent);
-  color: var(--accent-foreground);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* View transitions */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: vt-fade-out 120ms linear both; }
+::view-transition-new(root) { animation: vt-fade-in 180ms linear both; }
+@keyframes vt-fade-out { to   { opacity: 0; } }
+@keyframes vt-fade-in  { from { opacity: 0; } }
+
+/* ===================================================================
+   LAYOUT UTILITIES
+   =================================================================== */
+
+/* Full-bleed navy feature band */
+.dark-section {
+  background: var(--color-ink-navy);
+  color: var(--color-on-navy);
+}
+
+.dark-section h1,
+.dark-section h2,
+.dark-section h3,
+.dark-section h4,
+.dark-section h5,
+.dark-section h6 {
+  color: var(--color-on-navy);
+}
+
+.dark-section .text-muted {
+  color: var(--color-on-navy-muted);
+}
+
+/* ===================================================================
+   SCROLL REVEAL
+   Hiding is inside @supports so non-supporting browsers see content.
+   =================================================================== */
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+/* ===================================================================
+   MARQUEE
+   =================================================================== */
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+.marquee {
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 4rem;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ===================================================================
+   BUTTONS
+   =================================================================== */
+
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  padding: 0.625rem 1.5rem;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    color-mix(in oklch, white 30%, transparent) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 400ms ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -6px color-mix(in oklch, var(--color-accent) 50%, transparent);
+}
+
+.btn-primary:hover::after {
+  transform: translateX(100%);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  background: transparent;
+  color: var(--color-text-strong);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ===================================================================
+   CARDS
+   =================================================================== */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+}
+
+.card-lift {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px -12px color-mix(in oklch, var(--color-text) 12%, transparent);
+  border-color: color-mix(in oklch, var(--color-accent) 40%, var(--color-border));
+}
+
+.card-navy {
+  background: var(--color-navy-surface);
+  border: 1px solid var(--color-navy-border);
+  border-radius: 16px;
+  color: var(--color-on-navy);
+}
+
+/* ===================================================================
+   LINK UNDERLINE — gold wipe left→right on hover
+   =================================================================== */
+
+.link-underline {
+  text-decoration: none;
+  background-image: linear-gradient(
+    var(--color-accent),
+    var(--color-accent)
+  );
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 240ms ease;
+}
+
+.link-underline:hover {
+  background-size: 100% 2px;
+}
+
+/* ===================================================================
+   EYEBROW label
+   =================================================================== */
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* ===================================================================
+   HERO GLOW
+   =================================================================== */
+
+@keyframes drift {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(20px, 20px); }
+}
+
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklch, var(--color-accent-soft) 30%, transparent),
+    transparent 70%
+  );
+  filter: blur(60px);
+  pointer-events: none;
+  animation: drift 20s alternate ease-in-out infinite;
+}
+
+/* ===================================================================
+   STAT NUMBER
+   =================================================================== */
+
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-accent);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1;
+}
+
+/* ===================================================================
+   REDUCED MOTION — disable all animation-heavy utilities
+   =================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Marquee stops */
+  .marquee-track {
+    animation: none;
+  }
+
+  /* Reveal shows immediately (no hiding, no animation) */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Hero glow stops drifting */
+  .hero-glow {
+    animation: none;
+  }
+
+  /* Card lifts flatten */
+  .card-lift:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* btn-primary lift flattens */
+  .btn-primary:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* View transitions off */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
 }

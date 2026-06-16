@@ -250,3 +250,76 @@ export const skills = {
   data: ["Snowflake", "Power BI", "Tableau", "Quicksight", "Excel", "Azure"],
   tools: ["Git", "Claude Code", "Gemini"],
 };
+
+// ===================================================================
+// Creator / UGC identity — used by the redesigned public-facing site
+// ===================================================================
+
+export type Social = {
+  platform: string;
+  url: string;
+};
+
+export type UgcAccount = {
+  name: string;
+  handle: string;
+  url: string;
+  blurb: string;
+};
+
+export type Brand = {
+  name: string;
+  logo: string;
+};
+
+export type Creator = {
+  name: string;
+  handle: string;
+  tagline: string;
+  followers: string;
+  platformCount: number;
+  brandCount: number;
+  contactEmail: string;
+  bio: string;
+  socials: Social[];
+  ugcAccounts: UgcAccount[];
+  brands: Brand[];
+};
+
+export const creator: Creator = {
+  name: "Jaden Oca",
+  handle: "@financefleap",
+  tagline: "Stats, psychology, mindset & AI — content that actually makes you think.",
+  followers: "6k+",
+  platformCount: 4,
+  brandCount: 5,
+  contactEmail: "financefleapcontact@gmail.com",
+  bio: "Stats grad. Spent a year in corporate data. Now betting on myself — creating content on statistics, psychology, mindset, and AI, with a slice of personal finance thrown in.",
+  socials: [
+    { platform: "Instagram", url: "https://www.instagram.com/financefleap/" },
+    { platform: "TikTok",    url: "https://www.tiktok.com/@financefleap" },
+    { platform: "YouTube",   url: "https://www.youtube.com/@fleapster" },
+    { platform: "LinkedIn",  url: "https://www.linkedin.com/in/jadenoca2025/" },
+  ],
+  ugcAccounts: [
+    {
+      name:   "investfleap",
+      handle: "@investfleap",
+      url:    "https://www.instagram.com/investfleap/reels/",
+      blurb:  "Mindset, money psychology & personal finance Reels through a data-driven lens.",
+    },
+    {
+      name:   "createwithfleap",
+      handle: "@createwithfleap",
+      url:    "https://www.instagram.com/createwithfleap/reels/",
+      blurb:  "Lifestyle, behind-the-scenes & creative UGC reels.",
+    },
+  ],
+  brands: [
+    { name: "Monarch Money",  logo: "/logos/brands/monarch.svg"    },
+    { name: "Blossom Social", logo: "/logos/brands/blossom.svg"    },
+    { name: "Higgsfield AI",  logo: "/logos/brands/higgsfield.svg" },
+    { name: "Polymarket",     logo: "/logos/brands/polymarket.svg" },
+    { name: "Finvest",        logo: "/logos/brands/finvest.svg"    },
+  ],
+};

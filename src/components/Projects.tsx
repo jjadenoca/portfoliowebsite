@@ -21,7 +21,7 @@ export default function Projects() {
         {projects.map((p) => (
           <article
             key={p.name}
-            className="rounded-2xl border border-border bg-card overflow-hidden hover:border-accent/60 transition-colors"
+            className="card-lift rounded-2xl border border-border bg-card overflow-hidden"
           >
             {p.image && (
               <div className="relative w-full aspect-[16/9] bg-muted/30 border-b border-border">

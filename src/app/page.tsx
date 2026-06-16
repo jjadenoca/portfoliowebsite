@@ -1,25 +1,21 @@
-import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import Experience from "@/components/Experience";
-import Projects from "@/components/Projects";
-import Activities from "@/components/Activities";
-import Education from "@/components/Education";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
+import Hero from "@/components/site/Hero";
+import StatBand from "@/components/site/StatBand";
+import BrandWall from "@/components/site/BrandWall";
+import AboutBlock from "@/components/site/AboutBlock";
+import WorkTeaser from "@/components/site/WorkTeaser";
+import Services from "@/components/site/Services";
+import CtaFooter from "@/components/site/CtaFooter";
 
 export default function Home() {
   return (
-    <>
-      <Nav />
-      <main className="mx-auto max-w-5xl px-6 flex-1 w-full">
-        <Hero />
-        <Experience />
-        <Projects />
-        <Activities />
-        <Education />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <Hero />
+      <StatBand />
+      <BrandWall />
+      <AboutBlock />
+      <WorkTeaser />
+      <Services />
+      <CtaFooter />
+    </main>
   );
 }

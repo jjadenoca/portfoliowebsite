@@ -23,7 +23,12 @@ const SCROLL_SPEED = 75;
 export default function Experience() {
   const trackRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
+  // Respect OS reduced-motion preference: start paused so auto-scroll never
+  // begins; user can still navigate via arrow buttons.
+  const [paused, setPaused] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
   const [activeIndex, setActiveIndex] = useState(0);
   // Track translateX in a ref so the rAF loop doesn't re-render every frame
   const offsetRef = useRef(0);

@@ -1,27 +1,38 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Plus_Jakarta_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import ChatWidget from "@/components/ChatWidget";
+import SiteNav from "@/components/site/SiteNav";
 
-const inter = Inter({
-  variable: "--font-sans",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
-  title: "Jaden Oca — Data Professional",
+  title: "Jaden Oca — Content Creator | @financefleap",
   description:
-    "Portfolio of Jaden Oca — Associate Business Analyst at Capital One. Data science, ML pipelines, and analytics for SaaS and financial services.",
+    "Jaden Oca (@financefleap) is a stats, psychology, mindset & AI content creator with 6k+ followers across 4 platforms. Worked with brands including Monarch Money, Blossom Social, Higgsfield AI, Polymarket, and Finvest.",
   metadataBase: new URL("https://jadenoca.com"),
   openGraph: {
-    title: "Jaden Oca — Data Professional",
+    title: "Jaden Oca — Content Creator | @financefleap",
     description:
-      "Data scientist & analyst building ML pipelines, KPI analytics, and AI tools for large-scale SaaS products.",
+      "Stats, psychology, mindset & AI content creator with 6k+ followers across 4 platforms. Partnered with Monarch Money, Blossom Social, Higgsfield AI, and more.",
     url: "https://jadenoca.com",
     siteName: "Jaden Oca",
     type: "website",
@@ -36,9 +47,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jaden Oca — Data Professional",
+    title: "Jaden Oca — Content Creator | @financefleap",
     description:
-      "Data scientist & analyst building ML pipelines, KPI analytics, and AI tools.",
+      "Stats, psychology, mindset & AI content creator with 6k+ followers across 4 platforms.",
     images: ["/headshot.jpeg"],
   },
   icons: {
@@ -56,9 +67,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased scroll-smooth`}
+      className={`${fraunces.variable} ${plusJakartaSans.variable} ${instrumentSerif.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
+      <body className="min-h-full flex flex-col bg-bg text-text font-sans">
+        <SiteNav />
         {children}
         <ChatWidget />
       </body>

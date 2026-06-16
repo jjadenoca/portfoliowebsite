@@ -7,7 +7,7 @@ export default function Education() {
     <Section id="education" eyebrow="Education" title="School & societies.">
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         {/* Education card */}
-        <div className="rounded-2xl border border-border bg-card p-6">
+        <div className="card-lift rounded-2xl border border-border bg-card p-6">
           <div className="flex items-start gap-3">
             {education.logo && (
               <div className="shrink-0 h-12 w-12 rounded-lg overflow-hidden flex items-center justify-center">
@@ -44,7 +44,7 @@ export default function Education() {
               {education.activities.map((a) => (
                 <li
                   key={a.org}
-                  className="rounded-xl border border-border bg-card p-4 hover:border-accent/50 transition-colors"
+                  className="card-lift rounded-xl border border-border bg-card p-4"
                 >
                   <p className="text-sm font-semibold text-foreground leading-snug">
                     {a.org}
@@ -71,7 +71,7 @@ export default function Education() {
             {awards.map((a) => (
               <li
                 key={a}
-                className="rounded-xl border border-border bg-card p-3 hover:border-accent/50 transition-colors flex items-center gap-2 whitespace-nowrap"
+                className="card-lift rounded-xl border border-border bg-card p-3 flex items-center gap-2 whitespace-nowrap"
               >
                 <span aria-hidden className="text-accent shrink-0">★</span>
                 <span className="text-[11px] font-medium text-foreground">

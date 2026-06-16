@@ -11,7 +11,12 @@ const SCROLL_SPEED = 65;
 export default function Activities() {
   const trackRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
+  // Respect OS reduced-motion preference: start paused so the slot reel
+  // never auto-advances; user can still step manually via arrow buttons.
+  const [paused, setPaused] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
   const [activeIndex, setActiveIndex] = useState(0);
   const offsetRef = useRef(0);
   const halfHeightRef = useRef(0);
