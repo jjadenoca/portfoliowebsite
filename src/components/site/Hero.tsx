@@ -109,7 +109,7 @@ export default function Hero() {
                 className="object-cover rounded-full"
                 style={{
                   border: "3px solid color-mix(in oklch, var(--color-accent) 50%, transparent)",
-                  objectPosition: "60% center",
+                  objectPosition: "40% center",
                 }}
               />
             </div>
