@@ -27,17 +27,14 @@ export default function WorkTeaser() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-6 mb-10">
           {REELS.map((reel) => (
             <div key={reel.shortcode} className="reveal">
-              <div
-                className="relative w-full overflow-hidden rounded-2xl bg-bg border border-border"
-                style={{ aspectRatio: "9 / 16" }}
-              >
+              <div className="w-full overflow-hidden rounded-2xl bg-bg border border-border">
                 <iframe
                   src={`https://www.instagram.com/reel/${reel.shortcode}/embed/`}
-                  className="absolute inset-0 w-full h-full border-0"
+                  style={{ display: "block", width: "100%", height: "720px", border: 0 }}
                   scrolling="no"
                   loading="lazy"
                   allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  title={`Instagram Reel`}
+                  title="Instagram Reel"
                 />
               </div>
             </div>

@@ -1,9 +1,9 @@
 import { creator } from "@/lib/content";
 
 const FOCUS_AREAS = [
-  { icon: "▶", label: "UGC Video", sub: "Short-form vertical content built to convert" },
-  { icon: "◆", label: "Stats & Psychology", sub: "Data-driven breakdowns that actually make people think" },
   { icon: "◉", label: "Mindset & AI", sub: "Personal growth, AI tools, and what's actually working" },
+  { icon: "◆", label: "Stats & Psychology", sub: "Data-driven breakdowns that actually make people think" },
+  { icon: "▶", label: "UGC Video", sub: "Short-form vertical content built to convert" },
 ];
 
 export default function AboutBlock() {
