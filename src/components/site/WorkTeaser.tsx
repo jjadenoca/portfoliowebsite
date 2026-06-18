@@ -27,11 +27,7 @@ export default function WorkTeaser() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-6 mb-10">
           {REELS.map((reel) => (
             <div key={reel.shortcode} className="reveal">
-              {/* Container clips the "Add a comment" input at the bottom of the IG embed (~48px) while keeping the like/share bar visible */}
-              <div
-                className="w-full overflow-hidden rounded-2xl bg-bg border border-border"
-                style={{ height: "672px" }}
-              >
+              <div className="relative w-full overflow-hidden rounded-2xl bg-bg border border-border">
                 <iframe
                   src={`https://www.instagram.com/reel/${reel.shortcode}/embed/`}
                   style={{ display: "block", width: "100%", height: "720px", border: 0 }}
@@ -39,6 +35,11 @@ export default function WorkTeaser() {
                   loading="lazy"
                   allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                   title="Instagram Reel"
+                />
+                {/* White overlay matches the embed's background — covers "Add a comment" row at the bottom */}
+                <div
+                  className="absolute bottom-0 inset-x-0 pointer-events-none"
+                  style={{ height: "58px", background: "#ffffff" }}
                 />
               </div>
             </div>
