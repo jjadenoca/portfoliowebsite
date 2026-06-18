@@ -10,7 +10,7 @@ const SERVICES = [
     title: "UGC Video",
     tagline: "Short-form vertical content built for brands.",
     description:
-      "Authentic, platform-native Reels and TikToks that feel organic — not like ads. Scripted, filmed, and edited to convert.",
+      "Authentic, platform-native Reels and TikToks that feel organic, not like ads. Scripted, filmed, and edited to convert.",
   },
   {
     icon: (
@@ -24,7 +24,7 @@ const SERVICES = [
     title: "Brand Partnerships",
     tagline: "Sponsored content that feels like storytelling.",
     description:
-      "Integrated placements in stats, mindset, and AI content. Your product, my audience's trust — delivered naturally.",
+      "Integrated placements in stats, mindset, and AI content. Your product, my audience's trust, delivered naturally.",
   },
   {
     icon: (
@@ -35,7 +35,7 @@ const SERVICES = [
     title: "Stats, Mindset & AI Content",
     tagline: "Explainers that build trust and a real audience.",
     description:
-      "From behavioral psychology to AI breakdowns, I translate complex ideas in statistics, mindset, and AI into content people actually want to watch and share — with a personal finance lens.",
+      "From behavioral psychology to AI breakdowns, I translate complex ideas in statistics, mindset, and AI into content people actually want to watch and share, with a personal finance lens.",
   },
 ] as const;
 

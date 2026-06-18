@@ -29,7 +29,7 @@ export default function AboutBlock() {
             <p className="text-muted" style={{ fontSize: "0.9375rem", lineHeight: 1.7 }}>
               Stats don&apos;t have to be scary. I combine a data-driven mindset with creator
               instincts to make content on psychology, mindset, and AI that actually reaches
-              people — and actually moves them.
+              people and actually moves them.
             </p>
           </div>
 

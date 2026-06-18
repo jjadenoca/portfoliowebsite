@@ -52,7 +52,7 @@ export default function BrandCollabGrid() {
           </h2>
           <p style={{ color: "var(--color-on-navy-muted)", lineHeight: 1.7 }}>
             From fintech to AI tools, I&apos;ve partnered with brands building
-            category-defining products — creating content that earns attention and drives action.
+            category-defining products, creating content that earns attention and drives action.
           </p>
         </div>
 

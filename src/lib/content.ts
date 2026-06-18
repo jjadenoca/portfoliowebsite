@@ -4,7 +4,7 @@
 export const profile = {
   name: "Jaden Oca",
   title: "Data Professional",
-  location: "Dallas, TX",
+  location: "New York, NY",
   openTo: "Open to relocation",
   email: "jadenesoca@gmail.com",
   phone: "281-467-4955",
@@ -13,12 +13,11 @@ export const profile = {
   medium: "https://medium.com/@jadenesoca",
   mediumUsername: "jadenesoca",
   substack: "https://substack.com/@jadenoca",
-  resumeUrl: "/JadenOcaResume.pdf",
+  resumeUrl: "/JadenOcaSummer2026Resume.pdf",
   headshot: "/headshot.jpeg",
-  // Summary pulled directly from resume. Edit later as desired.
-  bio: "2 years of experience in data science and analytics for large-scale SaaS products in financial services. Built ML pipelines that automated 95% of claim classifications, delivered KPI analytics supporting 70% YoY revenue growth, forecasted pricing across 8K tenants using ensemble models, and deployed AI tools adopted by 100-person department. Skilled in Python, SQL, and Tableau.",
+  bio: "2+ years of experience in data science and analytics at Fortune 100 companies. Currently building AI workflow infrastructure for a media startup. Built ML pipelines automating 95% of claims review, delivered analytics supporting 70% YoY revenue growth, and deployed AI tools adopted by 100-person departments. Skilled in Python, SQL, and Claude Code.",
   longBio:
-    "2 years of experience in data science and analytics for large-scale SaaS products in financial services. Built ML pipelines that automated 95% of claim classifications, delivered KPI analytics supporting 70% YoY revenue growth, forecasted pricing across 8K tenants using ensemble models, and deployed AI tools adopted by 100-person department. Skilled in Python, SQL, and Tableau.",
+    "2+ years of experience in data science and analytics at Fortune 100 companies. Currently building AI workflow infrastructure for a media startup. Built ML pipelines automating 95% of claims review, delivered analytics supporting 70% YoY revenue growth, and deployed AI tools adopted by 100-person departments. Skilled in Python, SQL, and Claude Code.",
 };
 
 export type Experience = {
@@ -36,19 +35,35 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
+    company: "No Dice",
+    role: "AI and Social Media Consultant",
+    location: "New York, NY",
+    start: "2026",
+    end: "Present",
+    blurb: "Media and wellness startup with 100K+ subscribers across platforms and 1K+ app users",
+    bullets: [
+      "Building automated content research pipeline using Claude Code and Grok API to surface trending X content and deliver briefs directly to founders via Notion MCP, reducing research time and increasing content output",
+      "Scraping and analyzing top-performing LinkedIn posts to build proprietary dataset informing daily content strategy and engagement benchmarking",
+      "Collaborating directly with founders to identify operational bottlenecks and architect AI workflow infrastructure across content, research, and distribution functions",
+    ],
+    tech: ["Claude Code", "Grok API", "Python", "Notion"],
+    logo: "/logos/nodice.svg",
+  },
+  {
     company: "Capital One",
     role: "Associate Business Analyst",
     location: "Plano, TX",
     start: "August 2025",
-    end: "Present",
+    end: "2026",
     blurb: "Fortune 100 bank with $470B+ in assets across 100M+ customers",
     bullets: [
-      "Support 70% YoY revenue growth for auto lending SaaS platform by monitoring churn, ARR, and customer lifetime value across 19K dealers, informing forecasts and GTM decisions",
-      "Reduce research time by 90% for 100-person department by building custom Gemini assistant grounded in GTM policies, reporting metrics, and internal terminology, accelerating document synthesis, pricing lookups, and trend analysis",
-      "Inform GTM strategy for B2B SaaS products by building and maintaining quarterly report from scratch, using SQL to pull and analyze transaction data from 19K auto dealerships, ensuring reproducibility with Git",
-      "Drive pricing decisions by delivering competitive analyses across SaaS product portfolio, benchmarking pricing and positioning against key competitors",
+      "Built AI assistant in Gemini grounded in reporting metrics and internal terminology to accelerate onboarding, data synthesis, and policy lookup by 90% for 100-person department",
+      "Informed forecasts and GTM decisions for auto dealer lead generation platform by tracking churn, ARR, loan NPV, and customer lifetime value across 20K dealers, contributing to 70% YoY revenue growth",
+      "Built SQL reporting infrastructure from scratch to analyze transaction data across 20K dealerships and $1B+ in auto loan originations, ensuring reproducibility with Git",
+      "Conducted competitive analyses across SaaS product portfolio, leveraging Gemini for Deep Research to benchmark pricing and offerings against four key competitors",
+      "Partnered with Product Managers, data engineers, and sales teams to implement GTM policy changes, serving as liaison between technical and commercial stakeholders to drive adoption of new pricing and reporting initiatives",
     ],
-    tech: ["SQL", "Python", "Snowflake", "Quicksight", "Gemini", "Git"],
+    tech: ["SQL", "Python", "Snowflake", "Gemini", "Git"],
     logo: "/logos/c1.png",
   },
   {
@@ -114,8 +129,8 @@ export const projects: Project[] = [
   {
     name: "Spotify Streaming Insights",
     tagline: "Language processing and time series analysis project",
-    start: "November 2024",
-    end: "December 2024",
+    start: "2024",
+    end: "2025",
     bullets: [
       "Built a pipeline to transform Spotify stream and lyric data into NLP-ready features, fine-tuned GPT-2 for lyric generation, and visualized insights using BERT-based topic modeling",
       "Facilitated text analysis by scraping lyrics to user's top 790 tracks across top 10 English artists using Genius.com API",
@@ -245,10 +260,11 @@ export const awards: string[] = [
 ];
 
 export const skills = {
+  ai: ["Claude Code", "Gemini", "ChatGPT", "Grok API"],
   languages: ["Python", "SQL", "R"],
-  python: ["Pandas", "NumPy", "Matplotlib", "PyTorch", "scikit-learn"],
+  python: ["Pandas", "NumPy", "scikit-learn"],
   data: ["Snowflake", "Power BI", "Tableau", "Quicksight", "Excel", "Azure"],
-  tools: ["Git", "Claude Code", "Gemini"],
+  tools: ["Git"],
 };
 
 // ===================================================================
@@ -289,12 +305,12 @@ export type Creator = {
 export const creator: Creator = {
   name: "Jaden Oca",
   handle: "@financefleap",
-  tagline: "Stats, psychology, mindset & AI — content that actually makes you think.",
+  tagline: "I make content about AI, decision making, and the hidden forces that shape how people think.",
   followers: "6k+",
   platformCount: 4,
   brandCount: 5,
   contactEmail: "financefleapcontact@gmail.com",
-  bio: "Stats grad. Spent a year in corporate data. Now betting on myself — creating content on statistics, psychology, mindset, and AI, with a slice of personal finance thrown in.",
+  bio: "Stats grad. Spent a year in corporate data. Now betting on myself, creating content on statistics, psychology, mindset, and AI, with a slice of personal finance thrown in.",
   socials: [
     { platform: "Instagram", url: "https://www.instagram.com/financefleap/" },
     { platform: "TikTok",    url: "https://www.tiktok.com/@financefleap" },

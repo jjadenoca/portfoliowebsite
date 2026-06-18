@@ -7,7 +7,7 @@ import ActivitiesList from "@/components/site/ActivitiesList";
 import EducationBlock from "@/components/site/EducationBlock";
 
 export const metadata: Metadata = {
-  title: "Corporate Résumé — Jaden Oca",
+  title: "Corporate Resume | Jaden Oca",
   description:
     "Statistics grad with ~2 years in data science & analytics across financial services.",
 };

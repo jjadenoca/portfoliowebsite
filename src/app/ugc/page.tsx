@@ -6,7 +6,7 @@ import BrandCollabGrid from "@/components/site/BrandCollabGrid";
 import SocialLinks from "@/components/site/SocialLinks";
 
 export const metadata: Metadata = {
-  title: "UGC Portfolio — Jaden Oca (@financefleap)",
+  title: "UGC Portfolio | Jaden Oca (@financefleap)",
   description:
     "Jaden Oca (@financefleap) creates short-form content on stats, psychology, mindset & AI for brands on Instagram Reels. Worked with Monarch Money, Blossom Social, Higgsfield AI, Polymarket, and Finvest.",
 };

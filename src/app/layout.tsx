@@ -25,12 +25,12 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Jaden Oca — Content Creator | @financefleap",
+  title: "Jaden Oca | Content Creator | @financefleap",
   description:
     "Jaden Oca (@financefleap) is a stats, psychology, mindset & AI content creator with 6k+ followers across 4 platforms. Worked with brands including Monarch Money, Blossom Social, Higgsfield AI, Polymarket, and Finvest.",
   metadataBase: new URL("https://jadenoca.com"),
   openGraph: {
-    title: "Jaden Oca — Content Creator | @financefleap",
+    title: "Jaden Oca | Content Creator | @financefleap",
     description:
       "Stats, psychology, mindset & AI content creator with 6k+ followers across 4 platforms. Partnered with Monarch Money, Blossom Social, Higgsfield AI, and more.",
     url: "https://jadenoca.com",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jaden Oca — Content Creator | @financefleap",
+    title: "Jaden Oca | Content Creator | @financefleap",
     description:
       "Stats, psychology, mindset & AI content creator with 6k+ followers across 4 platforms.",
     images: ["/headshot.jpeg"],

@@ -26,10 +26,10 @@ export default function UgcHero() {
           </h1>
 
           <p className="text-muted text-lg leading-relaxed mb-8" style={{ maxWidth: "56ch" }}>
-            Hi, I&apos;m Jaden Oca ({creator.handle}) — a short-form content creator
-            based in Dallas, TX making videos on stats, psychology, mindset, AI, and a
+            Hi, I&apos;m Jaden Oca ({creator.handle}), a short-form content creator
+            based in New York, NY making videos on stats, psychology, mindset, AI, and a
             slice of personal finance. I produce authentic, high-retention Instagram Reels
-            that connect brands with audiences who are ready to think — and act.
+            that connect brands with audiences who are ready to think and act.
           </p>
 
           <div className="flex flex-wrap gap-6 items-center">

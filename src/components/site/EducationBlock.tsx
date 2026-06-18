@@ -1,6 +1,7 @@
 import { education, awards, skills } from "@/lib/content";
 
 const SKILL_GROUPS: { label: string; items: string[] }[] = [
+  { label: "AI tools",        items: skills.ai },
   { label: "Languages",       items: skills.languages },
   { label: "Python packages", items: skills.python },
   { label: "Data & BI tools", items: skills.data },
@@ -44,7 +45,7 @@ export default function EducationBlock() {
                 >
                   <span>
                     <span className="text-text">{a.org}</span>
-                    <span className="text-muted"> — {a.role}</span>
+                    <span className="text-muted">, {a.role}</span>
                   </span>
                   <span className="text-muted text-sm whitespace-nowrap">
                     {a.start} – {a.end}

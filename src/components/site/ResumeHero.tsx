@@ -23,7 +23,7 @@ export default function ResumeHero() {
         {/* Framing line */}
         <p className="text-muted text-lg md:text-xl max-w-2xl mb-8 leading-relaxed">
           Texas A&amp;M statistics graduate with ~2 years in data science and analytics
-          across financial services — from Fortune 100 banks to mortgage intelligence leaders.
+          across financial services, from Fortune 100 banks to mortgage intelligence leaders.
         </p>
 
         {/* Actions row */}

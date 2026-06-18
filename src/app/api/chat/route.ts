@@ -71,6 +71,7 @@ function buildResumeContext(): string {
   lines.push("");
 
   lines.push("## Skills");
+  lines.push(`AI tools: ${skills.ai.join(", ")}`);
   lines.push(`Languages: ${skills.languages.join(", ")}`);
   lines.push(`Python libraries: ${skills.python.join(", ")}`);
   lines.push(`Data tools: ${skills.data.join(", ")}`);
@@ -115,7 +116,7 @@ function checkRateLimit(ip: string): { ok: true } | { ok: false; reason: string 
     entry.day = { count: 0, resetAt: now + DAY_MS };
   }
   if (entry.minute.count >= PER_MINUTE) {
-    return { ok: false, reason: "Too many messages — give me a moment and try again." };
+    return { ok: false, reason: "Too many messages - give me a moment and try again." };
   }
   if (entry.day.count >= PER_DAY) {
     return { ok: false, reason: "Daily message limit reached. Please come back tomorrow." };
@@ -227,7 +228,7 @@ export async function POST(req: NextRequest) {
         .filter((b) => b.type === "text")
         .map((b) => (b.type === "text" ? b.text : ""))
         .join("\n")
-        .trim() || "Sorry, I didn't catch that — try rephrasing?";
+        .trim() || "Sorry, I didn't catch that - try rephrasing?";
 
     console.log(`[chat] ip=${ip} a=${JSON.stringify(text.slice(0, 500))}`);
 
@@ -267,7 +268,7 @@ export async function POST(req: NextRequest) {
     if (isBillingLimit) {
       return new Response(
         JSON.stringify({
-          error: `Usage limit reached for this month — the chatbot is paused. Please email Jaden directly at ${profile.email} with any questions.`,
+          error: `Usage limit reached for this month - the chatbot is paused. Please email Jaden directly at ${profile.email} with any questions.`,
         }),
         { status: 503, headers: { "Content-Type": "application/json" } }
       );

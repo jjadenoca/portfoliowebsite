@@ -29,7 +29,7 @@ export default function Hero() {
           {/* Text column */}
           <div className="flex-1 text-center md:text-left">
             {/* Eyebrow */}
-            <p className="eyebrow mb-5 reveal">FINANCE · LIFESTYLE · UGC CREATOR</p>
+            <p className="eyebrow mb-5 reveal">AI · DECISION MAKING · UGC</p>
 
             {/* Name */}
             <h1
