@@ -32,10 +32,10 @@ const SERVICES = [
         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
-    title: "Stats, Mindset & AI Content",
-    tagline: "Explainers that build trust and a real audience.",
+    title: "AI & Decision Making Content",
+    tagline: "Explainers that make people think differently.",
     description:
-      "From behavioral psychology to AI breakdowns, I translate complex ideas in statistics, mindset, and AI into content people actually want to watch and share, with a personal finance lens.",
+      "From cognitive biases to AI breakdowns, I translate complex ideas about how people think and decide into content that earns attention, builds trust, and keeps people coming back.",
   },
 ] as const;
 
