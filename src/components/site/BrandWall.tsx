@@ -39,9 +39,10 @@ function BrandLogo({ name, logo }: { name: string; logo: string }) {
         <img
           src={logo}
           alt={name}
-          width={120}
+          width={48}
           height={48}
-          className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 object-contain max-h-12 select-none"
+          className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 object-contain select-none"
+          style={{ borderRadius: "10px" }}
           onError={() => setFailed(true)}
         />
       ) : (

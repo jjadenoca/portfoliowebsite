@@ -21,8 +21,8 @@ function BrandLogoTile({ brand }: { brand: Brand }) {
         <img
           src={brand.logo}
           alt={brand.name}
-          className="w-full h-full object-contain"
-          style={{ filter: "brightness(0) invert(1) opacity(0.8)", maxHeight: "48px" }}
+          className="object-contain"
+          style={{ maxHeight: "56px", maxWidth: "56px", borderRadius: "12px" }}
           loading="lazy"
           onError={() => setFailed(true)}
         />

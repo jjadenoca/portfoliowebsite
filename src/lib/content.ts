@@ -332,10 +332,10 @@ export const creator: Creator = {
     },
   ],
   brands: [
-    { name: "Monarch Money",  logo: "/logos/brands/monarch.svg"    },
-    { name: "Blossom Social", logo: "/logos/brands/blossom.svg"    },
-    { name: "Higgsfield AI",  logo: "/logos/brands/higgsfield.svg" },
-    { name: "Polymarket",     logo: "/logos/brands/polymarket.svg" },
-    { name: "Finvest",        logo: "/logos/brands/finvest.svg"    },
+    { name: "Monarch Money",  logo: "/logos/brands/monarch.png"    },
+    { name: "Blossom Social", logo: "/logos/brands/blossom.png"    },
+    { name: "Higgsfield AI",  logo: "/logos/brands/higgsfield.png" },
+    { name: "Polymarket",     logo: "/logos/brands/polymarket.png" },
+    { name: "Finvest",        logo: "/logos/brands/finvest.png"    },
   ],
 };
