@@ -306,7 +306,7 @@ export const creator: Creator = {
   name: "Jaden Oca",
   handle: "@jadeneoca",
   tagline: "I make content about AI, decision making, and the hidden forces that shape how people think.",
-  followers: "6k+",
+  followers: "7k+",
   platformCount: 4,
   brandCount: 5,
   contactEmail: "financefleapcontact@gmail.com",
