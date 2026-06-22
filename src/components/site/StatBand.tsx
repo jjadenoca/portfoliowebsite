@@ -13,7 +13,7 @@ type Stat = {
 
 const STATS: Stat[] = [
   {
-    numericValue: 6,
+    numericValue: 7,
     suffix: "k+",
     label: "Followers",
   },

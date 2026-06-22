@@ -8,16 +8,16 @@ export const profile = {
   openTo: "Open to relocation",
   email: "jadenesoca@gmail.com",
   phone: "281-467-4955",
-  linkedin: "https://www.linkedin.com/in/jadenoca",
+  linkedin: "https://www.linkedin.com/in/jadenoca2025/",
   github: "https://github.com/jjadenoca",
   medium: "https://medium.com/@jadenesoca",
   mediumUsername: "jadenesoca",
   substack: "https://substack.com/@jadenoca",
   resumeUrl: "/JadenOcaSummer2026Resume.pdf",
   headshot: "/headshot.jpeg",
-  bio: "2+ years of experience in data science and analytics at Fortune 100 companies. Currently building AI workflow infrastructure for a media startup. Built ML pipelines automating 95% of claims review, delivered analytics supporting 70% YoY revenue growth, and deployed AI tools adopted by 100-person departments. Skilled in Python, SQL, and Claude Code.",
+  bio: "1 year of full-time experience in data science and analytics at Fortune 100 companies, plus internship roles at Cotality, Truist, and Link Logistics. Currently building AI workflow infrastructure as a consultant. Built ML pipelines automating 95% of claims review, delivered analytics supporting 70% YoY revenue growth, and deployed AI tools adopted by 100-person departments. Skilled in Python, SQL, and Claude Code.",
   longBio:
-    "2+ years of experience in data science and analytics at Fortune 100 companies. Currently building AI workflow infrastructure for a media startup. Built ML pipelines automating 95% of claims review, delivered analytics supporting 70% YoY revenue growth, and deployed AI tools adopted by 100-person departments. Skilled in Python, SQL, and Claude Code.",
+    "1 year of full-time experience in data science and analytics at Fortune 100 companies, plus internship roles at Cotality, Truist, and Link Logistics. Currently building AI workflow infrastructure as a consultant. Built ML pipelines automating 95% of claims review, delivered analytics supporting 70% YoY revenue growth, and deployed AI tools adopted by 100-person departments. Skilled in Python, SQL, and Claude Code.",
 };
 
 export type Experience = {

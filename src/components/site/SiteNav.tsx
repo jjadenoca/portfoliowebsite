@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { creator } from "@/lib/content";
 
 const NAV_LINKS = [
   { label: "Home",            href: "/" },
@@ -98,7 +99,7 @@ export default function SiteNav() {
 
           {/* CTA */}
           <a
-            href="mailto:financefleapcontact@gmail.com"
+            href={`mailto:${creator.contactEmail}`}
             className="btn-primary text-sm py-2 px-4"
           >
             Work with me

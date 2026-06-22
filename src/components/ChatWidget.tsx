@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from "react";
 type Message = { role: "user" | "assistant"; content: string };
 
 const SUGGESTIONS = [
-  "What's Jaden working on at Capital One?",
-  "Tell me about his ML projects.",
-  "What are his strongest skills?",
+  "What is Jaden currently working on?",
+  "Tell me about his work at No Dice.",
+  "What does he post about on LinkedIn?",
 ];
 
 export default function ChatWidget() {
