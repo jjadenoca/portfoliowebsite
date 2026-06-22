@@ -304,7 +304,7 @@ export type Creator = {
 
 export const creator: Creator = {
   name: "Jaden Oca",
-  handle: "@financefleap",
+  handle: "@jadeneoca",
   tagline: "I make content about AI, decision making, and the hidden forces that shape how people think.",
   followers: "6k+",
   platformCount: 4,
@@ -312,8 +312,8 @@ export const creator: Creator = {
   contactEmail: "financefleapcontact@gmail.com",
   bio: "Stats grad. Spent a year in corporate data. Now betting on myself, creating content on statistics, psychology, mindset, and AI, with a slice of personal finance thrown in.",
   socials: [
-    { platform: "Instagram", url: "https://www.instagram.com/financefleap/" },
-    { platform: "TikTok",    url: "https://www.tiktok.com/@financefleap" },
+    { platform: "Instagram", url: "https://www.instagram.com/jadeneoca/" },
+    { platform: "TikTok",    url: "https://www.tiktok.com/@jadeneoca" },
     { platform: "YouTube",   url: "https://www.youtube.com/@fleapster" },
     { platform: "LinkedIn",  url: "https://www.linkedin.com/in/jadenoca2025/" },
   ],
