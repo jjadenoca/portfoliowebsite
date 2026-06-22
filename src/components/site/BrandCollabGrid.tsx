@@ -1,32 +1,32 @@
 "use client";
 
+import { useState } from "react";
 import { creator } from "@/lib/content";
 import type { Brand } from "@/lib/content";
 
 function BrandLogoTile({ brand }: { brand: Brand }) {
-  return (
-    <div className="card-navy card-lift relative flex items-center justify-center p-6 sm:p-8 min-h-[96px] overflow-hidden reveal">
-      {/* Text fallback — always in DOM, painted over by the image when it loads */}
-      <span
-        className="font-display font-semibold text-on-navy-muted text-center leading-tight pointer-events-none select-none text-sm"
-        style={{ fontFamily: "var(--font-display)" }}
-        aria-hidden="true"
-      >
-        {brand.name}
-      </span>
+  const [failed, setFailed] = useState(false);
 
-      {/* Logo overlay — hides itself on 404 via onError, revealing the text beneath */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={brand.logo}
-        alt={brand.name}
-        className="absolute inset-0 w-full h-full object-contain p-6 sm:p-8"
-        style={{ filter: "brightness(0) invert(1) opacity(0.8)" }}
-        loading="lazy"
-        onError={(e) => {
-          (e.currentTarget as HTMLImageElement).style.display = "none";
-        }}
-      />
+  return (
+    <div className="card-navy card-lift flex items-center justify-center p-6 sm:p-8 min-h-[96px] reveal">
+      {failed ? (
+        <span
+          className="font-display font-semibold text-on-navy-muted text-center leading-tight text-sm"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          {brand.name}
+        </span>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={brand.logo}
+          alt={brand.name}
+          className="w-full h-full object-contain"
+          style={{ filter: "brightness(0) invert(1) opacity(0.8)", maxHeight: "48px" }}
+          loading="lazy"
+          onError={() => setFailed(true)}
+        />
+      )}
     </div>
   );
 }
