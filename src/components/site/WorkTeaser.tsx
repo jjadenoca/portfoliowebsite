@@ -17,10 +17,6 @@ export default function WorkTeaser() {
           >
             Content that makes you rethink
           </h2>
-          <p className="text-muted mt-4 max-w-md mx-auto">
-            Short-form videos built for real engagement. AI breakdowns, decision-making psychology,
-            and brand integrations that feel native.
-          </p>
         </div>
 
         {/* Instagram reel embeds */}

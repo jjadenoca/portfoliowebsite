@@ -310,7 +310,7 @@ export const creator: Creator = {
   platformCount: 4,
   brandCount: 5,
   contactEmail: "financefleapcontact@gmail.com",
-  bio: "Stats grad. Spent a year in corporate data. Now betting on myself, creating content on statistics, psychology, mindset, and AI, with a slice of personal finance thrown in.",
+  bio: "Studied stats, spent a year at Capital One, and quit to bet on myself.",
   socials: [
     { platform: "Instagram", url: "https://www.instagram.com/jadeneoca/" },
     { platform: "TikTok",    url: "https://www.tiktok.com/@jadeneoca" },

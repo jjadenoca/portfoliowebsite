@@ -26,11 +26,6 @@ export default function AboutBlock() {
             <p className="text-text mb-5" style={{ fontSize: "1.0625rem", lineHeight: 1.75 }}>
               {creator.bio}
             </p>
-            <p className="text-muted" style={{ fontSize: "0.9375rem", lineHeight: 1.7 }}>
-              Stats don&apos;t have to be scary. I combine a data-driven mindset with creator
-              instincts to make content on psychology, mindset, and AI that actually reaches
-              people and actually moves them.
-            </p>
           </div>
 
           {/* Right — focus areas */}
