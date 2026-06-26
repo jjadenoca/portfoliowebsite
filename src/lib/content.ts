@@ -322,13 +322,13 @@ export const creator: Creator = {
       name:   "investfleap",
       handle: "@investfleap",
       url:    "https://www.instagram.com/investfleap/reels/",
-      blurb:  "UGC content for Blossom Social — personal finance and investing Reels designed to convert.",
+      blurb:  "Personal finance and investing Reels for Blossom Social.",
     },
     {
       name:   "createwithfleap",
       handle: "@createwithfleap",
       url:    "https://www.instagram.com/createwithfleap/reels/",
-      blurb:  "UGC content for Higgsfield AI — creative and lifestyle Reels showcasing AI video tools.",
+      blurb:  "Creative Reels for Higgsfield AI showcasing AI video tools.",
     },
   ],
   brands: [

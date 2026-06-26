@@ -42,12 +42,6 @@ export default function WorkTeaser() {
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center reveal">
-          <a href="/ugc" className="btn-ghost px-8 py-3">
-            View full UGC portfolio
-          </a>
-        </div>
       </div>
     </section>
   );

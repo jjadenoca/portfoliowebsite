@@ -29,7 +29,7 @@ export default function Hero() {
           {/* Text column */}
           <div className="flex-1 text-center md:text-left">
             {/* Eyebrow */}
-            <p className="eyebrow mb-5 reveal">AI · DECISION MAKING · UGC</p>
+            <p className="eyebrow mb-5 reveal">AI · DECISION MAKING</p>
 
             {/* Name */}
             <h1
@@ -69,9 +69,6 @@ export default function Hero() {
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-8 reveal">
               <a href={`mailto:${creator.contactEmail}`} className="btn-primary px-7 py-3 text-base">
                 Work with me
-              </a>
-              <a href="/ugc" className="btn-ghost px-7 py-3 text-base">
-                See my work
               </a>
             </div>
 

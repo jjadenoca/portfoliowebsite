@@ -27,7 +27,7 @@ export default function CtaFooter() {
           className="text-on-navy-muted max-w-sm"
           style={{ fontSize: "1.0625rem", lineHeight: 1.7 }}
         >
-          Brand partnership, UGC video, or collaboration. I&apos;d love to hear from you.
+          Brand partnership or collaboration. I&apos;d love to hear from you.
         </p>
 
         {/* CTA button */}

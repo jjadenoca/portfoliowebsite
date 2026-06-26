@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { creator } from "@/lib/content";
 
 const NAV_LINKS = [
-  { label: "Home",            href: "/" },
-  { label: "UGC Portfolio",   href: "/ugc" },
+  { label: "Home",             href: "/" },
   { label: "Corporate Resume", href: "/resume" },
 ] as const;
 
@@ -84,7 +83,7 @@ export default function SiteNav() {
                   ].join(" ")}
                   aria-current={active ? "page" : undefined}
                 >
-                  {label === "Corporate Resume" ? "Resume" : label === "UGC Portfolio" ? "UGC" : label}
+                  {label === "Corporate Resume" ? "Resume" : label}
                   {active && (
                     <span
                       aria-hidden="true"
