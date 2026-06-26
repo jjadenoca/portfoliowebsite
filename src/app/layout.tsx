@@ -27,12 +27,12 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Jaden Oca | Content Creator | @jadeneoca",
   description:
-    "Jaden Oca (@jadeneoca) is a stats, psychology, mindset & AI content creator with 7k+ followers across 4 platforms. Worked with brands including Monarch Money, Blossom Social, Higgsfield AI, Polymarket, and Finvest.",
+    "Jaden Oca (@jadeneoca) is a stats, psychology, mindset & AI content creator with 15k+ followers across 3 platforms. Worked with brands including Monarch Money, Blossom Social, Higgsfield AI, Polymarket, and Finvest.",
   metadataBase: new URL("https://jadenoca.com"),
   openGraph: {
     title: "Jaden Oca | Content Creator | @jadeneoca",
     description:
-      "Stats, psychology, mindset & AI content creator with 7k+ followers across 4 platforms. Partnered with Monarch Money, Blossom Social, Higgsfield AI, and more.",
+      "Stats, psychology, mindset & AI content creator with 15k+ followers across 3 platforms. Partnered with Monarch Money, Blossom Social, Higgsfield AI, and more.",
     url: "https://jadenoca.com",
     siteName: "Jaden Oca",
     type: "website",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jaden Oca | Content Creator | @jadeneoca",
     description:
-      "Stats, psychology, mindset & AI content creator with 7k+ followers across 4 platforms.",
+      "Stats, psychology, mindset & AI content creator with 15k+ followers across 3 platforms.",
     images: ["/headshot.jpeg"],
   },
   icons: {
