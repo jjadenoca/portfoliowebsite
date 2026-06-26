@@ -305,7 +305,7 @@ export type Creator = {
 export const creator: Creator = {
   name: "Jaden Oca",
   handle: "@jadeneoca",
-  tagline: "I make content about AI, decision making, and the hidden forces that shape how people think.",
+  tagline: "I make content about AI and decision making.",
   followers: "7k+",
   platformCount: 4,
   brandCount: 5,
