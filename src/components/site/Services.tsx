@@ -45,7 +45,7 @@ export default function Services() {
             <article
               key={s.title}
               className={`card card-lift reveal p-8 flex flex-col gap-5 relative${s.preferred ? " ring-2" : ""}`}
-              style={s.preferred ? { ringColor: "var(--color-accent)", boxShadow: "0 0 0 2px var(--color-accent)" } : undefined}
+              style={s.preferred ? { boxShadow: "0 0 0 2px var(--color-accent)" } : undefined}
             >
               {/* Preferred badge */}
               {s.preferred && (
