@@ -1,5 +1,3 @@
-import { creator } from "@/lib/content";
-
 const SERVICES = [
   {
     icon: (
@@ -10,8 +8,21 @@ const SERVICES = [
         <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
-    title: "Brand Partnerships",
+    title: "Brand Deals",
+    cta: { label: "contact@jadenoca.com", href: "mailto:contact@jadenoca.com" },
     preferred: true,
+  },
+  {
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.75" />
+        <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    title: "1:1 Session — $50/hr",
+    description: "Email me to set up a time.",
+    cta: { label: "contact@jadenoca.com", href: "mailto:contact@jadenoca.com" },
+    preferred: false,
   },
   {
     icon: (
@@ -20,6 +31,8 @@ const SERVICES = [
       </svg>
     ),
     title: "Collabs",
+    description: "Shoot me an email and let's figure something out.",
+    cta: { label: "contact@jadenoca.com", href: "mailto:contact@jadenoca.com" },
     preferred: false,
   },
 ];
@@ -44,7 +57,7 @@ export default function Services() {
           {SERVICES.map((s) => (
             <article
               key={s.title}
-              className={`card card-lift reveal p-8 flex flex-col gap-5 relative${s.preferred ? " ring-2" : ""}`}
+              className="card card-lift reveal p-8 flex flex-col gap-5 relative"
               style={s.preferred ? { boxShadow: "0 0 0 2px var(--color-accent)" } : undefined}
             >
               {/* Preferred badge */}
@@ -68,22 +81,27 @@ export default function Services() {
               <div className="text-accent">{s.icon}</div>
 
               {/* Text */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2 flex-1">
                 <h3
                   className="font-display font-semibold text-text-strong"
                   style={{ fontSize: "1.1875rem" }}
                 >
                   {s.title}
                 </h3>
-                {s.preferred && (
-                  <a
-                    href={`mailto:${creator.contactEmail}`}
-                    className="font-sans text-sm font-medium text-accent hover:underline"
-                  >
-                    Email me for rates →
-                  </a>
+                {"description" in s && s.description && (
+                  <p className="text-muted text-sm" style={{ lineHeight: 1.6 }}>
+                    {s.description}
+                  </p>
                 )}
               </div>
+
+              {/* CTA link */}
+              <a
+                href={s.cta.href}
+                className="font-sans text-sm font-medium text-accent hover:underline mt-auto"
+              >
+                {s.cta.label} →
+              </a>
             </article>
           ))}
         </div>
