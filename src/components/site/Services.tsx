@@ -19,7 +19,7 @@ const SERVICES = [
         <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
-    title: "1:1 Session — $50/hr",
+    title: "1:1 Session · $50/hr",
     description: "Email me to set up a time.",
     cta: { label: "contact@jadenoca.com", href: "mailto:contact@jadenoca.com" },
     preferred: false,

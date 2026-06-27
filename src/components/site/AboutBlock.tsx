@@ -1,7 +1,7 @@
 import { creator } from "@/lib/content";
 
 const FOCUS_AREAS = [
-  { icon: "◆", label: "Stats & Psychology", sub: "Reframing the things you see every day — why people behave the way they do, and what the numbers actually say." },
+  { icon: "◆", label: "Stats & Psychology", sub: "Reframing the things you see every day: why people behave the way they do, and what the numbers actually say." },
   { icon: "◉", label: "Mindset & AI", sub: "How the biases holding you back work, why taking the first step is the hardest part, and what AI literacy looks like in practice." },
 ];
 
