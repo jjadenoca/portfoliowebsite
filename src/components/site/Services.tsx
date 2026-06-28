@@ -1,3 +1,7 @@
+import { creator } from "@/lib/content";
+
+const EMAIL = creator.contactEmail;
+
 const SERVICES = [
   {
     icon: (
@@ -9,7 +13,7 @@ const SERVICES = [
       </svg>
     ),
     title: "Brand Deals",
-    cta: { label: "contact@jadenoca.com", href: "mailto:contact@jadenoca.com" },
+    cta: { label: EMAIL, href: `mailto:${EMAIL}` },
     preferred: true,
   },
   {
@@ -21,7 +25,7 @@ const SERVICES = [
     ),
     title: "1:1 Session · $50/hr",
     description: "Email me to set up a time.",
-    cta: { label: "contact@jadenoca.com", href: "mailto:contact@jadenoca.com" },
+    cta: { label: EMAIL, href: `mailto:${EMAIL}` },
     preferred: false,
   },
   {
@@ -32,7 +36,7 @@ const SERVICES = [
     ),
     title: "Collabs",
     description: "Shoot me an email and let's figure something out.",
-    cta: { label: "contact@jadenoca.com", href: "mailto:contact@jadenoca.com" },
+    cta: { label: EMAIL, href: `mailto:${EMAIL}` },
     preferred: false,
   },
 ];

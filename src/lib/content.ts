@@ -309,7 +309,7 @@ export const creator: Creator = {
   followers: "15k+",
   platformCount: 3,
   brandCount: 5,
-  contactEmail: "financefleapcontact@gmail.com",
+  contactEmail: "contact@jadenoca.com",
   bio: "Studied stats, spent a year at Capital One, and quit to bet on myself.",
   socials: [
     { platform: "Instagram", url: "https://www.instagram.com/jadeneoca/" },
