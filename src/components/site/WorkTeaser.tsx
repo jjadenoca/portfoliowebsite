@@ -13,7 +13,7 @@ export default function WorkTeaser() {
           <p className="eyebrow mb-4">SELECTED WORK</p>
           <h2
             className="font-display font-semibold text-text-strong"
-            style={{ fontSize: "clamp(2rem, 5vw, 3.25rem)" }}
+            style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", letterSpacing: "-0.02em" }}
           >
             Content that makes you rethink
           </h2>

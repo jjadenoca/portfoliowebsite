@@ -22,8 +22,20 @@ export default function AboutBlock() {
             >
               Stats grad. One year corporate. Now betting on myself.
             </p>
-            <p className="text-text mb-5" style={{ fontSize: "1.0625rem", lineHeight: 1.75 }}>
+            <p className="text-text mb-4" style={{ fontSize: "1.0625rem", lineHeight: 1.75 }}>
               {creator.bio}
+            </p>
+            <p className="text-muted" style={{ fontSize: "1.0625rem", lineHeight: 1.75 }}>
+              Currently {creator.currentRole.title} at{" "}
+              <a
+                href={creator.currentRole.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline font-semibold text-text-strong"
+              >
+                {creator.currentRole.company}
+              </a>
+              .
             </p>
           </div>
 

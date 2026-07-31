@@ -297,6 +297,11 @@ export type Creator = {
   brandCount: number;
   contactEmail: string;
   bio: string;
+  currentRole: { title: string; company: string; url: string };
+  // Work-with-me funnels
+  mediaKitUrl: string; // Beacons media kit — PLACEHOLDER, replace with real URL
+  bookingUrl: string;  // 1:1 coaching call booking
+  coachingRate: string;
   socials: Social[];
   ugcAccounts: UgcAccount[];
   brands: Brand[];
@@ -305,12 +310,20 @@ export type Creator = {
 export const creator: Creator = {
   name: "Jaden Oca",
   handle: "@jadeneoca",
-  tagline: "I make content about AI and decision making.",
-  followers: "15k+",
+  tagline: "I make content about decision making.",
+  followers: "30k+",
   platformCount: 3,
   brandCount: 5,
   contactEmail: "contact@jadenoca.com",
   bio: "Studied stats, spent a year at Capital One, and quit to bet on myself.",
+  currentRole: {
+    title: "Founding Chief Growth Officer",
+    company: "No Dice",
+    url: "https://nodice.app/",
+  },
+  mediaKitUrl: "https://beacons.ai/jadeneoca/mediakit?platform=instagram&platform_username=jadeneoca",
+  bookingUrl: "https://linktr.ee/jadeneoca",
+  coachingRate: "$50/hr",
   socials: [
     { platform: "Instagram", url: "https://www.instagram.com/jadeneoca/" },
     { platform: "TikTok",    url: "https://www.tiktok.com/@jadeneoca" },

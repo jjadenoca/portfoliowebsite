@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { creator } from "@/lib/content";
 import SocialLinks from "@/components/site/SocialLinks";
 
@@ -14,9 +15,9 @@ export default function CtaFooter() {
         <h2
           className="font-display font-semibold text-on-navy"
           style={{
-            fontSize: "clamp(2.5rem, 7vw, 5rem)",
+            fontSize: "clamp(2rem, 5vw, 3.25rem)",
             letterSpacing: "-0.025em",
-            lineHeight: 1.05,
+            lineHeight: 1.08,
           }}
         >
           Let&apos;s build something.
@@ -31,12 +32,9 @@ export default function CtaFooter() {
         </p>
 
         {/* CTA button */}
-        <a
-          href={`mailto:${creator.contactEmail}`}
-          className="btn-primary px-9 py-3.5 text-base"
-        >
+        <Link href="/work-with-me" className="btn-primary px-9 py-3.5 text-base">
           Work with me
-        </a>
+        </Link>
 
         {/* Social links */}
         <SocialLinks variant="navy" />

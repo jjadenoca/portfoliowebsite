@@ -1,41 +1,20 @@
 import Image from "next/image";
+import Link from "next/link";
 import { creator } from "@/lib/content";
 import SocialLinks from "@/components/site/SocialLinks";
 
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-bg min-h-[88vh] flex items-center">
-      {/* Glow elements */}
-      <div
-        className="hero-glow"
-        style={{ width: "600px", height: "600px", top: "-100px", left: "5%", opacity: 0.6 }}
-        aria-hidden="true"
-      />
-      <div
-        className="hero-glow"
-        style={{
-          width: "400px",
-          height: "400px",
-          bottom: "-60px",
-          right: "8%",
-          opacity: 0.35,
-          animationDelay: "10s",
-        }}
-        aria-hidden="true"
-      />
-
       <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 py-20 md:py-28">
         <div className="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16 lg:gap-20">
           {/* Text column */}
           <div className="flex-1 text-center md:text-left">
-            {/* Eyebrow */}
-            <p className="eyebrow mb-5 reveal">AI · DECISION MAKING</p>
-
             {/* Name */}
             <h1
               className="font-display font-semibold text-text-strong mb-3 reveal"
               style={{
-                fontSize: "clamp(3rem, 8vw, 6rem)",
+                fontSize: "clamp(2.75rem, 6.5vw, 4.75rem)",
                 lineHeight: 1.05,
                 letterSpacing: "-0.03em",
               }}
@@ -46,7 +25,7 @@ export default function Hero() {
             {/* Handle */}
             <p
               className="font-display text-accent mb-6 reveal"
-              style={{ fontSize: "clamp(1.25rem, 3vw, 1.75rem)", fontStyle: "italic" }}
+              style={{ fontSize: "clamp(1.2rem, 2.6vw, 1.5rem)", fontStyle: "italic" }}
             >
               {creator.handle}
             </p>
@@ -62,14 +41,14 @@ export default function Hero() {
               >
                 {creator.followers}
               </span>{" "}
-              followers across {creator.platformCount} platforms.
+              followers across platforms.
             </p>
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-8 reveal">
-              <a href={`mailto:${creator.contactEmail}`} className="btn-primary px-7 py-3 text-base">
+              <Link href="/work-with-me" className="btn-primary px-7 py-3 text-base">
                 Work with me
-              </a>
+              </Link>
             </div>
 
             {/* Social links */}
@@ -83,30 +62,21 @@ export default function Hero() {
             <div
               className="relative"
               style={{
-                width: "clamp(220px, 36vw, 380px)",
-                height: "clamp(220px, 36vw, 380px)",
+                width: "clamp(240px, 38vw, 400px)",
+                aspectRatio: "3 / 4",
               }}
             >
-              {/* Gold ring accent */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background:
-                    "radial-gradient(circle at 70% 30%, color-mix(in oklch, var(--color-accent) 25%, transparent), transparent 65%)",
-                  transform: "scale(1.08)",
-                }}
-              />
               <Image
                 src="/headshot.jpeg"
                 alt="Jaden Oca"
                 fill
-                sizes="(max-width: 768px) 220px, 380px"
+                sizes="(max-width: 768px) 240px, 400px"
                 priority
-                className="object-cover rounded-full"
+                className="object-cover rounded-[24px]"
                 style={{
-                  border: "3px solid color-mix(in oklch, var(--color-accent) 50%, transparent)",
-                  objectPosition: "47% center",
+                  border: "3px solid color-mix(in oklch, var(--color-accent) 45%, transparent)",
+                  boxShadow: "0 24px 55px -20px color-mix(in oklch, var(--color-ink-navy) 30%, transparent)",
+                  objectPosition: "center",
                 }}
               />
             </div>

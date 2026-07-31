@@ -1,33 +1,33 @@
 @import "tailwindcss";
 
 /* ===================================================================
-   EDITORIAL LUXE — light cream canvas, deep ink-navy, warm gold accent
+   COASTAL — cool light-blue canvas, deep navy ink, sky-blue accent
    =================================================================== */
 
 :root {
-  /* Base surfaces */
-  --color-bg:         #FBF7F0;
-  --color-bg-alt:     #F4EDE2;
+  /* Base surfaces — cool, airy, light-blue tinted */
+  --color-bg:         #F3F7FC;
+  --color-bg-alt:     #E7F0F9;
   --color-surface:    #FFFFFF;
-  --color-surface-2:  #FAF4EA;
+  --color-surface-2:  #EEF5FB;
 
-  /* Ink */
-  --color-text:         #14181F;
-  --color-text-strong:  #0A0D12;
-  --color-muted:        #5A6068;
-  --color-border:       #E6DCCC;
+  /* Ink — deep navy */
+  --color-text:         #16202E;
+  --color-text-strong:  #0B1420;
+  --color-muted:        #55636F;
+  --color-border:       #D5E2EF;
 
-  /* Gold accent */
-  --color-accent:      #C8852A;
-  --color-accent-soft: #E8A93C;
-  --color-accent-ink:  #1A1206;
+  /* Sky-blue accent */
+  --color-accent:      #2F72BC;
+  --color-accent-soft: #8AC2EE;
+  --color-accent-ink:  #FFFFFF;
 
   /* Navy feature bands */
-  --color-ink-navy:       #11161F;
-  --color-navy-surface:   #1A212E;
-  --color-navy-border:    #2A3340;
-  --color-on-navy:        #F3EFE7;
-  --color-on-navy-muted:  #9AA3B0;
+  --color-ink-navy:       #142338;
+  --color-navy-surface:   #1D3251;
+  --color-navy-border:    #2E466A;
+  --color-on-navy:        #EAF2FB;
+  --color-on-navy-muted:  #9EB4D0;
 
   /* Font family vars — set by next/font in layout.tsx */
   --font-display:       var(--font-fraunces, Georgia, serif);
@@ -141,7 +141,7 @@ h2 { letter-spacing: -0.02em; }
    =================================================================== */
 
 @keyframes reveal {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -149,7 +149,7 @@ h2 { letter-spacing: -0.02em; }
   .reveal {
     animation: reveal linear both;
     animation-timeline: view();
-    animation-range: entry 0% entry 35%;
+    animation-range: entry 0% entry 30%;
   }
 }
 
@@ -186,7 +186,6 @@ h2 { letter-spacing: -0.02em; }
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  overflow: hidden;
   padding: 0.625rem 1.5rem;
   background: var(--color-accent);
   color: var(--color-accent-ink);
@@ -199,31 +198,13 @@ h2 { letter-spacing: -0.02em; }
   cursor: pointer;
   text-decoration: none;
   transition:
-    transform 180ms ease,
+    background-color 180ms ease,
     box-shadow 180ms ease;
 }
 
-.btn-primary::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    color-mix(in oklch, white 30%, transparent) 50%,
-    transparent 70%
-  );
-  transform: translateX(-100%);
-  transition: transform 400ms ease;
-}
-
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px -6px color-mix(in oklch, var(--color-accent) 50%, transparent);
-}
-
-.btn-primary:hover::after {
-  transform: translateX(100%);
+  background: color-mix(in srgb, var(--color-accent) 90%, black);
+  box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--color-accent) 55%, transparent);
 }
 
 .btn-ghost {
@@ -270,9 +251,9 @@ h2 { letter-spacing: -0.02em; }
 }
 
 .card-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px -12px color-mix(in oklch, var(--color-text) 12%, transparent);
-  border-color: color-mix(in oklch, var(--color-accent) 40%, var(--color-border));
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -16px color-mix(in oklch, var(--color-ink-navy) 22%, transparent);
+  border-color: color-mix(in oklch, var(--color-accent) 30%, var(--color-border));
 }
 
 .card-navy {
@@ -345,7 +326,7 @@ h2 { letter-spacing: -0.02em; }
   font-family: var(--font-display);
   font-weight: 600;
   color: var(--color-accent);
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
   line-height: 1;
 }
 

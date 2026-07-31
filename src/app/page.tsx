@@ -3,7 +3,6 @@ import StatBand from "@/components/site/StatBand";
 import BrandWall from "@/components/site/BrandWall";
 import AboutBlock from "@/components/site/AboutBlock";
 import WorkTeaser from "@/components/site/WorkTeaser";
-import Services from "@/components/site/Services";
 import CtaFooter from "@/components/site/CtaFooter";
 
 export default function Home() {
@@ -14,7 +13,6 @@ export default function Home() {
       <BrandWall />
       <AboutBlock />
       <WorkTeaser />
-      <Services />
       <CtaFooter />
     </main>
   );
