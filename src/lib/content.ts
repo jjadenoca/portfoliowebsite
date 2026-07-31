@@ -312,7 +312,7 @@ export const creator: Creator = {
   handle: "@jadeneoca",
   tagline: "I make content about decision making.",
   followers: "30k+",
-  platformCount: 3,
+  platformCount: 4,
   brandCount: 5,
   contactEmail: "contact@jadenoca.com",
   bio: "Studied stats, spent a year at Capital One, and quit to bet on myself.",
