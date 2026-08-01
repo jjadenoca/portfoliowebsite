@@ -8,7 +8,7 @@ import SocialLinks from "@/components/site/SocialLinks";
 export const metadata: Metadata = {
   title: "UGC Portfolio | Jaden Oca (@jadeneoca)",
   description:
-    "Jaden Oca (@jadeneoca) creates short-form content on stats, psychology, mindset & AI for brands on Instagram Reels. Worked with Monarch Money, Blossom Social, Higgsfield AI, Polymarket, and Finvest.",
+    "Jaden Oca (@jadeneoca) creates short-form content on stats, psychology, mindset & AI for brands on Instagram Reels. Worked with Monarch Money, Blossom Social, Higgsfield AI, and Finvest.",
 };
 
 export default function UgcPage() {

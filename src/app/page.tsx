@@ -1,8 +1,7 @@
 import Hero from "@/components/site/Hero";
 import StatBand from "@/components/site/StatBand";
 import BrandWall from "@/components/site/BrandWall";
-import AboutBlock from "@/components/site/AboutBlock";
-import WorkTeaser from "@/components/site/WorkTeaser";
+import Timeline from "@/components/site/Timeline";
 import CtaFooter from "@/components/site/CtaFooter";
 
 export default function Home() {
@@ -11,8 +10,7 @@ export default function Home() {
       <Hero />
       <StatBand />
       <BrandWall />
-      <AboutBlock />
-      <WorkTeaser />
+      <Timeline />
       <CtaFooter />
     </main>
   );

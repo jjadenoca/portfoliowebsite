@@ -21,18 +21,18 @@ export default function SiteNav() {
         {/* Wordmark */}
         <Link
           href="/"
-          className="shrink-0 font-display font-semibold text-lg text-text-strong tracking-tight hover:text-accent transition-colors duration-150"
+          className="shrink-0 font-display font-semibold text-lg text-text-strong tracking-tight hover:text-accent transition-colors duration-150 lowercase"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Jaden Oca
         </Link>
 
-        {/* Two tabs: Overview (text) + Work with me (gold pill CTA) */}
+        {/* Two tabs: Overview (text) + Work with me (black pill CTA) */}
         <nav className="flex items-center gap-2 sm:gap-3" aria-label="Main navigation">
           <Link
             href="/"
             className={[
-              "relative px-3 py-1.5 text-sm font-medium rounded-md transition-colors duration-150",
+              "relative px-3 py-1.5 text-sm font-medium rounded-md transition-colors duration-150 lowercase",
               onOverview ? "text-text-strong" : "text-muted hover:text-text-strong",
             ].join(" ")}
             aria-current={onOverview ? "page" : undefined}

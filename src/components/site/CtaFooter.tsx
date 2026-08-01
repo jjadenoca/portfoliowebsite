@@ -4,8 +4,8 @@ import SocialLinks from "@/components/site/SocialLinks";
 
 export default function CtaFooter() {
   return (
-    <footer className="dark-section py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col items-center text-center gap-8">
+    <footer className="dark-section py-10 md:py-14">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col items-center text-center gap-5">
         {/* Eyebrow */}
         <p className="eyebrow" style={{ color: "var(--color-on-navy-muted)" }}>
           GET IN TOUCH
@@ -28,11 +28,11 @@ export default function CtaFooter() {
           className="text-on-navy-muted max-w-sm"
           style={{ fontSize: "1.0625rem", lineHeight: 1.7 }}
         >
-          Brand partnership or collaboration. I&apos;d love to hear from you.
+          brand deals or coaching. let&apos;s talk about it.
         </p>
 
         {/* CTA button */}
-        <Link href="/work-with-me" className="btn-primary px-9 py-3.5 text-base">
+        <Link href="/work-with-me" className="btn-invert px-9 py-3.5 text-base">
           Work with me
         </Link>
 

@@ -5,8 +5,8 @@ import SocialLinks from "@/components/site/SocialLinks";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-bg min-h-[88vh] flex items-center">
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 py-20 md:py-28">
+    <section className="relative overflow-hidden bg-bg min-h-[52vh] flex items-center">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 py-8 md:py-10">
         <div className="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16 lg:gap-20">
           {/* Text column */}
           <div className="flex-1 text-center md:text-left">
@@ -72,10 +72,9 @@ export default function Hero() {
                 fill
                 sizes="(max-width: 768px) 240px, 400px"
                 priority
-                className="object-cover rounded-[24px]"
+                className="object-cover rounded-[8px]"
                 style={{
-                  border: "3px solid color-mix(in oklch, var(--color-accent) 45%, transparent)",
-                  boxShadow: "0 24px 55px -20px color-mix(in oklch, var(--color-ink-navy) 30%, transparent)",
+                  border: "1px solid var(--color-border)",
                   objectPosition: "center",
                 }}
               />

@@ -1,38 +1,39 @@
 @import "tailwindcss";
 
 /* ===================================================================
-   COASTAL — cool light-blue canvas, deep navy ink, sky-blue accent
+   MONO — white canvas, black ink, gray muted, one classic link-blue.
+   Editorial / minimalist; inverted (black) sections for rhythm.
    =================================================================== */
 
 :root {
-  /* Base surfaces — cool, airy, light-blue tinted */
-  --color-bg:         #F3F7FC;
-  --color-bg-alt:     #E7F0F9;
+  /* Base surfaces */
+  --color-bg:         #FFFFFF;
+  --color-bg-alt:     #F4F4F2;
   --color-surface:    #FFFFFF;
-  --color-surface-2:  #EEF5FB;
+  --color-surface-2:  #F4F4F2;
 
-  /* Ink — deep navy */
-  --color-text:         #16202E;
-  --color-text-strong:  #0B1420;
-  --color-muted:        #55636F;
-  --color-border:       #D5E2EF;
+  /* Ink */
+  --color-text:         #141414;
+  --color-text-strong:  #000000;
+  --color-muted:        #8A8A8A;
+  --color-border:       #E5E5E2;
 
-  /* Sky-blue accent */
-  --color-accent:      #2F72BC;
-  --color-accent-soft: #8AC2EE;
+  /* Classic link-blue accent — used sparingly (links, marks) */
+  --color-accent:      #0000EE;
+  --color-accent-soft: #4B4BF5;
   --color-accent-ink:  #FFFFFF;
 
-  /* Navy feature bands */
-  --color-ink-navy:       #142338;
-  --color-navy-surface:   #1D3251;
-  --color-navy-border:    #2E466A;
-  --color-on-navy:        #EAF2FB;
-  --color-on-navy-muted:  #9EB4D0;
+  /* Inverted (black) feature sections — token names kept for reuse */
+  --color-ink-navy:       #0A0A0A;
+  --color-navy-surface:   #171717;
+  --color-navy-border:    #2A2A2A;
+  --color-on-navy:        #F4F4F2;
+  --color-on-navy-muted:  #9A9A9A;
 
   /* Font family vars — set by next/font in layout.tsx */
-  --font-display:       var(--font-fraunces, Georgia, serif);
-  --font-sans:          var(--font-plus-jakarta, system-ui, -apple-system, sans-serif);
-  --font-serif-accent:  var(--font-instrument-serif, Georgia, serif);
+  --font-display:  var(--font-bricolage, "Helvetica Neue", Arial, sans-serif);
+  --font-sans:     var(--font-plus-jakarta, system-ui, -apple-system, sans-serif);
+  --font-mono:     var(--font-space-mono, ui-monospace, "SF Mono", Menlo, monospace);
 }
 
 /* Expose tokens as Tailwind utility classes */
@@ -64,7 +65,7 @@
   /* Fonts */
   --font-display:       var(--font-display);
   --font-sans:          var(--font-sans);
-  --font-serif-accent:  var(--font-serif-accent);
+  --font-mono:          var(--font-mono);
 }
 
 /* ===================================================================
@@ -76,6 +77,24 @@ html {
   scroll-padding-top: 5rem;
 }
 
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-text);
@@ -84,11 +103,12 @@ body {
   line-height: 1.7;
 }
 
-/* Heading defaults — display serif, strong ink, tight tracking on large */
+/* Heading defaults — display grotesque, strong ink, lowercase, tight tracking on large */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   color: var(--color-text-strong);
   line-height: 1.15;
+  text-transform: lowercase;
 }
 
 h1 { letter-spacing: -0.02em; }
@@ -140,17 +160,18 @@ h2 { letter-spacing: -0.02em; }
    Hiding is inside @supports so non-supporting browsers see content.
    =================================================================== */
 
-@keyframes reveal {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: none; }
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
-@supports (animation-timeline: view()) {
-  .reveal {
-    animation: reveal linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 30%;
-  }
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
 /* ===================================================================
@@ -181,30 +202,33 @@ h2 { letter-spacing: -0.02em; }
    =================================================================== */
 
 .btn-primary {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.625rem 1.5rem;
-  background: var(--color-accent);
-  color: var(--color-accent-ink);
+  padding: 0.6875rem 1.5rem;
+  background: var(--color-text-strong);
+  color: #ffffff;
   font-family: var(--font-sans);
   font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1;
+  text-transform: lowercase;
   border-radius: 9999px;
-  border: none;
+  border: 1px solid var(--color-text-strong);
   cursor: pointer;
   text-decoration: none;
   transition:
-    background-color 180ms ease,
-    box-shadow 180ms ease;
+    transform 200ms ease,
+    background-color 200ms ease,
+    color 200ms ease;
 }
 
+/* Invert on hover — fills to outline */
 .btn-primary:hover {
-  background: color-mix(in srgb, var(--color-accent) 90%, black);
-  box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--color-accent) 55%, transparent);
+  transform: translateY(-1px);
+  background: transparent;
+  color: var(--color-text-strong);
 }
 
 .btn-ghost {
@@ -219,6 +243,7 @@ h2 { letter-spacing: -0.02em; }
   font-size: 0.9375rem;
   font-weight: 500;
   line-height: 1;
+  text-transform: lowercase;
   border-radius: 9999px;
   border: 1px solid var(--color-border);
   cursor: pointer;
@@ -229,8 +254,38 @@ h2 { letter-spacing: -0.02em; }
 }
 
 .btn-ghost:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--color-text-strong);
+  color: var(--color-text-strong);
+}
+
+/* Inverted pill — white on dark sections */
+.btn-invert {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6875rem 1.5rem;
+  background: #ffffff;
+  color: #000000;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: lowercase;
+  border-radius: 9999px;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform 200ms ease,
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.btn-invert:hover {
+  transform: translateY(-1px);
+  background: transparent;
+  color: #ffffff;
 }
 
 /* ===================================================================
@@ -240,20 +295,18 @@ h2 { letter-spacing: -0.02em; }
 .card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: 6px;
 }
 
 .card-lift {
   transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    border-color 180ms ease;
+    transform 220ms ease,
+    border-color 220ms ease;
 }
 
 .card-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px -16px color-mix(in oklch, var(--color-ink-navy) 22%, transparent);
-  border-color: color-mix(in oklch, var(--color-accent) 30%, var(--color-border));
+  border-color: var(--color-text-strong);
 }
 
 .card-navy {
@@ -288,34 +341,12 @@ h2 { letter-spacing: -0.02em; }
    =================================================================== */
 
 .eyebrow {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 0.8125rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
   color: var(--color-muted);
-}
-
-/* ===================================================================
-   HERO GLOW
-   =================================================================== */
-
-@keyframes drift {
-  from { transform: translate(0, 0); }
-  to   { transform: translate(20px, 20px); }
-}
-
-.hero-glow {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    color-mix(in oklch, var(--color-accent-soft) 30%, transparent),
-    transparent 70%
-  );
-  filter: blur(60px);
-  pointer-events: none;
-  animation: drift 20s alternate ease-in-out infinite;
 }
 
 /* ===================================================================
@@ -325,7 +356,7 @@ h2 { letter-spacing: -0.02em; }
 .stat-num {
   font-family: var(--font-display);
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-text-strong);
   font-size: clamp(2.25rem, 4vw, 3.25rem);
   line-height: 1;
 }
@@ -335,38 +366,24 @@ h2 { letter-spacing: -0.02em; }
    =================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  /* Marquee stops */
   .marquee-track {
     animation: none;
   }
 
-  /* Reveal shows immediately (no hiding, no animation) */
-  @supports (animation-timeline: view()) {
-    .reveal {
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 
-  /* Hero glow stops drifting */
-  .hero-glow {
-    animation: none;
-  }
-
-  /* Card lifts flatten */
   .card-lift:hover {
     transform: none;
-    box-shadow: none;
   }
 
-  /* btn-primary lift flattens */
   .btn-primary:hover {
     transform: none;
-    box-shadow: none;
   }
 
-  /* View transitions off */
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;

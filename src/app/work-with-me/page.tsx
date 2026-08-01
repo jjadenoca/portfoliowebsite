@@ -37,7 +37,7 @@ export default function WorkWithMePage() {
     <main className="min-h-screen bg-bg">
       {/* Hero */}
       <section>
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-20 md:pt-28 pb-10">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-10 md:pt-14 pb-6">
           <h1
             className="font-display font-semibold text-text-strong mb-5"
             style={{ fontSize: "clamp(2.25rem, 5.5vw, 3.5rem)", lineHeight: 1.06, letterSpacing: "-0.03em" }}
@@ -60,7 +60,7 @@ export default function WorkWithMePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             {/* ── Brand deal ── */}
-            <article className="card p-8 md:p-10 flex flex-col gap-6">
+            <article className="card p-7 md:p-8 flex flex-col gap-5">
               <div className="text-accent">
                 <HandshakeIcon />
               </div>
@@ -114,7 +114,7 @@ export default function WorkWithMePage() {
             </article>
 
             {/* ── 1:1 coaching call ── */}
-            <article className="card card-lift reveal p-8 md:p-10 flex flex-col gap-6">
+            <article className="card card-lift reveal p-7 md:p-8 flex flex-col gap-5">
               <div className="text-accent">
                 <CallIcon />
               </div>
@@ -160,7 +160,7 @@ export default function WorkWithMePage() {
       </section>
 
       {/* Closing band */}
-      <section className="dark-section mt-16 md:mt-24 py-16 md:py-20">
+      <section className="dark-section mt-8 md:mt-12 py-10 md:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col items-center text-center gap-6">
           <h2
             className="font-display font-semibold text-on-navy"
@@ -170,7 +170,7 @@ export default function WorkWithMePage() {
           </h2>
           <a
             href={`mailto:${EMAIL}`}
-            className="btn-primary px-8 py-3 text-base"
+            className="btn-invert px-8 py-3 text-base"
           >
             {EMAIL}
           </a>

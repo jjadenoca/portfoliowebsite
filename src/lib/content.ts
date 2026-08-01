@@ -297,11 +297,11 @@ export type Creator = {
   brandCount: number;
   contactEmail: string;
   bio: string;
-  currentRole: { title: string; company: string; url: string };
   // Work-with-me funnels
   mediaKitUrl: string; // Beacons media kit — PLACEHOLDER, replace with real URL
   bookingUrl: string;  // 1:1 coaching call booking
   coachingRate: string;
+  timeline: { year: string; items: string[]; link?: { text: string; url: string } }[];
   socials: Social[];
   ugcAccounts: UgcAccount[];
   brands: Brand[];
@@ -313,23 +313,48 @@ export const creator: Creator = {
   tagline: "I make content about decision making.",
   followers: "30k+",
   platformCount: 4,
-  brandCount: 5,
+  brandCount: 4,
   contactEmail: "contact@jadenoca.com",
   bio: "Studied stats, spent a year at Capital One, and quit to bet on myself.",
-  currentRole: {
-    title: "Founding Chief Growth Officer",
-    company: "No Dice",
-    url: "https://nodice.app/",
-  },
   mediaKitUrl: "https://beacons.ai/jadeneoca/mediakit?platform=instagram&platform_username=jadeneoca",
   bookingUrl: "https://linktr.ee/jadeneoca",
-  coachingRate: "$50/hr",
+  coachingRate: "$200/hr",
   socials: [
     { platform: "Instagram", url: "https://www.instagram.com/jadeneoca/" },
     { platform: "TikTok",    url: "https://www.tiktok.com/@jadeneoca" },
     { platform: "YouTube",   url: "https://www.youtube.com/@fleapster" },
     { platform: "LinkedIn",  url: "https://www.linkedin.com/in/jadenoca2025/" },
   ],
+  timeline: [
+    { year: "2018", items: ["Failed high school pre-cal."] },
+    {
+      year: "2021",
+      items: [
+        "Started at Texas A&M, majoring in economics.",
+        "Taught myself to code with League of Legends data projects.",
+      ],
+    },
+    { year: "2022", items: ["Changed majors to statistics."] },
+    { year: "2023", items: ["Data analyst internship in NYC."] },
+    { year: "2024", items: ["Data science internship in Atlanta."] },
+    {
+      year: "2025",
+      items: [
+        "Graduated with a degree in Statistics, minors in Business and Psychology.",
+        "Started full-time as a Business Analyst at Capital One.",
+        "Started posting content.",
+      ],
+    },
+    {
+      year: "2026",
+      items: [
+        "Left Capital One.",
+        "Went full-time as a creator.",
+        "Became founding Chief Growth Officer at No Dice, an app to combat screentime and the gambling epidemic.",
+      ],
+      link: { text: "No Dice", url: "https://nodice.app/" },
+    },
+  ] as { year: string; items: string[]; link?: { text: string; url: string } }[],
   ugcAccounts: [
     {
       name:   "investfleap",
@@ -348,7 +373,6 @@ export const creator: Creator = {
     { name: "Monarch Money",  logo: "/logos/brands/monarch.png"    },
     { name: "Blossom Social", logo: "/logos/brands/blossom.png"    },
     { name: "Higgsfield AI",  logo: "/logos/brands/higgsfield.png" },
-    { name: "Polymarket",     logo: "/logos/brands/polymarket.png" },
     { name: "Finvest",        logo: "/logos/brands/finvest.png"    },
   ],
 };

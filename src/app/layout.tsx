@@ -1,13 +1,15 @@
+// Root layout — fonts, smooth scroll, reveal observer, nav.
 import type { Metadata } from "next";
-import { Fraunces, Plus_Jakarta_Sans, Instrument_Serif } from "next/font/google";
+import { Bricolage_Grotesque, Plus_Jakarta_Sans, Space_Mono } from "next/font/google";
 import "./globals.css";
 import SiteNav from "@/components/site/SiteNav";
+import SmoothScroll from "@/components/site/SmoothScroll";
+import RevealObserver from "@/components/site/RevealObserver";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -16,22 +18,21 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600"],
 });
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
   subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
   title: "Jaden Oca | Content Creator | @jadeneoca",
   description:
-    "Jaden Oca (@jadeneoca) is a stats, psychology, mindset & AI content creator with 30k+ followers across platforms. Worked with brands including Monarch Money, Blossom Social, Higgsfield AI, Polymarket, and Finvest.",
+    "Jaden Oca (@jadeneoca) makes content about decision making — 30k+ followers across platforms. Founding Chief Growth Officer at No Dice. Worked with Monarch Money, Blossom Social, Higgsfield AI, and Finvest.",
   metadataBase: new URL("https://jadenoca.com"),
   openGraph: {
     title: "Jaden Oca | Content Creator | @jadeneoca",
     description:
-      "Stats, psychology, mindset & AI content creator with 30k+ followers across platforms. Partnered with Monarch Money, Blossom Social, Higgsfield AI, and more.",
+      "Content about decision making — 30k+ followers across platforms. Founding CGO at No Dice. Partnered with Monarch Money, Blossom Social, Higgsfield AI, and more.",
     url: "https://jadenoca.com",
     siteName: "Jaden Oca",
     type: "website",
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
       {
         url: "/headshot.jpeg",
         width: 1200,
-        height: 1500,
+        height: 1600,
         alt: "Jaden Oca",
       },
     ],
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jaden Oca | Content Creator | @jadeneoca",
     description:
-      "Stats, psychology, mindset & AI content creator with 30k+ followers across platforms.",
+      "Content about decision making — 30k+ followers across platforms. Founding CGO at No Dice.",
     images: ["/headshot.jpeg"],
   },
   icons: {
@@ -66,9 +67,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${plusJakartaSans.variable} ${instrumentSerif.variable} h-full antialiased scroll-smooth`}
+      className={`${bricolage.variable} ${plusJakartaSans.variable} ${spaceMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-bg text-text font-sans">
+        <SmoothScroll />
+        <RevealObserver />
         <SiteNav />
         {children}
       </body>
