@@ -125,17 +125,15 @@ export default function WorkWithMePage() {
                     className="font-display font-semibold text-text-strong"
                     style={{ fontSize: "clamp(1.5rem, 3vw, 1.9rem)", letterSpacing: "-0.02em" }}
                   >
-                    1:1 coaching call
+                    Content Consulting 1:1 Call
                   </h2>
                   <span className="stat-num text-accent" style={{ fontSize: "1.25rem" }}>
                     {creator.coachingRate}
                   </span>
                 </div>
                 <p className="text-muted" style={{ fontSize: "1rem", lineHeight: 1.7 }}>
-                  A focused hour, one-on-one. Bring your questions on growing short-form
-                  content, building an audience, or wiring up AI workflows to ship faster.
-                  I studied stats, spent a year at Capital One, and left to bet on myself,
-                  so I&apos;ll give it to you straight.
+                  1 hour meeting where I audit your content and teach you how to learn
+                  the skill of content creation. Serious inquiries only.
                 </p>
               </div>
 
