@@ -190,7 +190,7 @@ h2 { letter-spacing: -0.02em; }
   display: flex;
   gap: 4rem;
   width: max-content;
-  animation: marquee 28s linear infinite;
+  animation: marquee 130s linear infinite;
 }
 
 .marquee:hover .marquee-track {

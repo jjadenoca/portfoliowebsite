@@ -291,6 +291,7 @@ export type Brand = {
 export type Creator = {
   name: string;
   handle: string;
+  roleLine: { text: string; link: { text: string; url: string } };
   tagline: string;
   followers: string;
   platformCount: number;
@@ -310,7 +311,11 @@ export type Creator = {
 export const creator: Creator = {
   name: "Jaden Oca",
   handle: "@jadeneoca",
-  tagline: "I make content about decision making.",
+  roleLine: {
+    text: "full-time creator | chief growth officer @ no dice",
+    link: { text: "no dice", url: "https://nodice.app/" },
+  },
+  tagline: "i make content about decision making.",
   followers: "30k+",
   platformCount: 4,
   brandCount: 4,
