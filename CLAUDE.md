@@ -36,6 +36,12 @@ Bundled docs in `node_modules/next/dist/docs/` are authoritative — consult the
 - For instant client navigation, Suspense alone isn't enough — see `node_modules/next/dist/docs/01-app/02-guides/instant-navigation.mdx`.
 - Tailwind v4 via `@tailwindcss/postcss`; theme tokens defined inline in `globals.css` with `@theme inline` against CSS custom properties — do NOT introduce a separate Tailwind config file.
 
+## Security posture (2026-08 audit)
+- **Security headers** live in `next.config.ts`: CSP (self-only; `'unsafe-inline'` script/style for Next hydration, `'unsafe-eval'` dev-only), HSTS, `nosniff`, `X-Frame-Options: DENY` + `frame-ancestors 'none'`, Referrer-Policy, Permissions-Policy. **No third-party scripts are allowed by the CSP** — adding an external script/iframe/analytics requires editing the CSP first.
+- **No PII in the repo**: phone number removed from `content.ts`; the résumé PDF was `git rm`'d from `public/` (an untracked `public/JadenOcaResume.pdf` may exist locally — do NOT commit it). `profile.email` is the public contact address.
+- External links use `rel="noopener noreferrer"`; no `dangerouslySetInnerHTML`; no API routes; `/ai-daily`'s `date` param is allowlist-validated (no traversal).
+- `npm audit` accepted residual: 3 highs pinned **inside** `next` itself (bundled `sharp`/`postcss`) — upstream, trusted-input contexts; do NOT run `npm audit fix --force` (it downgrades next to v9).
+
 ## Dev-loop gotcha
 Turbopack hot-reload is unreliable for `globals.css` rewrites — when changing tokens, kill the dev server and `rm -rf .next` rather than expecting HMR.
 

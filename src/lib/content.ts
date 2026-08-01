@@ -6,14 +6,15 @@ export const profile = {
   title: "Data Professional",
   location: "New York, NY",
   openTo: "Open to relocation",
-  email: "jadenesoca@gmail.com",
-  phone: "281-467-4955",
+  email: "contact@jadenoca.com",
   linkedin: "https://www.linkedin.com/in/jadenoca2025/",
   github: "https://github.com/jjadenoca",
   medium: "https://medium.com/@jadenesoca",
   mediumUsername: "jadenesoca",
   substack: "https://substack.com/@jadenoca",
-  resumeUrl: "/JadenOcaSummer2026Resume.pdf",
+  // Résumé PDF removed from public/ (2026-08 security audit) — field kept
+  // because retired components still reference it.
+  resumeUrl: "",
   headshot: "/headshot.jpeg",
   bio: "1 year of full-time experience in data science and analytics at Fortune 100 companies, plus internship roles at Cotality, Truist, and Link Logistics. Currently building AI workflow infrastructure as a consultant. Built ML pipelines automating 95% of claims review, delivered analytics supporting 70% YoY revenue growth, and deployed AI tools adopted by 100-person departments. Skilled in Python, SQL, and Claude Code.",
   longBio:
