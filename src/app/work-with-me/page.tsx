@@ -39,18 +39,11 @@ export default function WorkWithMePage() {
       <section>
         <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-10 md:pt-14 pb-6">
           <h1
-            className="font-display font-semibold text-text-strong mb-5"
+            className="font-display font-semibold text-text-strong"
             style={{ fontSize: "clamp(2.25rem, 5.5vw, 3.5rem)", lineHeight: 1.06, letterSpacing: "-0.03em" }}
           >
             Work with me.
           </h1>
-          <p
-            className="text-muted max-w-xl"
-            style={{ fontSize: "1.0625rem", lineHeight: 1.7 }}
-          >
-            Two ways in: a brand partnership, or a 1:1 call. Whichever fits, you&apos;ll
-            hear back from me directly.
-          </p>
         </div>
       </section>
 
@@ -162,9 +155,9 @@ export default function WorkWithMePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col items-center text-center gap-6">
           <h2
             className="font-display font-semibold text-on-navy"
-            style={{ fontSize: "clamp(1.75rem, 4.5vw, 2.75rem)", letterSpacing: "-0.02em", lineHeight: 1.1 }}
+            style={{ fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)", letterSpacing: "-0.02em", lineHeight: 1.1 }}
           >
-            Still deciding? Email me.
+            question? email me
           </h2>
           <a
             href={`mailto:${EMAIL}`}
