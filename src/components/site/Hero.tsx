@@ -67,9 +67,6 @@ export default function Hero() {
             </p>
 
             {/* Value prop */}
-            <p className="text-text text-lg md:text-xl max-w-lg mb-1 reveal" style={{ lineHeight: 1.6 }}>
-              {creator.tagline}
-            </p>
             <p className="text-text text-lg md:text-xl max-w-lg mb-2 reveal" style={{ lineHeight: 1.6 }}>
               i&apos;m in love with the intersection of people, numbers, and technology.
             </p>
