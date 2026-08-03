@@ -326,7 +326,7 @@ export const creator: Creator = {
   socials: [
     { platform: "Instagram", url: "https://www.instagram.com/jadeneoca/" },
     { platform: "TikTok",    url: "https://www.tiktok.com/@jadeneoca" },
-    { platform: "YouTube",   url: "https://www.youtube.com/@fleapster" },
+    { platform: "YouTube",   url: "https://www.youtube.com/@jadeneoca" },
     { platform: "LinkedIn",  url: "https://www.linkedin.com/in/jadenoca2025/" },
   ],
   timeline: [
@@ -398,5 +398,154 @@ export const creator: Creator = {
     { name: "Blossom Social", logo: "/logos/brands/blossom.png"    },
     { name: "Higgsfield AI",  logo: "/logos/brands/higgsfield.png" },
     { name: "Finvest",        logo: "/logos/brands/finvest.png"    },
+  ],
+};
+
+/* ===================================================================
+   COACHING PROGRAM
+   -------------------------------------------------------------------
+   Single source of truth for the 1:1 / cohort coaching offer.
+
+   LAUNCH = flip `status` from "waitlist" to "open".
+     "waitlist" → /coaching shows the promise, the mechanism, and the
+                  waitlist form. Price and apply CTA are hidden.
+     "open"     → price, cohort size and the apply CTA render instead.
+
+   Everything below is DATA. The /coaching page reads it and renders.
+   Rewriting copy should never require touching a component.
+
+   TODO before launch (all one-line edits here):
+     - `promise`      — the measurable before/after. Currently a placeholder.
+     - `dailyMetric`  — the single yes/no a client marks each day.
+     - `name`         — method name, still undecided.
+     - `price`        — research puts this category at $150–350/mo.
+     - `applyUrl`     — Stripe Payment Link or application form.
+   =================================================================== */
+
+export type CoachingStep = { label: string; body: string };
+export type CoachingFaq = { q: string; a: string };
+
+export type Coaching = {
+  status: "waitlist" | "open";
+  name: string;
+  eyebrow: string;
+  promise: string;
+  sub: string;
+  forWho: string[];
+  notForWho: string[];
+  dailyMetric: string;
+  steps: CoachingStep[];
+  included: string[];
+  mechanism: { title: string; body: string }[];
+  price: string;
+  priceNote: string;
+  cohortSize: string;
+  guarantee: string;
+  applyUrl: string;
+  faq: CoachingFaq[];
+};
+
+export const coaching: Coaching = {
+  status: "waitlist",
+
+  // PLACEHOLDER — method name undecided.
+  name: "the system",
+
+  eyebrow: "1:1 coaching",
+
+  // PLACEHOLDER — needs the real measurable before/after.
+  promise: "stop relying on willpower. build the system that runs the behavior for you.",
+
+  sub: "for early-20s guys who already know what to do and still aren't doing it. this isn't motivation. it's infrastructure, measured daily.",
+
+  forWho: [
+    "you know exactly what you should be doing and you're not doing it",
+    "you've tried discipline and it worked for about nine days",
+    "your phone is eating hours you'd rather spend on the gym, your work, or your sleep",
+    "you want a number that proves it's changing, not a feeling",
+  ],
+
+  notForWho: [
+    "you want motivation, hype, or someone to yell at you",
+    "you won't let the data be tracked",
+  ],
+
+  // PLACEHOLDER — the single daily yes/no.
+  dailyMetric: "did the behavior fire today, yes or no",
+
+  steps: [
+    {
+      label: "baseline",
+      body: "seven days of tracking before we change anything. most of it is automatic, your phone already logs it. we find out what actually happens in your week instead of what you think happens.",
+    },
+    {
+      label: "diagnose",
+      body: "we find which lever is missing. environment, identity, or constraint. it's usually one, and it's usually not the one you'd guess.",
+    },
+    {
+      label: "install",
+      body: "one system, built with you, not explained to you. plus a commitment contract with real stakes, which the research says is the most effective behavioral incentive there is.",
+    },
+    {
+      label: "measure",
+      body: "a daily yes or no, verified by data instead of memory. you get a hit rate, not a vibe.",
+    },
+    {
+      label: "adjust",
+      body: "weekly review of the log. what fired, what didn't, what changes. the program moves with the data.",
+    },
+  ],
+
+  included: [
+    "weekly 1:1 call",
+    "async access between calls, replies within 12 hours",
+    "auto-verified daily tracking, no honor system",
+    "a commitment contract with stakes you set",
+    "your log, kept and reviewed every week",
+  ],
+
+  mechanism: [
+    {
+      title: "the data is automatic",
+      body: "self-report is where habit coaching dies. your phone already tracks screen time per app, your watch already tracks sleep and steps. we use what's already being measured, so there's nothing to remember and nothing to fake.",
+    },
+    {
+      title: "stakes, not motivation",
+      body: "a meta-analysis found deposit contracts are the most effective financial incentive for behavior change, and a 2024 trial found stakes you actively dislike lifted goal completion 34 percent. motivation is a feeling. a contract is a mechanism.",
+    },
+    {
+      title: "intentional, not zero",
+      body: "the goal was never less screen time. you have coursework, applications, your own projects. the goal is less unintentional screen time, which is a different number and the only one worth moving.",
+    },
+  ],
+
+  // PLACEHOLDER — hidden while status is "waitlist".
+  price: "$—/mo",
+  priceNote: "month to month. cancel anytime.",
+  cohortSize: "capped, so the 12-hour reply is real",
+
+  guarantee:
+    "if you do the work and it doesn't move, you get your money back. the work means showing up to the calls and letting the tracking run.",
+
+  // PLACEHOLDER — Stripe Payment Link or application form at launch.
+  applyUrl: "",
+
+  faq: [
+    {
+      q: "is this just atomic habits",
+      a: "the concepts are in books and the books are good. what a book can't do is look at your actual week, tell you which lever is missing, and notice on wednesday that you stopped. that's the part you're paying for.",
+    },
+    {
+      q: "what do you actually track",
+      a: "whatever the goal needs, as long as something other than your memory records it. screen time per app, sleep, steps, gym check-ins. the rule is that it has to be verifiable.",
+    },
+    {
+      q: "what if i miss days",
+      a: "expected, and it's information. a missed day tells us the system was too heavy or the environment beat it. that's the signal we adjust on.",
+    },
+    {
+      q: "why should i listen to you",
+      a: "i'm not going to claim credentials i don't have. what i have is a stats degree, a psychology minor, a research lab that studied burnout, and a public log of my own: 100+ videos, a job i quit on a written decision rule, and the metrics to show for it.",
+    },
   ],
 };
