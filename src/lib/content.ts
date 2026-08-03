@@ -338,9 +338,21 @@ export const creator: Creator = {
         "Taught myself to code with League of Legends data projects.",
       ],
     },
-    { year: "2022", items: ["Changed majors to statistics."] },
-    { year: "2023", items: ["Data analyst internship in NYC."] },
-    { year: "2024", items: ["Data science internship in Atlanta."] },
+    {
+      year: "2022",
+      items: ["Changed majors to statistics.", "Added a business minor."],
+    },
+    {
+      year: "2023",
+      items: [
+        "Data analyst internship in NYC.",
+        "Started reading dozens of books on psychology and mindset.",
+      ],
+    },
+    {
+      year: "2024",
+      items: ["Data science internship in Atlanta.", "Added a psychology minor."],
+    },
     {
       year: "2025",
       items: [
