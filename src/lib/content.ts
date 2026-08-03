@@ -356,6 +356,10 @@ export const creator: Creator = {
         "Added a psychology minor.",
         "Started in the Recovery From Stress Lab at Texas A&M, studying the impact of burnout on employees.",
       ],
+      link: {
+        text: "Recovery From Stress Lab",
+        url: "https://sites.google.com/view/ze-mia-zhus-research-lab",
+      },
     },
     {
       year: "2025",
