@@ -166,27 +166,38 @@ function BrandsTile() {
 
 function CtaTile() {
   return (
-    <Link
-      href="/work-with-me"
-      className="tile tile-hover reveal md:col-span-12 p-6 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 no-underline"
+    <div
+      className="tile reveal md:col-span-12 p-6 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-4"
       style={{
         background:
           "linear-gradient(120deg, rgba(91,140,255,0.14), rgba(255,255,255,0.05) 60%)",
       }}
     >
-      <div>
-        <p
-          className="font-display font-semibold text-text-strong lowercase"
-          style={{ fontSize: "clamp(1.25rem, 2.4vw, 1.6rem)", letterSpacing: "-0.02em" }}
+      <p
+        className="font-display font-semibold text-text-strong lowercase"
+        style={{ fontSize: "clamp(1.2rem, 2.2vw, 1.5rem)", letterSpacing: "-0.02em" }}
+      >
+        work with me
+      </p>
+      <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+        <a
+          href={creator.mediaKitUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary whitespace-nowrap"
         >
-          brand deals &amp; content consulting
-        </p>
-        <p className="text-muted lowercase" style={{ fontSize: "0.9rem" }}>
-          media kit, rates, and a 1:1 call — all in one place.
-        </p>
+          brand deals
+        </a>
+        <a
+          href={creator.bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-ghost whitespace-nowrap"
+        >
+          1:1 consulting
+        </a>
       </div>
-      <span className="btn-primary shrink-0">work with me →</span>
-    </Link>
+    </div>
   );
 }
 
@@ -198,9 +209,9 @@ export default function BentoGrid() {
         <GaltonTile />
         <QuoteTile />
         <StatsTile />
+        <CtaTile />
         <Timeline />
         <BrandsTile />
-        <CtaTile />
       </div>
     </section>
   );
