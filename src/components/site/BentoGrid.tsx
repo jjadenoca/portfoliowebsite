@@ -93,7 +93,7 @@ function GaltonTile() {
         <GaltonBoard />
       </div>
       <p className="text-muted mt-2" style={{ fontSize: "0.8125rem", lineHeight: 1.5 }}>
-        single events are chaos. enough of them make a curve. that&apos;s why i love stats.
+        even in randomness, we can find order.
       </p>
     </div>
   );
