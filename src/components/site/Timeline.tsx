@@ -25,14 +25,13 @@ export default function Timeline() {
   const items = creator.timeline;
 
   return (
-    <section className="bg-bg py-8 md:py-10">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6">
-        <h2
-          className="font-display font-semibold text-text-strong mb-6 reveal"
-          style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", letterSpacing: "-0.02em" }}
-        >
-          How I got here
-        </h2>
+    <div className="tile reveal md:col-span-7 p-6 md:p-7">
+      <h2
+        className="font-display font-semibold text-text-strong mb-5"
+        style={{ fontSize: "clamp(1.35rem, 2.6vw, 1.75rem)", letterSpacing: "-0.02em" }}
+      >
+        How I got here
+      </h2>
 
         <ol className="relative lowercase">
           {/* Vertical rail */}
@@ -102,7 +101,6 @@ export default function Timeline() {
             );
           })}
         </ol>
-      </div>
-    </section>
+    </div>
   );
 }
