@@ -90,12 +90,12 @@ function IdentityTile() {
 function HabitTransferTile() {
   return (
     <div className="tile reveal md:col-span-5 md:row-span-2 p-5 md:p-6 flex flex-col gap-3">
-      <p className="eyebrow">how a habit moves in the brain</p>
+      <p className="eyebrow">why systems beat willpower</p>
       <HabitTransfer />
       <div className="mt-auto flex flex-col gap-1.5">
         <p className="text-muted" style={{ fontSize: "0.8125rem", lineHeight: 1.5 }}>
-          repetition hands the behavior from the region that needs willpower to the
-          one that doesn&apos;t. that&apos;s the whole game.
+          a system doesn&apos;t make you try harder. it keeps the behavior running
+          until your brain hands it to the part that never needed you to try.
         </p>
         <p
           className="text-muted lowercase"

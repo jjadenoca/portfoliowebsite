@@ -27,7 +27,7 @@ export default function HabitTransfer() {
         viewBox="0 0 260 180"
         className="w-full"
         role="img"
-        aria-label={`Brain diagram: after ${day} days of repetition, control has shifted from the prefrontal cortex toward the basal ganglia.`}
+        aria-label={`Brain diagram: after ${day} days of the system running the behavior, control has shifted from the prefrontal cortex toward the basal ganglia.`}
       >
         <defs>
           <clipPath id="brainClip">
@@ -118,7 +118,7 @@ export default function HabitTransfer() {
       {/* Control */}
       <label className="flex flex-col gap-1">
         <span className="eyebrow flex justify-between">
-          <span>days of repetition</span>
+          <span>days the system runs it</span>
           <span className="text-text-strong">{day}</span>
         </span>
         <input

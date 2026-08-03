@@ -351,7 +351,11 @@ export const creator: Creator = {
     },
     {
       year: "2024",
-      items: ["Data science internship in Atlanta.", "Added a psychology minor."],
+      items: [
+        "Data science internship in Atlanta.",
+        "Added a psychology minor.",
+        "Started in the Recovery From Stress Lab at Texas A&M, studying the impact of burnout on employees.",
+      ],
     },
     {
       year: "2025",
