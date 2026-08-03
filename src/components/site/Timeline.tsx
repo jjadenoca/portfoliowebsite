@@ -25,7 +25,7 @@ export default function Timeline() {
   const items = creator.timeline;
 
   return (
-    <div className="tile reveal md:col-span-7 p-6 md:p-7">
+    <div className="tile reveal md:col-span-7 md:row-span-2 p-6 md:p-7">
       <h2
         className="font-display font-semibold text-text-strong mb-5"
         style={{ fontSize: "clamp(1.35rem, 2.6vw, 1.75rem)", letterSpacing: "-0.02em" }}

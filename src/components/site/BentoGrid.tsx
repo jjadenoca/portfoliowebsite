@@ -3,6 +3,7 @@ import Link from "next/link";
 import { creator } from "@/lib/content";
 import SocialLinks from "@/components/site/SocialLinks";
 import GaltonBoard from "@/components/site/GaltonBoard";
+import BinomialCalculator from "@/components/site/BinomialCalculator";
 import Timeline from "@/components/site/Timeline";
 
 function IdentityTile() {
@@ -164,6 +165,18 @@ function BrandsTile() {
   );
 }
 
+function BinomialTile() {
+  return (
+    <div className="tile reveal md:col-span-5 p-5 md:p-6 flex flex-col gap-3">
+      <p className="eyebrow">the binomial calculator</p>
+      <BinomialCalculator />
+      <p className="text-muted" style={{ fontSize: "0.8125rem", lineHeight: 1.5 }}>
+        long odds shrink fast when you take more shots. play with it.
+      </p>
+    </div>
+  );
+}
+
 function CtaTile() {
   return (
     <div
@@ -212,6 +225,7 @@ export default function BentoGrid() {
         <CtaTile />
         <Timeline />
         <BrandsTile />
+        <BinomialTile />
       </div>
     </section>
   );
