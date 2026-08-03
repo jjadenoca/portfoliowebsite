@@ -4,6 +4,7 @@ import { creator } from "@/lib/content";
 import SocialLinks from "@/components/site/SocialLinks";
 import GaltonBoard from "@/components/site/GaltonBoard";
 import BinomialCalculator from "@/components/site/BinomialCalculator";
+import HabitTransfer from "@/components/site/HabitTransfer";
 import Timeline from "@/components/site/Timeline";
 
 function IdentityTile() {
@@ -86,9 +87,30 @@ function IdentityTile() {
   );
 }
 
+function HabitTransferTile() {
+  return (
+    <div className="tile reveal md:col-span-5 md:row-span-2 p-5 md:p-6 flex flex-col gap-3">
+      <p className="eyebrow">how a habit moves in the brain</p>
+      <HabitTransfer />
+      <div className="mt-auto flex flex-col gap-1.5">
+        <p className="text-muted" style={{ fontSize: "0.8125rem", lineHeight: 1.5 }}>
+          repetition hands the behavior from the region that needs willpower to the
+          one that doesn&apos;t. that&apos;s the whole game.
+        </p>
+        <p
+          className="text-muted lowercase"
+          style={{ fontSize: "0.6875rem", opacity: 0.62, fontFamily: "var(--font-mono)" }}
+        >
+          graybiel, 2008 · lally et al., 2010
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function GaltonTile() {
   return (
-    <div className="tile reveal md:col-span-5 md:row-span-2 p-5 md:p-6 flex flex-col min-h-[340px] md:min-h-0">
+    <div className="tile reveal md:col-span-6 p-5 md:p-6 flex flex-col min-h-[340px]">
       <p className="eyebrow mb-1">the galton board</p>
       <div className="flex-1 min-h-0" style={{ minHeight: "220px" }}>
         <GaltonBoard />
@@ -140,7 +162,7 @@ function BrandsTile() {
   return (
     <div className="tile reveal md:col-span-5 p-6 flex flex-col gap-4">
       <p className="eyebrow">worked with</p>
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-3 flex-1 justify-center">
         {creator.brands.map((b) => (
           <li key={b.name} className="flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -167,7 +189,7 @@ function BrandsTile() {
 
 function BinomialTile() {
   return (
-    <div className="tile reveal md:col-span-5 p-5 md:p-6 flex flex-col gap-3">
+    <div className="tile reveal md:col-span-6 p-5 md:p-6 flex flex-col gap-3">
       <p className="eyebrow">the binomial calculator</p>
       <BinomialCalculator />
       <p className="text-muted" style={{ fontSize: "0.8125rem", lineHeight: 1.5 }}>
@@ -219,12 +241,13 @@ export default function BentoGrid() {
     <section className="mx-auto max-w-6xl px-4 sm:px-6 py-6 md:py-8">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
         <IdentityTile />
-        <GaltonTile />
+        <HabitTransferTile />
         <QuoteTile />
         <StatsTile />
         <CtaTile />
         <Timeline />
         <BrandsTile />
+        <GaltonTile />
         <BinomialTile />
       </div>
     </section>
