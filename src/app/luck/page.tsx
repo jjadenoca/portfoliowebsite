@@ -19,7 +19,6 @@ export default function LuckPage() {
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-6 md:py-8">
         {/* header */}
         <div className="reveal mb-6 md:mb-8 max-w-2xl flex flex-col gap-3">
-          <p className="eyebrow">luck is not a black box — it&apos;s a formula</p>
           <h1
             className="font-display font-semibold"
             style={{ fontSize: "clamp(2.25rem, 5vw, 3.25rem)", letterSpacing: "-0.02em" }}
@@ -27,9 +26,8 @@ export default function LuckPage() {
             the luck field
           </h1>
           <p className="text-text" style={{ fontSize: "1.0625rem", lineHeight: 1.65 }}>
-            luck isn&apos;t a board you drop a ball through — it&apos;s a field you move
-            through, full of drifting opportunity. drag to orbit it, then pull the
-            levers and watch what gets pulled into range.
+            luck isn&apos;t a black box, it&apos;s a formula that you can rig in your
+            favor.
           </p>
         </div>
 
