@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 export default function SiteNav() {
   const pathname = usePathname();
   const onWork = pathname.startsWith("/work-with-me");
+  const onLuck = pathname.startsWith("/luck");
   const onOverview = pathname === "/";
 
   return (
@@ -27,8 +28,8 @@ export default function SiteNav() {
           Jaden Oca
         </Link>
 
-        {/* Two tabs: Overview (text) + Work with me (black pill CTA) */}
-        <nav className="flex items-center gap-2 sm:gap-3" aria-label="Main navigation">
+        {/* Three tabs: Overview + Luck Simulation (text) + Work with me (pill CTA) */}
+        <nav className="flex items-center gap-1.5 sm:gap-3" aria-label="Main navigation">
           <Link
             href="/"
             className={[
@@ -39,6 +40,24 @@ export default function SiteNav() {
           >
             Overview
             {onOverview && (
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-3 -bottom-[1px] h-[2px] rounded-full"
+                style={{ backgroundColor: "var(--color-accent)" }}
+              />
+            )}
+          </Link>
+
+          <Link
+            href="/luck"
+            className={[
+              "relative px-2.5 sm:px-3 py-1.5 text-sm font-medium rounded-md transition-colors duration-150 lowercase whitespace-nowrap",
+              onLuck ? "text-text-strong" : "text-muted hover:text-text-strong",
+            ].join(" ")}
+            aria-current={onLuck ? "page" : undefined}
+          >
+            Luck Simulation
+            {onLuck && (
               <span
                 aria-hidden="true"
                 className="absolute inset-x-3 -bottom-[1px] h-[2px] rounded-full"
